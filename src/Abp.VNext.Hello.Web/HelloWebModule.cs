@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Localization.Resources.AbpUi;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,30 +10,25 @@ using Abp.VNext.Hello.Localization;
 using Abp.VNext.Hello.MultiTenancy;
 using Abp.VNext.Hello.Web.Menus;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 using Volo.Abp;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.Localization;
-using Volo.Abp.AspNetCore.Mvc.UI;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
-using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
-using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity.Web;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
-using Volo.Abp.PermissionManagement.Web;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.AspNetCore.SignalR;
+using System;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -70,7 +63,8 @@ namespace Abp.VNext.Hello.Web
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            var hostingEnvironment = context.Services.GetHostingEnvironment();
+            context.Services.AddObjectAccessor<IHubContext<NotificationHub>>();
+            IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
             var configuration = context.Services.GetConfiguration();
 
             ConfigureUrls(configuration);
@@ -81,6 +75,12 @@ namespace Abp.VNext.Hello.Web
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
+
+            context.Services.AddConnections();
+            context.Services.AddSignalR(options =>
+            {
+                options.KeepAliveInterval = TimeSpan.FromSeconds(5);
+            });
         }
 
         private void ConfigureUrls(IConfiguration configuration)
@@ -175,8 +175,8 @@ namespace Abp.VNext.Hello.Web
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            var app = context.GetApplicationBuilder();
-            var env = context.GetEnvironment();
+            IApplicationBuilder app = context.GetApplicationBuilder();
+            IWebHostEnvironment env = context.GetEnvironment();
 
             app.UseCorrelationId();
 
@@ -190,6 +190,17 @@ namespace Abp.VNext.Hello.Web
             }
             app.UseVirtualFiles();
             app.UseRouting();
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://hello.com",
+                                    "http://www.123.com",
+                                    "http://119.23.207.114",
+                                    "http://119.23.207.115",
+                                    "http://localhost")
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod()
+                                    .AllowCredentials();
+            });
             app.UseAuthentication();
             app.UseJwtTokenMiddleware();
 
@@ -199,6 +210,16 @@ namespace Abp.VNext.Hello.Web
             }
             app.UseIdentityServer();
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<NotificationHub>("/Notification", (options) =>
+                {
+
+                });
+                endpoints.MapConnectionHandler<MessagesConnectionHandler>("/Message");
+            });
+
             app.UseAbpRequestLocalization();
             app.UseSwagger();
             app.UseSwaggerUI(options =>
