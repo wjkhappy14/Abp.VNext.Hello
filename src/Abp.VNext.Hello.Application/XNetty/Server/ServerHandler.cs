@@ -21,10 +21,6 @@ namespace Abp.VNext.Hello.XNetty.Server
         }
         static volatile IChannelGroup group;
 
-
-       
-
-
         public override void ChannelActive(IChannelHandlerContext contex)
         {
             IChannelGroup g = Group;

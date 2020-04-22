@@ -9,7 +9,7 @@ namespace Abp.VNext.Hello.XNetty.Server
 {
     public class XServerBootstrap
     {
-        public static async Task RunServerAsync()
+        public static async Task RunServerAsync(int port)
         {
             MultithreadEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             MultithreadEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
@@ -31,12 +31,11 @@ namespace Abp.VNext.Hello.XNetty.Server
                     {
                         IChannelPipeline pipeline = channel.Pipeline;
 
-
                         pipeline.AddLast(new DelimiterBasedFrameDecoder(8192, Delimiters.LineDelimiter()));
                         pipeline.AddLast(STRING_ENCODER, STRING_DECODER, SERVER_HANDLER);
                     }));
 
-                IChannel bootstrapChannel = await bootstrap.BindAsync(666);
+                IChannel bootstrapChannel = await bootstrap.BindAsync(port);
 
                 // await bootstrapChannel.CloseAsync();
             }

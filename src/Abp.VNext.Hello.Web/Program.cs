@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Abp.VNext.Hello.XNetty.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -8,7 +10,7 @@ namespace Abp.VNext.Hello.Web
 {
     public class Program
     {
-        public static int Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
 #if DEBUG
@@ -25,7 +27,10 @@ namespace Abp.VNext.Hello.Web
             try
             {
                 Log.Information("Starting web host.");
-                CreateHostBuilder(args).Build().Run();
+                Console.WriteLine($"Http Host Running on Port:5000 {Environment.NewLine} TCP(Netty) Running on Port:666");
+                await CreateHostBuilder(args).Build().RunAsync();
+                Console.WriteLine("");
+                await XServerBootstrap.RunServerAsync(666);
                 return 0;
             }
             catch (Exception ex)
