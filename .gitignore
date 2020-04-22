@@ -257,3 +257,4 @@ src/Abp.VNext.Hello.Web.Host/Logs/*
 src/Abp.VNext.Hello.IdentityServer/Logs/*
 src/Abp.VNext.Hello.HttpApi.Host/Logs/*
 src/Abp.VNext.Hello.HttpApi.HostWithIds/Logs/*
+src/Abp.VNext.Hello.DbMigrator/Logs/*

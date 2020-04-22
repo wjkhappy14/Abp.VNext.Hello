@@ -11,6 +11,8 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
     {
         public HelloMigrationsDbContext CreateDbContext(string[] args)
         {
+            HelloEfCoreEntityExtensionMappings.Configure();
+
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<HelloMigrationsDbContext>()
