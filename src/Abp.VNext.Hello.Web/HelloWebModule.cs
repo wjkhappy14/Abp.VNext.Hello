@@ -217,6 +217,14 @@ namespace Abp.VNext.Hello.Web
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Hello API");
             });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<NotificationHub>("/Notification", (options) =>
+                {
+
+                });
+                endpoints.MapConnectionHandler<MessagesConnectionHandler>("/Message");
+            });
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseMvcWithDefaultRouteAndArea();
