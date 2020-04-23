@@ -93,6 +93,7 @@ namespace Abp.VNext.Hello.Web
 
         private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
+            //http://www.identityserver.com.cn/
             context.Services.AddAuthentication()
                 .AddIdentityServerAuthentication(options =>
                 {
