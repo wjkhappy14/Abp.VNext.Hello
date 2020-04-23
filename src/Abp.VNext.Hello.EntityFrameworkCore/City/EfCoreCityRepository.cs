@@ -18,19 +18,21 @@ namespace Abp.VNext.Hello
 
         }
 
-        public async Task<List<City>> FindByMerchantIdAsync(int merchantId)
+        public Task<City> FindByIdAsync(int cityId)
         {
-            return await DbSet.Where(w => w.MerchantId == merchantId).ToListAsync();
+
+            return DbSet.FirstOrDefaultAsync(w => w.Id == cityId);
         }
 
-        public async Task<City> FindByNoAsync(string serialNo)
+        public Task<City> FindByNameAsync(string name)
         {
-            return await DbSet.FirstOrDefaultAsync(p => p.SerialNo == serialNo);
+
+            return DbSet.FirstOrDefaultAsync(w => w.Name == name);
         }
 
-        public async Task<List<City>> SearchAsync(int? merchantId, DateTime begin, DateTime end)
+        public IQueryable<City> SearchAsync(string keywords)
         {
-            return merchantId.HasValue ? await DbSet.Where(w => w.MerchantId == merchantId.Value && w.ReqTime > begin && w.ReqTime < end).ToListAsync() : await DbSet.Where((w) => w.ReqTime > begin && w.ReqTime < end).ToListAsync();
+            return DbSet.Where(w => w.Name == keywords);
         }
     }
 }

@@ -5,87 +5,15 @@ namespace Abp.VNext.Hello.Dtos
 {
     public class CountryDto : EntityDto<int>
     {
-        public string Account { get; set; }
-        
+        public string CountryName { get; set; }
+        public virtual string ChineseName { get; set; }
+        public string FormalName { get; set; }
+        public string IsoAlpha3Code { get; set; }
+        public int? IsoNumericCode { get; set; }
+        public string CountryType { get; set; }
+        public string Continent { get; set; }
+        public string Region { get; set; }
+        public string Subregion { get; set; }
 
-        public string Address { get; set; }
-
-
-        public string BankName { get; set; }
-
-
-        public string BankCode { get; set; }
-
-
-        public string Remark { get; set; }
-
-
-        public string BankCity { get; set; }
-
-        public decimal Fee { get; set; }
-
-
-
-        public int MerchantId
-        {
-            get;
-            set;
-        }
-
-        public string PayeeName
-        {
-            get;
-            set;
-        }
-
-        public decimal PayMoney { get; set; }
-
-
-        public DateTime? PayTime { get; set; }
-
-
-        public DateTime CreationTime { get; set; }
-
-        public decimal ReqMoney
-        {
-            get;
-            set;
-        }
-
-        public DateTime ReqTime
-        {
-            get;
-            set;
-        }
-
-        public string SerialNo
-        {
-            get;
-            set;
-        }
-
-        public int Status
-        {
-            get;
-            set;
-        }
-
-        public string DaiFuTradeNo
-        {
-            get;
-            set;
-        }
-
-        public decimal SettleCost
-        {
-            get;
-            set;
-        }
-
-        public string StatusDes()
-        {
-            return "";//((EncashStatus)Status).ToDescription();
-        }
     }
-
 }

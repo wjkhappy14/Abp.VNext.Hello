@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 
@@ -8,10 +7,10 @@ namespace Abp.VNext.Hello
 {
     public interface ICityRepository : IBasicRepository<City, int>
     {
-        Task<List<City>> FindByMerchantIdAsync(int merchantId);
+        Task<City> FindByIdAsync(int cityId);
 
-        Task<City> FindByNoAsync(string serialNo);
+        Task<City> FindByNameAsync(string name);
 
-        Task<List<City>> SearchAsync(int? merchantId, DateTime begin, DateTime end);
+        IQueryable<City> SearchAsync(string keywords);
     }
 }

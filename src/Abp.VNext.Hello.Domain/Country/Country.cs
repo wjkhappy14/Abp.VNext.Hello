@@ -1,25 +1,30 @@
-﻿using Volo.Abp;
+﻿using NetTopologySuite.Geometries;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 
 namespace Abp.VNext.Hello
 {
-    public class Country : AggregateRoot<int>
+    public partial class Country : Entity<int>
     {
-        public string Name { get; set; }
-
-        public string PostUrl { get; set; }
-
-        public string Comment { get; set; }
-
-        public string Bizs { get; set; }
-
-        public bool Enable { get; set; }
-        public virtual Country SetName(string name)
+        public Country()
         {
-            name = Check.NotNullOrWhiteSpace(name, nameof(name));
-            return this;
+
         }
 
+        public string CountryName { get; set; }
+        public virtual string ChineseName { get; set; }
+        public string FormalName { get; set; }
+        public virtual string IsoAlpha3Code { get; set; }
+        public virtual int? IsoNumericCode { get; set; }
+        public virtual string CountryType { get; set; }
+        public virtual string Continent { get; set; }
+        public virtual string Region { get; set; }
+        public virtual string Subregion { get; set; }
 
+        [JsonIgnore()]
+        public Geometry Border { get; set; }
+        public virtual ICollection<StateProvince> StateProvinces { get; protected set; } = new HashSet<StateProvince>();
     }
 }

@@ -1,99 +1,23 @@
-﻿using System;
+﻿using NetTopologySuite.Geometries;
+using System;
+using System.Text.Json.Serialization;
 using Volo.Abp.Domain.Entities;
 
 namespace Abp.VNext.Hello
 {
-    public class City : Entity<int>
+    public partial class City : Entity<int>
     {
-        public string Account
+        public City()
         {
-            get;
-            set; 
         }
+        public virtual string Name { get; set; }
+        public virtual string ChineseName { get; set; }
+        public virtual int StateProvinceId { get; set; }
 
-        public string Address
-        {
-            get;
-            set;
-        }
-
-        public string BankName
-        {
-            get;
-            set;
-        }
-
-        public string BankCode
-        {
-            get;
-            set;
-        }
-
-        public string Remark
-        {
-            get;
-            set;
-        }
-
-        public string BankCity
-        {
-            get;
-            set;
-        }
-
-        public decimal Fee
-        {
-            get;
-            set;
-        }
+        [JsonIgnore]
+        public Geometry Location { get; set; }
 
 
-        public int MerchantId { get; set; }
-
-
-        public string PayeeName { get; set; }
-
-        public decimal PayMoney { get; set; }
-
-
-        public DateTime? PayTime { get; set; }
-        public DateTime CreationTime { get; set; }
-
-
-
-        public decimal ReqMoney
-        {
-            get;
-            set;
-        }
-
-        public DateTime ReqTime
-        {
-            get;
-            set;
-        }
-
-        public string SerialNo { get; set; }
-
-
-        public int Status { get; set; }
-
-        public string DaiFuTradeNo
-        {
-            get;
-            set;
-        }
-
-        public decimal SettleCost
-        {
-            get;
-            set;
-        }
-
-        public string StatusDes()
-        {
-            return "";//((EncashStatus)Status).ToDescription();
-        }
     }
 
 }

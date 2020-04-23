@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Abp.VNext.Hello.Dtos;
+using AutoMapper;
 
 namespace Abp.VNext.Hello
 {
@@ -6,9 +7,9 @@ namespace Abp.VNext.Hello
     {
         public HelloApplicationAutoMapperProfile()
         {
-            /* You can configure your AutoMapper mapping configuration here.
-             * Alternatively, you can split your mapping configurations
-             * into multiple profile classes for a better organization. */
+            CreateMap<Country, CountryDto>();
+            CreateMap<StateProvince, StateProvinceDto>();
+            CreateMap<City, CityDto>();//.Ignore(x=>x.);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Abp.VNext.Hello.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -16,19 +16,22 @@ namespace Abp.VNext.Hello
 
         }
 
-        public async Task<List<Country>> FindByMerchantIdAsync(int merchantId)
+        public async Task<IQueryable<Country>> Search(string keyword)
         {
-            return await DbSet.ToListAsync();
+            return DbSet.Where(w => w.CountryName == keyword);
         }
 
-        public async Task<Country> FindByNameAsync(string name)
+        public async Task<Country> GetByNameAsync(string name)
         {
-            return await DbSet.FirstOrDefaultAsync(p => p.Name == name);
+            return await DbSet.FirstOrDefaultAsync(p => p.CountryName == name);
         }
-
-        public Task<Country> GetByNameAsync(string name)
+        public Task<Country> GetCountryByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            Task<Country> country = DbContext.Countries
+                               .AsNoTracking()
+                               .Include(item => item.StateProvinces)
+                               .FirstOrDefaultAsync(p => p.Id == id);
+            return country;
         }
     }
 }

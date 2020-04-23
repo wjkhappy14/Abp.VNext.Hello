@@ -1,5 +1,6 @@
 ﻿using Abp.VNext.Hello.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -15,9 +16,14 @@ namespace Abp.VNext.Hello
 
         }
 
-        public async Task<StateProvince> FindByNameAsync(string name)
+        public IQueryable<StateProvince> FindByCountryIdAsync(int countryId)
         {
-            return await DbSet.FirstOrDefaultAsync(p => p.Name == name);
+            return DbSet.Where(x => x.CountryId == countryId);
+        }
+
+        public  Task<StateProvince> FindByNameAsync(string name)
+        {
+            return  DbSet.FirstOrDefaultAsync(p => p.StateProvinceName == name);
         }
     }
 }

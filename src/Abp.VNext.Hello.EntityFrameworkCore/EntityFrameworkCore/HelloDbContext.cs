@@ -21,6 +21,11 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
     {
         public DbSet<AppUser> Users { get; set; }
 
+
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<StateProvince> StateProvinces { get; set; }
+
         /* Add DbSet properties for your Aggregate Roots / Entities here.
          * Also map them inside HelloDbContextModelCreatingExtensions.ConfigureHello
          */
@@ -46,7 +51,6 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
                 //Moved customization to a method so we can share it with the HelloMigrationsDbContext class
                 b.ConfigureCustomUserProperties();
             });
-
             /* Configure your own tables/entities inside the ConfigureHello method */
 
             builder.ConfigureHello();

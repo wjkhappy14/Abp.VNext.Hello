@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 
@@ -10,6 +8,8 @@ namespace Abp.VNext.Hello
     {
 
         Task<Country> GetByNameAsync(string name);
+        Task<IQueryable<Country>> Search(string keyword);
 
+        Task<Country> GetCountryByIdAsync(int id)
     }
 }
