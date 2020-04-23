@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
+using Volo.Abp.Dapper;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 {
     [DependsOn(
         typeof(HelloDomainModule),
+        typeof(AbpDapperModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
