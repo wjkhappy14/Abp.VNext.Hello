@@ -12,7 +12,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
      * It does not include entities of the used modules, because each module has already
      * its own DbContext class. If you want to share some database tables with the used modules,
      * just create a structure like done for AppUser.
-     *
+     * 高级方案ASP.NET MVC 和 EF Core https://docs.microsoft.com/zh-cn/aspnet/core/data/ef-mvc/advanced?view=aspnetcore-3.1
      * Don't use this DbContext for database migrations since it does not contain tables of the
      * used modules (as explained above). See HelloMigrationsDbContext for migrations.
      */
