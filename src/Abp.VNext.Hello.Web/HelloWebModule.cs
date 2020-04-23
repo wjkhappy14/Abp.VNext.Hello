@@ -139,7 +139,6 @@ namespace Abp.VNext.Hello.Web
 
                 options.Languages.Add(new LanguageInfo("en", "en", "English"));
                 options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
-                options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });
         }
 
@@ -171,21 +170,31 @@ namespace Abp.VNext.Hello.Web
             );
         }
 
+        /// <summary>
+        /// ASP.NET Core 中间件
+        /// </summary>
+        /// <param name="context"></param>
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
             IApplicationBuilder app = context.GetApplicationBuilder();
             IWebHostEnvironment env = context.GetEnvironment();
-
+            //https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-5.0
             app.UseCorrelationId();
 
             if (env.IsDevelopment())
             {
+                //开发人员异常页 
                 app.UseDeveloperExceptionPage();
             }
+          
             else
             {
                 app.UseErrorPage();
             }
+            app.UseDirectoryBrowser();
+            //静态文件中间件
+            app.UseStaticFiles();
+            app.UseStatusCodePages();
             app.UseVirtualFiles();
             app.UseRouting();
            
