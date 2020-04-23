@@ -7,3 +7,4 @@ Abp.VNext.Hello
 #  CAP https://github.com/dotnetcore/CAP
 #  DotNetty https://github.com/Azure/DotNetty
 #  IdentityServer4 https://github.com/IdentityServer/IdentityServer4
+#  EFCore.Sharding(EFCore分表) https://github.com/Coldairarrow/EFCore.Sharding
