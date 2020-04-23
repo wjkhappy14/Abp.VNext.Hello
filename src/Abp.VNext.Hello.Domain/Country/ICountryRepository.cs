@@ -10,6 +10,6 @@ namespace Abp.VNext.Hello
         Task<Country> GetByNameAsync(string name);
         Task<IQueryable<Country>> Search(string keyword);
 
-        Task<Country> GetCountryByIdAsync(int id)
+        Task<Country> GetCountryByIdAsync(int id);
     }
 }
