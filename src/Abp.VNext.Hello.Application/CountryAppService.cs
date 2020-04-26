@@ -1,14 +1,14 @@
 ﻿using Abp.VNext.Hello.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Uow;
 
 namespace Abp.VNext.Hello
 {
 
-    [Authorize]
+    [UnitOfWork]
     public class CountryAppService : ApplicationService, ICountryService
     {
         ICountryRepository _productRepository;
