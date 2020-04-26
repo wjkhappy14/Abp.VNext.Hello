@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Abp.VNext.Hello.Localization;
+﻿using Abp.VNext.Hello.Localization;
 using Volo.Abp.Application.Services;
+using Volo.Abp.EventBus.Distributed;
 
 namespace Abp.VNext.Hello
 {
-    /* Inherit your application services from this class.
-     */
     public abstract class HelloAppService : ApplicationService
     {
+
+        private IDistributedEventBus _eventBus;
+        public IDistributedEventBus EventBus => LazyGetRequiredService(ref _eventBus);
         protected HelloAppService()
         {
             LocalizationResource = typeof(HelloResource);

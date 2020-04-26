@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Http.Connections.Features;
-using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Text;
