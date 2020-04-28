@@ -16,9 +16,7 @@ namespace Abp.VNext.Hello
             _repository = repository;
         }
 
-      
-
-        public virtual async Task<ListResultDto<PictureDto>> SearchAsync(DateTime begin, DateTime end)
+        public async Task<ListResultDto<PictureDto>> SearchAsync(DateTime begin, DateTime end, int payStatus)
         {
             List<Picture> items = await _repository.SearchAsync(0, begin, end);
 
@@ -52,10 +50,6 @@ namespace Abp.VNext.Hello
             throw new NotImplementedException();
         }
 
-        public Task<ListResultDto<PictureDto>> SearchAsync(DateTime begin, DateTime end, int payStatus)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<ListResultDto<PictureDto>> GetListAsync()
         {

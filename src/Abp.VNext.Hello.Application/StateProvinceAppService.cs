@@ -17,17 +17,14 @@ namespace Abp.VNext.Hello
             _channelRepository = channelRepository;
         }
 
-        public async Task<StateProvinceDto> Create(StateProvince input)
+        public async Task<StateProvinceDto> Create(StateProvinceDto input)
         {
             StateProvince item = await _channelRepository.InsertAsync(new StateProvince() { });
 
             return ObjectMapper.Map<StateProvince, StateProvinceDto>(item);
         }
 
-        public Task<StateProvinceDto> Create(StateProvinceDto input)
-        {
-            throw new System.NotImplementedException();
-        }
+     
 
         public Task Delete(int id)
         {
