@@ -10,38 +10,38 @@ namespace Abp.VNext.Hello
     [Authorize]
     public class StateProvinceAppService : ApplicationService, IStateProvinceAppService
     {
-        IStateProvinceRepository _channelRepository;
+        IStateProvinceRepository _stateProvinceRepository;
 
-        public StateProvinceAppService(IStateProvinceRepository channelRepository)
+        public StateProvinceAppService(IStateProvinceRepository stateProvinceRepository)
         {
-            _channelRepository = channelRepository;
+            _stateProvinceRepository = stateProvinceRepository;
         }
 
         public async Task<StateProvinceDto> Create(StateProvinceDto input)
         {
-            StateProvince item = await _channelRepository.InsertAsync(new StateProvince() { });
+            StateProvince item = await _stateProvinceRepository.InsertAsync(new StateProvince() { });
 
             return ObjectMapper.Map<StateProvince, StateProvinceDto>(item);
         }
 
-     
+
 
         public Task Delete(int id)
         {
-            return _channelRepository.DeleteAsync(id);
+            return _stateProvinceRepository.DeleteAsync(id);
         }
 
-      
+
 
         public async Task<StateProvinceDto> GetAsync(int id)
         {
-            StateProvince item = await _channelRepository.GetAsync(id);
+            StateProvince item = await _stateProvinceRepository.GetAsync(id);
             return ObjectMapper.Map<StateProvince, StateProvinceDto>(item);
         }
 
         public async Task<StateProvinceDto> GetByNameAsync(string name)
         {
-            StateProvince result = await _channelRepository.FindByNameAsync(name);
+            StateProvince result = await _stateProvinceRepository.FindByNameAsync(name);
 
             return ObjectMapper.Map<StateProvince, StateProvinceDto>(result);
         }
@@ -50,7 +50,7 @@ namespace Abp.VNext.Hello
         {
             string email = CurrentUser.Email;
 
-            List<StateProvince> items = await _channelRepository.GetListAsync();
+            List<StateProvince> items = await _stateProvinceRepository.GetListAsync();
 
             return new ListResultDto<StateProvinceDto>(
                 ObjectMapper.Map<List<StateProvince>, List<StateProvinceDto>>(items)
@@ -59,7 +59,7 @@ namespace Abp.VNext.Hello
 
         public async Task<StateProvinceDto> Update(int id, StateProvinceDto input)
         {
-            StateProvince item = await _channelRepository.UpdateAsync(new StateProvince() { });
+            StateProvince item = await _stateProvinceRepository.UpdateAsync(new StateProvince() { });
 
             return ObjectMapper.Map<StateProvince, StateProvinceDto>(item);
         }

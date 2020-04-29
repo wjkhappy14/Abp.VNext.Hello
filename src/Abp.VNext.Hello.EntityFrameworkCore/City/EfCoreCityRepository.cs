@@ -1,7 +1,5 @@
 ﻿using Abp.VNext.Hello.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
@@ -20,13 +18,11 @@ namespace Abp.VNext.Hello
 
         public Task<City> FindByIdAsync(int cityId)
         {
-
             return DbSet.FirstOrDefaultAsync(w => w.Id == cityId);
         }
 
         public Task<City> FindByNameAsync(string name)
         {
-
             return DbSet.FirstOrDefaultAsync(w => w.Name == name);
         }
 

@@ -154,7 +154,12 @@ namespace Abp.VNext.Hello.Web
         {
             Configure<AbpAspNetCoreMvcOptions>(options =>
             {
-                options.ConventionalControllers.Create(typeof(HelloApplicationModule).Assembly);
+                options.MinifyGeneratedScript = true;
+                options.ConventionalControllers.Create(typeof(HelloApplicationModule).Assembly,
+                  opts =>
+                  {
+                      opts.RootPath = "hello/angkor";
+                  });
             });
         }
 
@@ -186,7 +191,7 @@ namespace Abp.VNext.Hello.Web
                 //开发人员异常页 
                 app.UseDeveloperExceptionPage();
             }
-          
+
             else
             {
                 app.UseErrorPage();
@@ -201,7 +206,7 @@ namespace Abp.VNext.Hello.Web
             app.UseStatusCodePages();
             app.UseVirtualFiles();
             app.UseRouting();
-    
+
             app.UseCors(builder =>
             {
                 builder.WithOrigins("http://hello.com",

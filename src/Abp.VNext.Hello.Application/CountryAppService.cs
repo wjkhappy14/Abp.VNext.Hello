@@ -53,6 +53,11 @@ namespace Abp.VNext.Hello
             );
         }
 
+        public Task<IList<CountryDto>> Search(string keyword)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<CountryDto> Update(int id, CountryDto input)
         {
             Country result = await _productRepository.UpdateAsync(new Country() { });

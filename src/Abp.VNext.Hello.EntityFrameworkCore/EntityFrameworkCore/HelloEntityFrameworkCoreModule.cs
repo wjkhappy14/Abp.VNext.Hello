@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Dapper;
@@ -42,7 +43,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
             {
                 /* The main point to change your DBMS.
                  * See also HelloMigrationsDbContextFactory for EF Core tooling. */
-                options.UseSqlServer();
+                options.UseSqlServer(x => x.UseNetTopologySuite());
             });
         }
     }

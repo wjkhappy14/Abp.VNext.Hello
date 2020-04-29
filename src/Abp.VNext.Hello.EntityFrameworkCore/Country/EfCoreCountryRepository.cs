@@ -16,7 +16,7 @@ namespace Abp.VNext.Hello
 
         }
 
-        public async Task<IQueryable<Country>> Search(string keyword)
+        public IQueryable<Country> Search(string keyword)
         {
             return DbSet.Where(w => w.CountryName == keyword);
         }
