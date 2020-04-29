@@ -10,6 +10,9 @@ using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.PermissionManagement.IdentityServer;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Abp.VNext.Hello
 {
@@ -29,6 +32,8 @@ namespace Abp.VNext.Hello
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            context.Services.Replace(ServiceDescriptor.Transient<AbpUserClaimsPrincipalFactory, MyUserClaimsPrincipalFactory>()
+);
             Configure<AbpMultiTenancyOptions>(options =>
             {
                 options.IsEnabled = MultiTenancyConsts.IsEnabled;
