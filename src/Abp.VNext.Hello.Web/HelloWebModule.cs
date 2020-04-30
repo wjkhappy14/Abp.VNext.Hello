@@ -29,6 +29,7 @@ using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.AspNetCore.SignalR;
 using System;
+using Volo.Abp.Timing;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -80,6 +81,11 @@ namespace Abp.VNext.Hello.Web
             context.Services.AddSignalR(options =>
             {
                 options.KeepAliveInterval = TimeSpan.FromSeconds(5);
+            });
+
+            Configure<AbpClockOptions>(options =>
+            {
+                options.Kind = DateTimeKind.Local;
             });
         }
 

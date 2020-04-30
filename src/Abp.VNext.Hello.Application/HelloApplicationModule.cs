@@ -26,6 +26,13 @@ namespace Abp.VNext.Hello
         )]
     public class HelloApplicationModule : AbpModule
     {
+
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            base.PreConfigureServices(context);
+        }
+
+
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             Configure<AbpAutoMapperOptions>(options =>
