@@ -1,8 +1,31 @@
 {
-    "culture": "zh-Hans",
-    "texts": {
-      "Menu:Home": "首页",
-      "Welcome": "欢迎",
-      "LongWelcomeMessage": "欢迎来到该应用程序. 这是一个基于ABP框架的启动项目. 有关更多信息, 请访问 abp.io."
-    }
+  "culture": "zh-Hans",
+  "texts": {
+    "Menu:Home": "Hello ABP",
+    "Welcome": "欢迎",
+    "LongWelcomeMessage": "欢迎来到该应用程序. 这是一个基于ABP框架的启动项目. 有关更多信息, 请访问 abp.io.",
+
+    "Hello": "行政区域管理",
+    "Hello:City": "城市",
+    "Hello:City:Create": "创建城市",
+    "Hello:City:Delete": "删除城市",
+    "Hello:City:Search": "搜索城市",
+    "Hello:City:Update": "编辑城市",
+    "Hello:City:View": "浏览城市",
+
+    "Sales:Customer": "省份",
+    "Sales:Customer:Create": "创建客户",
+    "Sales:Customer:Delete": "删除客户",
+    "Sales:Customer:Search": "搜索客户",
+    "Sales:Customer:Update": "编辑客户",
+    "Sales:Customer:View": "浏览客户",
+
+    "Sales:Order": "国家",
+    "Sales:Order:Create": "创建订单",
+    "Sales:Order:Delete": "删除订单",
+    "Sales:Order:Search": "搜索订单",
+    "Sales:Order:Update": "编辑订单",
+    "Sales:Order:View": "浏览订单"
   }
+
+}

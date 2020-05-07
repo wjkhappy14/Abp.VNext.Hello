@@ -11,42 +11,42 @@ namespace Abp.VNext.Hello
     [UnitOfWork]
     public class CountryAppService : ApplicationService, ICountryService
     {
-        ICountryRepository _productRepository;
+        ICountryRepository _countryRepository;
 
-        public CountryAppService(ICountryRepository productRepository)
+        public CountryAppService(ICountryRepository countryRepository)
         {
-            _productRepository = productRepository;
+            _countryRepository = countryRepository;
         }
 
         public async Task<CountryDto> Create(CountryDto input)
         {
-            Country result = await _productRepository.InsertAsync(new Country() { });
+            Country result = await _countryRepository.InsertAsync(new Country() { });
 
             return ObjectMapper.Map<Country, CountryDto>(result);
         }
 
-        public Task Delete(int id)
+        public Task Delete(string id)
         {
-            return _productRepository.DeleteAsync(id);
+            return _countryRepository.DeleteAsync(id);
         }
 
-      
+
         public Task<CountryDto> FindByNameAsync(string name)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<CountryDto> GetAsync(int id)
+        public async Task<CountryDto> GetAsync(string id)
         {
-            Country result = await _productRepository.GetAsync(id);
+            Country result = await _countryRepository.GetAsync(id);
             return ObjectMapper.Map<Country, CountryDto>(result);
         }
 
-      
+
 
         public async Task<ListResultDto<CountryDto>> GetListAsync()
         {
-            List<Country> items = await _productRepository.GetListAsync();
+            List<Country> items = await _countryRepository.GetListAsync();
 
             return new ListResultDto<CountryDto>(
                 ObjectMapper.Map<List<Country>, List<CountryDto>>(items)
@@ -60,7 +60,7 @@ namespace Abp.VNext.Hello
 
         public async Task<CountryDto> Update(int id, CountryDto input)
         {
-            Country result = await _productRepository.UpdateAsync(new Country() { });
+            Country result = await _countryRepository.UpdateAsync(new Country() { });
 
             return ObjectMapper.Map<Country, CountryDto>(result);
         }

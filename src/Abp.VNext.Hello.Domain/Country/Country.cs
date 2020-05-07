@@ -1,12 +1,15 @@
 ﻿using NetTopologySuite.Geometries;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 
 namespace Abp.VNext.Hello
 {
-    public partial class Country : Entity<int>
+
+    /// <summary>
+    /// https://docs.abp.io/zh-Hans/abp/latest/Entities
+    /// </summary>
+    public partial class Country : Entity<string>
     {
         public Country()
         {

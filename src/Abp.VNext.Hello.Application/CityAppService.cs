@@ -24,14 +24,16 @@ namespace Abp.VNext.Hello
             throw new System.NotImplementedException();
         }
 
+        [Authorize(HelloPermissions.City.Delete)]
         public Task DeleteAsync(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<CityDto> GetAsync(int id)
+        public async Task<CityDto> GetAsync(int id)
         {
-            throw new System.NotImplementedException();
+            City item = await _cityRepository.GetAsync(id);
+            return ObjectMapper.Map<City, CityDto>(item);
         }
 
         public async Task<PagedResultDto<CityDto>> GetListAsync(PagedAndSortedResultRequestDto input)
@@ -48,12 +50,14 @@ namespace Abp.VNext.Hello
                 );
         }
 
+        [Authorize(HelloPermissions.City.Search)]
         public async Task<IList<CityDto>> Search(string keyword)
         {
             List<City> items = await _cityRepository.SearchAsync(keyword).ToListAsync();
             return ObjectMapper.Map<IList<City>, IList<CityDto>>(items);
         }
 
+        [Authorize(HelloPermissions.City.Update)]
         public Task<CityDto> UpdateAsync(int id, CityDto input)
         {
             throw new System.NotImplementedException();

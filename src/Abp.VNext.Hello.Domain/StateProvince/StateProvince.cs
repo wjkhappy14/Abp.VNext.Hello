@@ -1,7 +1,6 @@
 ﻿using NetTopologySuite.Geometries;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Volo.Abp.Domain.Entities;
 
 namespace Abp.VNext.Hello

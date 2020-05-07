@@ -1,5 +1,4 @@
 ﻿using NetTopologySuite.Geometries;
-using System;
 using System.Text.Json.Serialization;
 using Volo.Abp.Domain.Entities;
 
