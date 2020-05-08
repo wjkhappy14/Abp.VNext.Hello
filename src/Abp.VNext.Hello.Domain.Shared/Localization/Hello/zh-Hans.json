@@ -1,9 +1,9 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "Menu:Home": "Hello ABP",
+    "Menu:Home": "用爱发电",
     "Welcome": "欢迎",
-    "LongWelcomeMessage": "欢迎来到该应用程序. 这是一个基于ABP框架的启动项目. 有关更多信息, 请访问 abp.io.",
+    "LongWelcomeMessage": "欢迎来到【用爱发电科技公司】. 这是一个能用爱发电的产品, 请访问 http://love.abp.io.",
 
     "Hello": "行政区域管理",
     "Hello:City": "城市",

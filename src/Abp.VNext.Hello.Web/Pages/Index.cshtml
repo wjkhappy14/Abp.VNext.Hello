@@ -12,16 +12,37 @@
     </abp-script-bundle>
 }
 <div class="jumbotron text-center">
-    <h1>@L["Welcome"]</h1>
+    <h1>@L["Welcome"] @this.HttpContext.Connection.RemoteIpAddress.ToString()</h1>
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <p>@L["LongWelcomeMessage"]</p>
-            <hr class="my-4"/>
+            <h2>@L["LongWelcomeMessage"]</h2>
+            <hr class="my-4" />
         </div>
     </div>
-    <a href="https://abp.io?ref=tmpl" target="_blank" class="btn btn-primary px-4">abp.io</a>
+    <a href="https://github.com/wjkhappy14/Abp.VNext.Hello" target="_blank" class="btn btn-primary px-4">abp.io</a>
     @if (!CurrentUser.IsAuthenticated)
     {
         <a abp-button="Primary" href="/Account/Login" class="px-4"><i class="fa fa-sign-in"></i> @L["Login"]</a>
     }
 </div>
+<div>
+    <span>Environment Variables</span>
+    <ul>
+        @foreach (System.Collections.DictionaryEntry item in Environment.GetEnvironmentVariables())
+        {
+            <li><span>@item.Key</span>:<b>@item.Value</b></li>
+        }
+    </ul>
+</div>
+
+
+<div>
+    <span> Request Headers</span>
+    <ul>
+        @foreach (var item in Request.Headers)
+        {
+            <li><span>@item.Key</span>:<b>@item.Value</b></li>
+        }
+    </ul>
+</div>
+<div><h3>@DateTime.Now.ToString()</h3><b>CurrentCulture:@System.Threading.Thread.CurrentThread.CurrentCulture.Name</b></div>
