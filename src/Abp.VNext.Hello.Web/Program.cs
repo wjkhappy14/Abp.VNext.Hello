@@ -10,6 +10,7 @@ namespace Abp.VNext.Hello.Web
 {
     public class Program
     {
+        static string url = "http://0.0.0.0:8080/";
         public static async Task<int> Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -27,7 +28,7 @@ namespace Abp.VNext.Hello.Web
             try
             {
                 Log.Information("Starting web host.");
-                Console.WriteLine($"Http Host Running on Port:5000 {Environment.NewLine}TCP(Netty) Running on Port:666");
+                Console.WriteLine($"Http Host Running on {url} {Environment.NewLine}TCP(Netty) Running on Port:666");
                 await CreateHostBuilder(args).Build().RunAsync();
                 await XServerBootstrap.RunServerAsync(666);
                 return 0;
@@ -45,9 +46,12 @@ namespace Abp.VNext.Hello.Web
 
         internal static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(webHostBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webHostBuilder.PreferHostingUrls(true);
+                    webHostBuilder.UseStaticWebAssets();
+                    webHostBuilder.UseUrls(url);
+                    webHostBuilder.UseStartup<Startup>();
                 })
                 .UseAutofac()
                 .UseSerilog();

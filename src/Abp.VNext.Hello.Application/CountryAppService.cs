@@ -8,7 +8,7 @@ using Volo.Abp.Uow;
 namespace Abp.VNext.Hello
 {
 
-    [UnitOfWork]
+    //[UnitOfWork]
     public class CountryAppService : ApplicationService, ICountryService
     {
         ICountryRepository _countryRepository;

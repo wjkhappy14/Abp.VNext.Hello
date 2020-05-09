@@ -30,6 +30,7 @@ using Volo.Abp.VirtualFileSystem;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using Volo.Abp.Timing;
+using Serilog;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -191,6 +192,8 @@ namespace Abp.VNext.Hello.Web
             IWebHostEnvironment env = context.GetEnvironment();
             //https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-5.0
             app.UseCorrelationId();
+
+            app.UseSerilogRequestLogging();
 
             if (env.IsDevelopment())
             {

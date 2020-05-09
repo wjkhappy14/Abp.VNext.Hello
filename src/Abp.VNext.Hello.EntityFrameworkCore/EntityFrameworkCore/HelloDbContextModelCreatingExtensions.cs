@@ -22,7 +22,6 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
             {
                 b.ToTable(options.TablePrefix + "Cities", options.Schema);
                 b.HasOne<StateProvince>().WithMany().HasForeignKey(ur => ur.StateProvinceId);
-                //Indexes
                 b.HasIndex(q => q.Id);
             });
 

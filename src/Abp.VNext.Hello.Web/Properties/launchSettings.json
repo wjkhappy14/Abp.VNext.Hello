@@ -1,27 +1,27 @@
 {
   "iisSettings": {
-    "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44387/",
-      "sslPort": 44387
-    }
+      "applicationUrl": "https://0.0.0.0:8080/",
+      "sslPort": 9527
+    },
+    "windowsAuthentication": false
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "Abp.VNext.Hello.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:44387/"
+      "applicationUrl": "http://0.0.0.0:8080/"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "launchBrowser": true
     }
   }
 }
