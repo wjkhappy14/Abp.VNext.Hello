@@ -1,6 +1,4 @@
-﻿using NetTopologySuite.Geometries;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Volo.Abp.Domain.Entities;
 
 namespace Abp.VNext.Hello
@@ -16,11 +14,8 @@ namespace Abp.VNext.Hello
 
         public virtual string ChineseName { get; set; }
 
-        public virtual int CountryId { get; set; }
+        public virtual string CountryId { get; set; }
         public virtual ICollection<City> Cities { get; set; }
-
-        [JsonIgnore()]
-        public Geometry Border { get; set; }
     }
 
 }

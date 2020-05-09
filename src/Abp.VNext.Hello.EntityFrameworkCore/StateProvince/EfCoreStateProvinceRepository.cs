@@ -22,7 +22,7 @@ namespace Abp.VNext.Hello
             _dapperRepository = new DapperRepository<HelloDbContext>(dbContextProvider);
         }
 
-        public IQueryable<StateProvince> FindByCountryIdAsync(int countryId)
+        public IQueryable<StateProvince> FindByCountryIdAsync(string countryId)
         {
             return DbSet.Where(x => x.CountryId == countryId);
         }

@@ -26,8 +26,6 @@ namespace Abp.VNext.Hello
         public virtual string Region { get; set; }
         public virtual string Subregion { get; set; }
 
-        [JsonIgnore()]
-        public Geometry Border { get; set; }
         public virtual ICollection<StateProvince> StateProvinces { get; protected set; } = new HashSet<StateProvince>();
     }
 }

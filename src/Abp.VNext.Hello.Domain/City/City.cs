@@ -14,10 +14,8 @@ namespace Abp.VNext.Hello
         public virtual int StateProvinceId { get; set; }
 
         //https://docs.microsoft.com/zh-cn/sql/t-sql/spatial-geography/spatial-types-geography?view=sql-server-ver15
-        [JsonIgnore]
-        public Geometry Location { get; set; }
-
-
+        // [JsonIgnore]
+        public string Location { get; set; }
     }
 
 }
