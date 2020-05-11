@@ -1,5 +1,6 @@
 ﻿using Abp.VNext.Hello.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories.Dapper;
@@ -27,9 +28,49 @@ namespace Abp.VNext.Hello
             return DbSet.Where(x => x.CountryId == countryId);
         }
 
-        public  Task<StateProvince> FindByNameAsync(string name)
+        public Task<StateProvince> FindByNameAsync(string name)
         {
-            return  DbSet.FirstOrDefaultAsync(p => p.StateProvinceName == name);
+            return DbSet.FirstOrDefaultAsync(p => p.StateProvinceName == name);
+        }
+
+
+        private Dictionary<string, List<StateProvince>> W()
+        {
+            return base.DbContext.StateProvinces
+                 .GroupBy(c => c.CountryId)
+                 .Where(x => x.Count() > 0)
+              .Select(g => new
+              {
+                  CountryId = g.Key,
+                  Items = g.ToList()
+              }).OrderByDescending(x => x.Items.Count)
+                .ToDictionary(g => g.CountryId, g => g.Items);
+        }
+        private void c()
+        {
+            var groupJoin = 
+                DbContext.StateProvinces.GroupJoin(
+                DbContext.Countries, stateProvince => stateProvince.CountryId,
+                country => country.Id,
+                (c, p) => new { c.CountryId, Provinces = p });
+
+        }
+
+        void GroupBy(string provinceName)
+        {
+            var queryable = base.DbContext.StateProvinces
+                .Where(x => x.StateProvinceName == provinceName)
+                .OrderByDescending(x => x.ChineseName)
+                .GroupBy(x => new { x.CountryId, x.StateProvinceName })
+                .Select(g => new
+                {
+                    SumOfCountryPopulation = g.Sum(x => x.Population),
+                    CityCount = g.Sum(x => x.Cities.Count),
+                    StateProvinces = g.ToList(),
+                    g.Key.CountryId,
+                    g.Key.StateProvinceName
+                });
+            var result = queryable;
         }
     }
 }

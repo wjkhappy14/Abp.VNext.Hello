@@ -14,6 +14,8 @@ namespace Abp.VNext.Hello
 
         public virtual string ChineseName { get; set; }
 
+        public long Population { get; set; }
+
         public virtual string CountryId { get; set; }
         public virtual ICollection<City> Cities { get; set; }
     }
