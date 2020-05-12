@@ -14,10 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <ProjectReference Include="..\Abp.VNext.Hello.Application.Tests\Abp.VNext.Hello.Application.Tests.csproj" />
     <ProjectReference Include="..\..\src\Abp.VNext.Hello.Web\Abp.VNext.Hello.Web.csproj" />
-    <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="2.6.0" />
+    <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>
