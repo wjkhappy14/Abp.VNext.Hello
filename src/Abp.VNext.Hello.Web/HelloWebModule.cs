@@ -31,12 +31,15 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using Volo.Abp.Timing;
 using Serilog;
+using EasyAbp.PrivateMessaging.Web;
+using EasyAbp.PrivateMessaging;
 
 namespace Abp.VNext.Hello.Web
 {
     [DependsOn(
         typeof(HelloHttpApiModule),
         typeof(HelloApplicationModule),
+        typeof(PrivateMessagingWebModule),
         typeof(HelloEntityFrameworkCoreDbMigrationsModule),
         typeof(AbpAutofacModule),
         typeof(AbpIdentityWebModule),
@@ -162,6 +165,7 @@ namespace Abp.VNext.Hello.Web
             Configure<AbpAspNetCoreMvcOptions>(options =>
             {
                 options.MinifyGeneratedScript = true;
+                options.ConventionalControllers.Create(typeof(PrivateMessagingApplicationModule).Assembly);
                 options.ConventionalControllers.Create(typeof(HelloApplicationModule).Assembly,
                   opts =>
                   {

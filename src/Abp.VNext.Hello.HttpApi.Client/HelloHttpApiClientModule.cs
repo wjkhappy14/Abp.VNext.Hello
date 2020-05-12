@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EasyAbp.PrivateMessaging;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -10,6 +11,7 @@ namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloApplicationContractsModule),
+        typeof(PrivateMessagingHttpApiClientModule),
         typeof(AbpAccountHttpApiClientModule),
         typeof(AbpIdentityHttpApiClientModule),
         typeof(AbpPermissionManagementHttpApiClientModule),

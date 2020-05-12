@@ -13,11 +13,13 @@ using Volo.Abp.TenantManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using EasyAbp.PrivateMessaging;
 
 namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloDomainSharedModule),
+        typeof(PrivateMessagingDomainModule),
         typeof(AbpAuditLoggingDomainModule),
         typeof(AbpBackgroundJobsDomainModule),
         typeof(AbpFeatureManagementDomainModule),

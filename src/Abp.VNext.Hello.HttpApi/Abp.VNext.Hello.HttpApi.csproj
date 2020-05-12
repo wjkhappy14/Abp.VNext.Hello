@@ -17,6 +17,7 @@
     <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi" Version="2.6.0" />
     <PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="2.6.0" />
     <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi" Version="2.6.0" />
+	<PackageReference Include="EasyAbp.PrivateMessaging.HttpApi" Version="0.2.1" />
   </ItemGroup>
 
 </Project>

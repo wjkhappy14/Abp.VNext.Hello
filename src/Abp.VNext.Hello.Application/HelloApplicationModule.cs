@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyAbp.PrivateMessaging;
+using System;
 using System.Data;
 using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
@@ -17,6 +18,7 @@ namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloDomainModule),
+        typeof(PrivateMessagingApplicationModule),
         typeof(AbpAccountApplicationModule),
         typeof(HelloApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),

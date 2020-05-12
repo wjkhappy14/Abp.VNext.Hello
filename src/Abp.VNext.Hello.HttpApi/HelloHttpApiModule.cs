@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Account;
+﻿using EasyAbp.PrivateMessaging;
+using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
@@ -9,6 +10,7 @@ namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloApplicationContractsModule),
+        typeof(PrivateMessagingHttpApiModule),
         typeof(AbpAccountHttpApiModule),
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),
