@@ -33,6 +33,8 @@ using Volo.Abp.Timing;
 using Serilog;
 using EasyAbp.PrivateMessaging.Web;
 using EasyAbp.PrivateMessaging;
+using System.Linq;
+using Microsoft.AspNetCore.Cors;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -77,6 +79,7 @@ namespace Abp.VNext.Hello.Web
             ConfigureAutoMapper();
             ConfigureVirtualFileSystem(hostingEnvironment);
             ConfigureLocalizationServices();
+            ConfigureCors(context, configuration);
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
@@ -152,6 +155,27 @@ namespace Abp.VNext.Hello.Web
             });
         }
 
+        private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
+        {
+            context.Services.AddCors(options =>
+            {
+                options.AddPolicy("Default", builder =>
+                {
+                    builder
+                        .WithOrigins(
+                            configuration["App:CorsOrigins"]
+                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                .Select(o => o.RemovePostFix("/"))
+                                .ToArray()
+                        )
+                        .WithAbpExposedHeaders()
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+        }
         private void ConfigureNavigationServices()
         {
             Configure<AbpNavigationOptions>(options =>
@@ -220,17 +244,7 @@ namespace Abp.VNext.Hello.Web
             app.UseVirtualFiles();
             app.UseRouting();
 
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins("http://hello.com",
-                                    "http://www.123.com",
-                                    "http://119.23.207.114",
-                                    "http://119.23.207.115",
-                                    "http://localhost")
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod()
-                                    .AllowCredentials();
-            });
+            app.UseCors("Default");
             app.UseAuthentication();
             app.UseJwtTokenMiddleware();
 
@@ -239,6 +253,7 @@ namespace Abp.VNext.Hello.Web
                 app.UseMultiTenancy();
             }
             app.UseIdentityServer();
+
             app.UseAuthorization();
 
 
