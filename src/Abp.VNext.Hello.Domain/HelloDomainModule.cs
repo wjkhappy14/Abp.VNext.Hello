@@ -14,12 +14,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using EasyAbp.PrivateMessaging;
+using Volo.Blogging;
 
 namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloDomainSharedModule),
         typeof(PrivateMessagingDomainModule),
+        typeof(BloggingDomainModule),
         typeof(AbpAuditLoggingDomainModule),
         typeof(AbpBackgroundJobsDomainModule),
         typeof(AbpFeatureManagementDomainModule),

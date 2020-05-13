@@ -6,12 +6,14 @@ using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Blogging;
 
 namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloApplicationContractsModule),
         typeof(PrivateMessagingHttpApiClientModule),
+        typeof(BloggingHttpApiClientModule),
         typeof(AbpAccountHttpApiClientModule),
         typeof(AbpIdentityHttpApiClientModule),
         typeof(AbpPermissionManagementHttpApiClientModule),

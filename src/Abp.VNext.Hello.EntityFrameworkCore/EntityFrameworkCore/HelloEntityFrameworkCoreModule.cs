@@ -13,6 +13,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Blogging.EntityFrameworkCore;
 
 namespace Abp.VNext.Hello.EntityFrameworkCore
 {
@@ -20,6 +21,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
         typeof(HelloDomainModule),
         typeof(AbpDapperModule),
         typeof(PrivateMessagingEntityFrameworkCoreModule),
+        typeof(BloggingEntityFrameworkCoreModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),

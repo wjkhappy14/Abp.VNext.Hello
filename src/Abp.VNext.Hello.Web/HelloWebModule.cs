@@ -35,6 +35,7 @@ using EasyAbp.PrivateMessaging.Web;
 using EasyAbp.PrivateMessaging;
 using System.Linq;
 using Microsoft.AspNetCore.Cors;
+using Volo.Blogging;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -42,6 +43,7 @@ namespace Abp.VNext.Hello.Web
         typeof(HelloHttpApiModule),
         typeof(HelloApplicationModule),
         typeof(PrivateMessagingWebModule),
+        typeof(BloggingWebModule),
         typeof(HelloEntityFrameworkCoreDbMigrationsModule),
         typeof(AbpAutofacModule),
         typeof(AbpIdentityWebModule),

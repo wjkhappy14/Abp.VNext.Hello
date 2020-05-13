@@ -13,12 +13,14 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.Timing;
 using Volo.Abp.Uow;
+using Volo.Blogging;
 
 namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloDomainModule),
         typeof(PrivateMessagingApplicationModule),
+        typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
         typeof(HelloApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),
