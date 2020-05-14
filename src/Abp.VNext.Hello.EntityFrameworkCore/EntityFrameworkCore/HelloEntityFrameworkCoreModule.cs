@@ -6,6 +6,7 @@ using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Dapper;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
+using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpEntityFrameworkCoreSqliteModule),
+        typeof(AbpEntityFrameworkCoreSqlServerModule),
         typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpTenantManagementEntityFrameworkCoreModule),
@@ -43,9 +45,54 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlite(x => { 
-                
+                options.UseSqlite<HelloDbContext>(x =>
+                {
+
                 });
+            });
+
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlite<SettingManagementDbContext>(x =>
+                {
+
+                });
+            });
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlite<PrivateMessagingDbContext>(x =>
+                {
+
+                });
+            });
+
+            Configure<AbpDbContextOptions>((options) =>
+            {
+                options.UseSqlite<IdentityDbContext>(x =>
+                {
+
+                });
+            });
+
+            Configure<AbpDbContextOptions>((options) =>
+            {
+                options.UseSqlite<PermissionManagementDbContext>(x =>
+                {
+
+                });
+            });
+
+            Configure<AbpDbContextOptions>((options) =>
+            {
+                options.UseSqlite<IdentityServerDbContext>(x =>
+                {
+
+                });
+            });
+
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlServer<BloggingDbContext>();
             });
         }
     }
