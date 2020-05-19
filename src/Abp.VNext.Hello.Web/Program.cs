@@ -12,7 +12,7 @@ namespace Abp.VNext.Hello.Web
 {
     public class Program
     {
-        static string url = "http://0.0.0.0:8080/";
+        static string url = "http://0.0.0.0/";
         public static async Task<int> Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
