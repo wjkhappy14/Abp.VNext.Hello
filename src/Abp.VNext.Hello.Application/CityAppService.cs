@@ -10,7 +10,7 @@ namespace Abp.VNext.Hello
 {
 
     // [Authorize]
-    public class CityAppService : ApplicationService, ICityAppService
+    public class CityAppService : HelloAppService, ICityAppService
     {
         ICityRepository _cityRepository;
 
