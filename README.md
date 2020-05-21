@@ -1,15 +1,15 @@
-#  ABP Application modules
-##  account/
-##  audit-logging/
-##  background-jobs/
-##  blogging/
-##  feature-management/
-##  identity/
-##  identityserver/
-##  permission-management/
-##  setting-management/
-##  tenant-management/
-##  users/
+# ABP Application modules
+## account/
+## audit-logging/
+## background-jobs/
+## blogging/
+## feature-management/
+## identity/
+## identityserver/
+## permission-management/
+## setting-management/
+## tenant-management/
+## users/
 
 # Abp.VNext.Hello 数据库使用的是SQLite 拉取代码，然后就可以跑起来了哦！
 Abp.VNext.Hello
