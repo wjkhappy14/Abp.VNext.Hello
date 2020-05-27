@@ -17,7 +17,7 @@
     <PackageReference Include="Volo.Abp.FeatureManagement.Domain.Shared" Version="2.8.0" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Shared" Version="2.8.0" />
     <PackageReference Include="Volo.Abp.SettingManagement.Domain.Shared" Version="2.8.0" />
-	<PackageReference Include="EasyAbp.PrivateMessaging.Domain.Shared" Version="0.2.2" />
+	<PackageReference Include="EasyAbp.PrivateMessaging.Domain.Shared" Version="0.2.4" />
   </ItemGroup>
 
   <ItemGroup>
