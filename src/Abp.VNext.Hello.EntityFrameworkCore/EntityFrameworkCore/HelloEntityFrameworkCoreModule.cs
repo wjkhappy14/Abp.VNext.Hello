@@ -51,6 +51,15 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
                 });
             });
 
+
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlite<TenantManagementDbContext>(x =>
+                {
+
+                });
+            });
+
             Configure<AbpDbContextOptions>(options =>
             {
                 options.UseSqlite<SettingManagementDbContext>(x =>

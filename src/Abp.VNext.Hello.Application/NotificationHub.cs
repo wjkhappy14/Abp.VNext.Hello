@@ -2,6 +2,8 @@
 using Abp.VNext.Hello.XNetty.Server;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -9,23 +11,28 @@ using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Volo.Abp.AspNetCore.SignalR;
+using Volo.Abp.Identity;
 
 namespace Abp.VNext.Hello
 {
 
-    public class NotificationHub : DynamicHub
+    [Authorize]
+    public class NotificationHub : AbpHub
     {
         private static List<HubCallerContext> Connections { get; } = new List<HubCallerContext>();//HubConnectionContext
-
-        private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
+        private readonly IIdentityUserRepository _identityUserRepository;
+        private readonly ILookupNormalizer _lookupNormalizer;
+        private static ConnectionMultiplexer Redis => RedisHelper.RedisMultiplexer();
         ILogger<string> _logger;
 
         private IChannelGroup ChannelGroup => ServerHandler.Group;
 
-        public NotificationHub(ILogger<string> logger)
+        public NotificationHub(IIdentityUserRepository identityUserRepository, ILookupNormalizer lookupNormalizer, ILogger<string> logger)
         {
             _logger = logger;
-
+            _lookupNormalizer = lookupNormalizer;
+            _identityUserRepository = identityUserRepository;
             Subscribe("new_order");
             ServerHandler.Handler.OnChannelActive += Handler_OnChannelActive;
             ServerHandler.Handler.OnChannelRead0 += (e, s) =>
@@ -36,7 +43,7 @@ namespace Abp.VNext.Hello
                     Cmd = "push",
                     Message = s
                 };
-                Clients.All.Send(reply);
+                Clients.All.SendAsync(reply.ToString());
             };
         }
         private void Subscribe(string channel)
@@ -51,7 +58,7 @@ namespace Abp.VNext.Hello
                 {
                 };
                 reply.Result = new { };
-                Clients.All.Send(reply);
+                Clients.All.SendAsync("", reply);
             });
         }
         private void Handler_OnChannelActive(object sender, IChannelHandlerContext e)
@@ -61,7 +68,7 @@ namespace Abp.VNext.Hello
                 Cmd = "active",
                 Scope = "tcp",
             };
-            Clients.All.Send(reply);
+            Clients.All.SendAsync("", reply);
         }
 
         public override Task OnConnectedAsync()
@@ -70,15 +77,16 @@ namespace Abp.VNext.Hello
             string name = names.Count >= 1 ? names[0] : "unknown";
             Connections.Add(this.Context);
 
+            //var targetUser =  _identityUserRepository.FindByNormalizedUserNameAsync(_lookupNormalizer.NormalizeName(name));
 
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Message = $"{name} join the chat",
+                Message = "",// $"{CurrentUser.UserName}",
                 Scope = "hub",
                 Cmd = "connected"
             };
-            return Clients.All.Send(reply);
+            return Clients.All.SendAsync("", reply);
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
@@ -90,7 +98,7 @@ namespace Abp.VNext.Hello
                 Message = $"{name} left the chat",
                 Cmd = "disconnected"
             };
-            return Clients.All.Send(reply);
+            return Clients.All.SendAsync("", reply);
         }
 
         public Task Send(string name, string message)
@@ -101,7 +109,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "send"
             };
-            return Clients.All.Send(reply);
+            return Clients.All.SendAsync("", reply);
         }
 
         public Task SendToOthers(string name, string message)
@@ -113,7 +121,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "SendToOthers"
             };
-            return Clients.Others.Send(reply);
+            return Clients.Others.SendAsync("", reply);
         }
 
         public Task SendToGroup(string groupName, string name, string message)
@@ -125,7 +133,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "SendToGroup"
             };
-            return Clients.Group(groupName).Send(reply);
+            return Clients.Group(groupName).SendAsync("toGroup", reply);
         }
 
         public Task SendToOthersInGroup(string groupName, string name, string message)
@@ -137,7 +145,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "SendToOthersInGroup"
             };
-            return Clients.OthersInGroup(groupName).Send(reply);
+            return Clients.OthersInGroup(groupName).SendAsync("toOthers", reply);
         }
 
         public async Task JoinGroup(string groupName, string name)
@@ -151,7 +159,7 @@ namespace Abp.VNext.Hello
             };
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-            await Clients.Group(groupName).Send(reply);
+            await Clients.Group(groupName).SendAsync("join", reply);
         }
 
         public async Task LeaveGroup(string groupName, string name)
@@ -163,7 +171,7 @@ namespace Abp.VNext.Hello
                 Cmd = "LeaveGroup"
             };
 
-            await Clients.Group(groupName).Send(reply);
+            await Clients.Group(groupName).SendAsync("leave", reply);
 
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
@@ -183,7 +191,7 @@ namespace Abp.VNext.Hello
                 Message = message,
                 Cmd = "handler"
             };
-            return Clients.Caller.Send(reply);
+            return Clients.Caller.SendAsync("handler", reply);
         }
 
         public Task Login(RequestCommand request)
@@ -195,7 +203,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "login"
             };
-            return Clients.Caller.Send(reply);
+            return Clients.Caller.SendAsync("login", reply);
         }
 
         public Task Token(string request)
@@ -207,7 +215,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "token"
             };
-            return Clients.Caller.Send(reply);
+            return Clients.Caller.SendAsync("token", reply);
         }
 
 
@@ -220,7 +228,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "SendToConnection"
             };
-            return Clients.Client(connectionId).Send(reply);
+            return Clients.Client(connectionId).SendAsync("connection", reply);
         }
 
     }

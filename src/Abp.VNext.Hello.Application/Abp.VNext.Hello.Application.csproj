@@ -14,7 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Account.Application" Version="3.0.3" />
-	<PackageReference Include="Volo.Blogging.Application" Version="3.0.3" />
+    <PackageReference Include="Volo.Abp.AspNetCore.SignalR" Version="3.0.3" />
+    <PackageReference Include="Volo.Blogging.Application" Version="3.0.3" />
     <PackageReference Include="Volo.Abp.EventBus.RabbitMQ" Version="3.0.3" />
     <PackageReference Include="Volo.Abp.Identity.Application" Version="3.0.3" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="3.0.3" />
@@ -26,7 +27,7 @@
     <PackageReference Include="DotNetty.Common" Version="0.6.0" />
     <PackageReference Include="DotNetty.Handlers" Version="0.6.0" />
     <PackageReference Include="DotNetty.Codecs" Version="0.6.0" />
-	<PackageReference Include="EasyAbp.PrivateMessaging.Application" Version="0.3.0" />
+    <PackageReference Include="EasyAbp.PrivateMessaging.Application" Version="0.3.0" />
   </ItemGroup>
 
 </Project>

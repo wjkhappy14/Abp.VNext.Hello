@@ -37,7 +37,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Cors;
 using Volo.Blogging;
 using Volo.Abp.BackgroundJobs;
-using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.AspNetCore.SignalR;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -53,6 +53,7 @@ namespace Abp.VNext.Hello.Web
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(AbpTenantManagementWebModule),
+        typeof(AbpAspNetCoreSignalRModule),
         typeof(AbpAspNetCoreSerilogModule)
         )]
     public class HelloWebModule : AbpModule
@@ -103,10 +104,6 @@ namespace Abp.VNext.Hello.Web
                 options.IsJobExecutionEnabled = false;
             });
 
-            Configure<AbpDbContextOptions>(options =>
-            {
-                options.UseSqlite();
-            });
         }
 
         private void ConfigureUrls(IConfiguration configuration)
@@ -276,17 +273,9 @@ namespace Abp.VNext.Hello.Web
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Hello API");
             });
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHub<NotificationHub>("/Notification", (options) =>
-                {
-
-                });
-                endpoints.MapConnectionHandler<MessagesConnectionHandler>("/Message");
-            });
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
-            app.UseMvcWithDefaultRouteAndArea();
+            app.UseConfiguredEndpoints();
         }
     }
 }
