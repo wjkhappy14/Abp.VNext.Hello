@@ -36,6 +36,8 @@ using EasyAbp.PrivateMessaging;
 using System.Linq;
 using Microsoft.AspNetCore.Cors;
 using Volo.Blogging;
+using Volo.Abp.BackgroundJobs;
+using Volo.Abp.EntityFrameworkCore;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -74,7 +76,7 @@ namespace Abp.VNext.Hello.Web
         {
             context.Services.AddObjectAccessor<IHubContext<NotificationHub>>();
             IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
-            var configuration = context.Services.GetConfiguration();
+            IConfiguration configuration = context.Services.GetConfiguration();
 
             ConfigureUrls(configuration);
             ConfigureAuthentication(context, configuration);
@@ -95,6 +97,15 @@ namespace Abp.VNext.Hello.Web
             Configure<AbpClockOptions>(options =>
             {
                 options.Kind = DateTimeKind.Local;
+            });
+            Configure<AbpBackgroundJobOptions>(options =>
+            {
+                options.IsJobExecutionEnabled = false;
+            });
+
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlite();
             });
         }
 
@@ -153,7 +164,7 @@ namespace Abp.VNext.Hello.Web
                     );
                 options.Languages.Add(new LanguageInfo("en", "en", "English"));
                 options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
-           
+
             });
         }
 
