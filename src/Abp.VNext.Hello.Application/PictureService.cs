@@ -18,7 +18,7 @@ namespace Abp.VNext.Hello
 
         public async Task<ListResultDto<PictureDto>> SearchAsync(DateTime begin, DateTime end, int payStatus)
         {
-            List<Picture> items = await _repository.SearchAsync(0, begin, end);
+            List<Picture> items = await _repository.SearchAsync(CurrentTenant.Id.Value, begin, end);
 
             return new ListResultDto<PictureDto>(
                 ObjectMapper.Map<List<Picture>, List<PictureDto>>(items)

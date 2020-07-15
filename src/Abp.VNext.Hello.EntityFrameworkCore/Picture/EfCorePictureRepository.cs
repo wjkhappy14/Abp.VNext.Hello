@@ -19,9 +19,9 @@ namespace Volo.Blogging.Payment
 
         }
 
-        public async Task<List<Picture>> FindByMerchantIdAsync(int merchantId)
+        public async Task<List<Picture>> FindByMerchantIdAsync(Guid? tenantId)
         {
-            return await DbSet.Where(w => w.MerchantId == merchantId).ToListAsync();
+            return await DbSet.Where(w => w.TenantId == tenantId).ToListAsync();
         }
 
         public async Task<Picture> FindByNoAsync(string serialNo)
@@ -29,9 +29,11 @@ namespace Volo.Blogging.Payment
             return await DbSet.FirstOrDefaultAsync(p => p.SerialNo == serialNo);
         }
 
-        public async Task<List<Picture>> SearchAsync(int? merchantId, DateTime begin, DateTime end)
+        public async Task<List<Picture>> SearchAsync(Guid? tenantId, DateTime begin, DateTime end)
         {
-            return merchantId.HasValue ? await DbSet.Where(w => w.MerchantId == merchantId.Value && w.ReqTime > begin && w.ReqTime < end).ToListAsync() : await DbSet.Where((w) => w.ReqTime > begin && w.ReqTime < end).ToListAsync();
+            return tenantId.HasValue ?
+                await DbSet.Where(w => w.TenantId == tenantId.Value && w.ReqTime > begin && w.ReqTime < end).ToListAsync() :
+                await DbSet.Where((w) => w.ReqTime > begin && w.ReqTime < end).ToListAsync();
         }
     }
 }

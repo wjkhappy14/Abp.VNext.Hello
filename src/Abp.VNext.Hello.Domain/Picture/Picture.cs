@@ -8,7 +8,7 @@ namespace Abp.VNext.Hello
         public string Account
         {
             get;
-            set; 
+            set;
         }
 
         public string Address
@@ -48,7 +48,7 @@ namespace Abp.VNext.Hello
         }
 
 
-        public int MerchantId { get; set; }
+        public Guid TenantId { get; set; }
 
 
         public string PayeeName { get; set; }
