@@ -51,6 +51,12 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
                 });
             });
 
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlite<AbpAuditLoggingDbContext>(x =>
+                {
+                });
+            });
 
             Configure<AbpDbContextOptions>(options =>
             {

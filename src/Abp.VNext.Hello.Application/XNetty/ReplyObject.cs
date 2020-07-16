@@ -41,7 +41,7 @@ namespace Abp.VNext.Hello.XNetty
         /// </summary>
         public string Message { get; set; }// "响应成功"
 
-        public long ServerTime { get; set; }
+        public long ServerTime => DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
         public long ClientTime { get; set; }
         public long GetTimeElapsed() => ClientTime - ServerTime;

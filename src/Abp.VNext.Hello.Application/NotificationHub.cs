@@ -17,14 +17,15 @@ using Volo.Abp.Identity;
 namespace Abp.VNext.Hello
 {
 
-    [Authorize]
+    // [Authorize]
     public class NotificationHub : AbpHub
     {
         private static List<HubCallerContext> Connections { get; } = new List<HubCallerContext>();//HubConnectionContext
         private readonly IIdentityUserRepository _identityUserRepository;
         private readonly ILookupNormalizer _lookupNormalizer;
         private static ConnectionMultiplexer Redis => RedisHelper.RedisMultiplexer();
-        ILogger<string> _logger;
+
+        readonly ILogger<string> _logger;
 
         private IChannelGroup ChannelGroup => ServerHandler.Group;
 
@@ -33,7 +34,7 @@ namespace Abp.VNext.Hello
             _logger = logger;
             _lookupNormalizer = lookupNormalizer;
             _identityUserRepository = identityUserRepository;
-            Subscribe("new_order");
+            // Subscribe("new_order");
             ServerHandler.Handler.OnChannelActive += Handler_OnChannelActive;
             ServerHandler.Handler.OnChannelRead0 += (e, s) =>
             {
@@ -73,8 +74,7 @@ namespace Abp.VNext.Hello
 
         public override Task OnConnectedAsync()
         {
-            StringValues names = Context.GetHttpContext().Request.Query["name"];
-            string name = names.Count >= 1 ? names[0] : "unknown";
+            StringValues id = Context.GetHttpContext().Request.Query["id"];
             Connections.Add(this.Context);
 
             //var targetUser =  _identityUserRepository.FindByNormalizedUserNameAsync(_lookupNormalizer.NormalizeName(name));
@@ -82,23 +82,23 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Message = "",// $"{CurrentUser.UserName}",
-                Scope = "hub",
+                Message = "Hello",// $"{CurrentUser.UserName}",
+                Scope = id,
                 Cmd = "connected"
             };
-            return Clients.All.SendAsync("", reply);
+            return Clients.All.SendAsync("send", reply);
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            var name = Context.GetHttpContext().Request.Query["name"];
+            var id = Context.GetHttpContext().Request.Query["id"];
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Message = $"{name} left the chat",
+                Message = $"{id} left the chat",
                 Cmd = "disconnected"
             };
-            return Clients.All.SendAsync("", reply);
+            return Clients.All.SendAsync("disconnect", reply);
         }
 
         public Task Send(string name, string message)
@@ -109,7 +109,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "send"
             };
-            return Clients.All.SendAsync("", reply);
+            return Clients.All.SendAsync("send", reply);
         }
 
         public Task SendToOthers(string name, string message)
@@ -121,7 +121,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "SendToOthers"
             };
-            return Clients.Others.SendAsync("", reply);
+            return Clients.Others.SendAsync("sendToOthers", reply);
         }
 
         public Task SendToGroup(string groupName, string name, string message)
@@ -199,7 +199,7 @@ namespace Abp.VNext.Hello
             string connectionId = Context.ConnectionId;
             ReplyContent<object> reply = new ReplyContent<object>
             {
-                ConnectionId = Context.ConnectionId,
+                ConnectionId = connectionId,
                 Scope = "hub",
                 Cmd = "login"
             };
@@ -211,26 +211,23 @@ namespace Abp.VNext.Hello
             string connectionId = Context.ConnectionId;
             ReplyContent<object> reply = new ReplyContent<object>
             {
-                ConnectionId = Context.ConnectionId,
+                ConnectionId = connectionId,
                 Scope = "hub",
                 Cmd = "token"
             };
             return Clients.Caller.SendAsync("token", reply);
         }
 
-
-        public Task SendToConnection(string connectionId, string name, string message)
+        public Task SendTo(string connectionId, string message)
         {
-            string connectionIdFrom = Context.ConnectionId;
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
                 Scope = "hub",
-                Cmd = "SendToConnection"
+                Message = message,
+                Cmd = "sendTo"
             };
-            return Clients.Client(connectionId).SendAsync("connection", reply);
+            return Clients.Client(connectionId).SendAsync("sendTo", reply);
         }
-
     }
-
 }
