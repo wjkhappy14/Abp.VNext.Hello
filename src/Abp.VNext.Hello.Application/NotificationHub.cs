@@ -10,13 +10,13 @@ using Microsoft.Extensions.Primitives;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.Identity;
 
 namespace Abp.VNext.Hello
 {
-
     // [Authorize]
     public class NotificationHub : AbpHub
     {
@@ -228,6 +228,30 @@ namespace Abp.VNext.Hello
                 Cmd = "sendTo"
             };
             return Clients.Client(connectionId).SendAsync("sendTo", reply);
+        }
+
+        /// <summary>
+        /// 流式传输
+        /// 有些场景中，服务器返回的数据量较大，等待时间较长，客户端不得不等待服务器返回所有数据后，再进行相应的操作。这时使用流式传输，
+        /// 将服务器数据碎片化，当每个数据碎片读取完成之后，就只传输完成的部分，而不需要等待所有数据都读取完成。
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
+        public async Task<ChannelReader<int>> DelayCounterAsync(int delay)
+        {
+            Channel<int> channel = Channel.CreateUnbounded<int>();
+            await WriteItems(channel.Writer, 20, delay);
+            return channel.Reader;
+        }
+
+        private async Task<bool> WriteItems(ChannelWriter<int> writer, int count, int delay)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                await writer.WriteAsync(i);
+                await Task.Delay(delay);
+            }
+            return writer.TryComplete();
         }
     }
 }
