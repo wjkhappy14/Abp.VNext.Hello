@@ -82,11 +82,11 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Message = "Hello",// $"{CurrentUser.UserName}",
+                Message = "连接成功",// $"{CurrentUser.UserName}",
                 Scope = id,
-                Cmd = "connected"
+                Cmd = "connecte"
             };
-            return Clients.All.SendAsync("send", reply);
+            return Clients.All.SendAsync("connected", reply);
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
@@ -98,7 +98,7 @@ namespace Abp.VNext.Hello
                 Message = $"{id} left the chat",
                 Cmd = "disconnected"
             };
-            return Clients.All.SendAsync("disconnect", reply);
+            return Clients.All.SendAsync("disconnected", reply);
         }
 
         public Task Send(string name, string message)
@@ -176,22 +176,20 @@ namespace Abp.VNext.Hello
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
 
-        public Task Handler(string scope, string cmd, string message)
+        public Task Handler(RequestCommand request)
         {
-            if (ChannelGroup != null && ChannelGroup.Count > 0)
-            {
-                ChannelGroup.WriteAndFlushAsync(message, ChannelMatchers.All());
-            }
-
-            string connectionId = Context.ConnectionId;
+            //if (ChannelGroup != null && ChannelGroup.Count > 0)
+            //{
+            //    ChannelGroup.WriteAndFlushAsync(request, ChannelMatchers.All());
+            //}
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = scope,
-                Message = message,
-                Cmd = "handler"
+                Scope = request.Scope,
+                Message = request.Message,
+                Cmd = request.Cmd
             };
-            return Clients.Caller.SendAsync("handler", reply);
+            return Clients.Caller.SendAsync("receive", reply);
         }
 
         public Task Login(RequestCommand request)
@@ -203,7 +201,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "login"
             };
-            return Clients.Caller.SendAsync("login", reply);
+            return Clients.Caller.SendAsync("receive", reply);
         }
 
         public Task Token(string request)
@@ -215,7 +213,7 @@ namespace Abp.VNext.Hello
                 Scope = "hub",
                 Cmd = "token"
             };
-            return Clients.Caller.SendAsync("token", reply);
+            return Clients.Caller.SendAsync("receive", reply);
         }
 
         public Task SendTo(string connectionId, string message)

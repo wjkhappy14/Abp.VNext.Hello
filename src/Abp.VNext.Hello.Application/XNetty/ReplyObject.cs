@@ -28,6 +28,7 @@ namespace Abp.VNext.Hello.XNetty
         /// <summary>
         /// 指令ID
         /// </summary>
+        [JsonProperty("cmd")]
         public string Cmd { get; set; }// 1,
 
         /// <summary>
@@ -74,8 +75,6 @@ namespace Abp.VNext.Hello.XNetty
             //ReplyObject result = JsonConvert.DeserializeObject<ReplyObject>(json);
             // return result;
             return new ReplyContent<T>() { Cmd = "100", RequestNo = "Hello", Message = json };
-
-
         }
     }
 }
