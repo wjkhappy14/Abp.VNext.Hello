@@ -14,14 +14,16 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.Identity;
+using Volo.Abp.SettingManagement;
 
 namespace Abp.VNext.Hello
 {
-    // [Authorize]
+    [AllowAnonymous]
     public class NotificationHub : AbpHub
     {
         private static List<HubCallerContext> Connections { get; } = new List<HubCallerContext>();//HubConnectionContext
         private readonly IIdentityUserRepository _identityUserRepository;
+        private readonly ISettingManager _settingManager;
         private readonly ILookupNormalizer _lookupNormalizer;
         private static ConnectionMultiplexer Redis => RedisHelper.RedisMultiplexer();
 
@@ -29,9 +31,10 @@ namespace Abp.VNext.Hello
 
         private IChannelGroup ChannelGroup => ServerHandler.Group;
 
-        public NotificationHub(IIdentityUserRepository identityUserRepository, ILookupNormalizer lookupNormalizer, ILogger<string> logger)
+        public NotificationHub(IIdentityUserRepository identityUserRepository, ILookupNormalizer lookupNormalizer, ILogger<string> logger, ISettingManager settingManager)
         {
             _logger = logger;
+            _settingManager = settingManager;
             _lookupNormalizer = lookupNormalizer;
             _identityUserRepository = identityUserRepository;
             // Subscribe("new_order");

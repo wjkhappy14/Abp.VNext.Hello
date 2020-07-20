@@ -9,13 +9,14 @@ namespace Abp.VNext.Hello
         {
             Cities = new HashSet<City>();
         }
-        public virtual string StateProvinceCode { get; set; }
-        public virtual string StateProvinceName { get; set; }
 
+        //Border
+
+        public virtual string Name { get; set; }
         public virtual string ChineseName { get; set; }
-
-        public long Population { get; set; }
-
+        public virtual string StateProvinceCode { get; set; }
+        public virtual string Territory { get; set; }
+        public virtual string CountryCode { get; set; }
         public virtual string CountryId { get; set; }
         public virtual ICollection<City> Cities { get; set; }
     }

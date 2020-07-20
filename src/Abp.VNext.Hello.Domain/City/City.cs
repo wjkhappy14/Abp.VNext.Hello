@@ -1,6 +1,4 @@
-﻿using NetTopologySuite.Geometries;
-using System.Text.Json.Serialization;
-using Volo.Abp.Domain.Entities;
+﻿using Volo.Abp.Domain.Entities;
 
 namespace Abp.VNext.Hello
 {
@@ -9,13 +7,19 @@ namespace Abp.VNext.Hello
         public City()
         {
         }
+        public virtual string StateProvinceId { get; set; }
+        public virtual string Location { get; set; }
         public virtual string Name { get; set; }
+        public virtual string StateProvinceCode { get; set; }
+        public virtual string CountryId { get; set; }
+        public virtual string CountryCode { get; set; }
+        public virtual string Latitude { get; set; }
+        public virtual string Longitude { get; set; }
         public virtual string ChineseName { get; set; }
-        public virtual int StateProvinceId { get; set; }
+
 
         //https://docs.microsoft.com/zh-cn/sql/t-sql/spatial-geography/spatial-types-geography?view=sql-server-ver15
         // [JsonIgnore]
-        public string Location { get; set; }
     }
 
 }

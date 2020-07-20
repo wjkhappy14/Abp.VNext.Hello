@@ -4,19 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
+using Volo.Abp.Caching;
 
 namespace Abp.VNext.Hello
 {
 
-    // [Authorize]
+    [AllowAnonymous]
     public class CityAppService : HelloAppService, ICityAppService
     {
         ICityRepository _cityRepository;
 
-        public CityAppService(ICityRepository cityRepository)
+        private IDistributedCache<string> DistributedCache { get; }
+
+        public CityAppService(ICityRepository cityRepository, IDistributedCache<string> distributedCache)
         {
             _cityRepository = cityRepository;
+            DistributedCache = distributedCache;
         }
 
         public Task<CityDto> CreateAsync(CityDto input)
