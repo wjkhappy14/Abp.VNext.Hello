@@ -18,12 +18,12 @@ namespace Abp.VNext.Hello
 
         public IQueryable<Country> Search(string keyword)
         {
-            return DbSet.Where(w => w.CountryName == keyword);
+            return DbSet.Where(w => w.Name == keyword);
         }
 
         public async Task<Country> GetByNameAsync(string name)
         {
-            return await DbSet.FirstOrDefaultAsync(p => p.CountryName == name);
+            return await DbSet.FirstOrDefaultAsync(p => p.Name == name);
         }
         public Task<Country> GetCountryByIdAsync(string id)
         {

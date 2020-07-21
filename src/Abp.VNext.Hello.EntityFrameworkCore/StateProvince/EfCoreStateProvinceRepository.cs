@@ -30,7 +30,7 @@ namespace Abp.VNext.Hello
 
         public Task<StateProvince> FindByNameAsync(string name)
         {
-            return DbSet.FirstOrDefaultAsync(p => p.StateProvinceName == name);
+            return DbSet.FirstOrDefaultAsync(p => p.Name == name);
         }
 
 
@@ -59,16 +59,15 @@ namespace Abp.VNext.Hello
         void GroupBy(string provinceName)
         {
             var queryable = base.DbContext.StateProvinces
-                .Where(x => x.StateProvinceName == provinceName)
+                .Where(x => x.Name == provinceName)
                 .OrderByDescending(x => x.ChineseName)
-                .GroupBy(x => new { x.CountryId, x.StateProvinceName })
+                .GroupBy(x => new { x.CountryId, x.Name })
                 .Select(g => new
                 {
-                    SumOfCountryPopulation = g.Sum(x => x.Population),
                     CityCount = g.Sum(x => x.Cities.Count),
                     StateProvinces = g.ToList(),
                     g.Key.CountryId,
-                    g.Key.StateProvinceName
+                    g.Key.Name
                 });
             var result = queryable;
         }

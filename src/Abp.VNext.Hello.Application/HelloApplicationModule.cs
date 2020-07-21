@@ -22,6 +22,7 @@ namespace Abp.VNext.Hello
         typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
+        typeof(AbpEventBusRabbitMqModule),
         typeof(HelloApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),
         typeof(AbpPermissionManagementApplicationModule),

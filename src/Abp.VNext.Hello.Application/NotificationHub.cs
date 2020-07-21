@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.SignalR;
+using Volo.Abp.EventBus.Distributed;
 using Volo.Abp.Identity;
 using Volo.Abp.SettingManagement;
 
@@ -25,15 +26,21 @@ namespace Abp.VNext.Hello
         private readonly IIdentityUserRepository _identityUserRepository;
         private readonly ISettingManager _settingManager;
         private readonly ILookupNormalizer _lookupNormalizer;
+        private readonly IDistributedEventBus _eventBus;
         private static ConnectionMultiplexer Redis => RedisHelper.RedisMultiplexer();
 
         readonly ILogger<string> _logger;
 
         private IChannelGroup ChannelGroup => ServerHandler.Group;
 
-        public NotificationHub(IIdentityUserRepository identityUserRepository, ILookupNormalizer lookupNormalizer, ILogger<string> logger, ISettingManager settingManager)
+        public NotificationHub(IIdentityUserRepository identityUserRepository,
+            ILookupNormalizer lookupNormalizer,
+            ILogger<string> logger,
+            IDistributedEventBus eventBus,
+            ISettingManager settingManager)
         {
             _logger = logger;
+            _eventBus = eventBus;
             _settingManager = settingManager;
             _lookupNormalizer = lookupNormalizer;
             _identityUserRepository = identityUserRepository;
@@ -192,6 +199,7 @@ namespace Abp.VNext.Hello
                 Message = request.Message,
                 Cmd = request.Cmd
             };
+            _eventBus.PublishAsync(reply);
             return Clients.Caller.SendAsync("receive", reply);
         }
 
