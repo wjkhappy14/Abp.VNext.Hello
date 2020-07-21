@@ -22,14 +22,14 @@
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.2-dev-10280" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0-dev-00880" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0-dev-00839" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="3.0.3" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="3.0.4" />
     <ProjectReference Include="..\Abp.VNext.Hello.Application.Contracts\Abp.VNext.Hello.Application.Contracts.csproj" />
     <ProjectReference Include="..\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations.csproj" />
   </ItemGroup>
