@@ -1,4 +1,5 @@
-﻿using EasyAbp.PrivateMessaging.EntityFrameworkCore;
+﻿using EasyAbp.EShop.Stores.EntityFrameworkCore;
+using EasyAbp.PrivateMessaging.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
     [DependsOn(
         typeof(HelloDomainModule),
         typeof(AbpDapperModule),
+        typeof(EShopStoresEntityFrameworkCoreModule),
         typeof(PrivateMessagingEntityFrameworkCoreModule),
         typeof(BloggingEntityFrameworkCoreModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),

@@ -16,6 +16,7 @@ using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.EventBus.Distributed;
 using Volo.Abp.Identity;
 using Volo.Abp.SettingManagement;
+using Volo.Abp.Users;
 
 namespace Abp.VNext.Hello
 {
@@ -199,7 +200,8 @@ namespace Abp.VNext.Hello
                 Message = request.Message,
                 Cmd = request.Cmd
             };
-            _eventBus.PublishAsync(reply);
+            _eventBus.PublishAsync(typeof(object), reply);
+
             return Clients.Caller.SendAsync("receive", reply);
         }
 

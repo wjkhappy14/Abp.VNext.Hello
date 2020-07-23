@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Abp.VNext.Hello.XNetty
 {
+
+
+    [Serializable]
     public class RequestCommand
     {
         /// <summary>
@@ -38,7 +41,7 @@ namespace Abp.VNext.Hello.XNetty
     /// 请求指令
     /// </summary>
     /// <typeparam name="T"></typeparam>
-
+    /// 
     public class RequestCommand<T> : RequestCommand
     {
         public static string GetRequestCommand(RequestCommand<T> requestCommand) => "";

@@ -38,11 +38,13 @@ using Microsoft.AspNetCore.Cors;
 using Volo.Blogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.AspNetCore.SignalR;
+using EasyAbp.EShop.Stores.Web;
 
 namespace Abp.VNext.Hello.Web
 {
     [DependsOn(
         typeof(HelloHttpApiModule),
+        typeof(EShopStoresWebModule),
         typeof(HelloApplicationModule),
         typeof(PrivateMessagingWebModule),
         typeof(BloggingWebModule),

@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Volo.Abp.EventBus;
 
 namespace Abp.VNext.Hello.XNetty
 {
+
+
     public abstract class ReplyObject
     {
         public ReplyObject()
@@ -58,6 +59,8 @@ namespace Abp.VNext.Hello.XNetty
     /// <summary>
     /// tcp响应统一格式
     /// </summary>
+    [EventName("Reply.Handler")]
+    [Serializable]
     public class ReplyContent<T> : ReplyObject
     {
         public ReplyContent()

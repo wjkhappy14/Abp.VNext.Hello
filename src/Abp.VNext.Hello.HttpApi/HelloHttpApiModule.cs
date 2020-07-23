@@ -1,4 +1,5 @@
-﻿using EasyAbp.PrivateMessaging;
+﻿using EasyAbp.EShop.Stores;
+using EasyAbp.PrivateMessaging;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -13,6 +14,7 @@ namespace Abp.VNext.Hello
         typeof(HelloApplicationContractsModule),
         typeof(PrivateMessagingHttpApiModule),
         typeof(BloggingHttpApiModule),
+        typeof(EShopStoresHttpApiModule),
         typeof(AbpAccountHttpApiModule),
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),
@@ -21,6 +23,6 @@ namespace Abp.VNext.Hello
         )]
     public class HelloHttpApiModule : AbpModule
     {
-        
+
     }
 }

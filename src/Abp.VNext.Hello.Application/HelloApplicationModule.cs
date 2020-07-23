@@ -1,4 +1,5 @@
-﻿using EasyAbp.PrivateMessaging;
+﻿using EasyAbp.EShop.Stores;
+using EasyAbp.PrivateMessaging;
 using System;
 using System.Data;
 using Volo.Abp.Account;
@@ -19,6 +20,7 @@ namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloDomainModule),
+        typeof(EShopStoresApplicationModule),
         typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
