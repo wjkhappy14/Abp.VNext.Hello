@@ -1,5 +1,7 @@
-﻿using EasyAbp.EShop.Stores;
+﻿using EasyAbp.Abp.EventBus.Cap;
+using EasyAbp.EShop.Stores;
 using EasyAbp.PrivateMessaging;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Data;
 using Volo.Abp.Account;
@@ -39,7 +41,6 @@ namespace Abp.VNext.Hello
             base.PreConfigureServices(context);
         }
 
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             Configure<AbpAutoMapperOptions>(options =>
@@ -74,6 +75,20 @@ namespace Abp.VNext.Hello
             Configure<AbpClockOptions>(options =>
             {
                 options.Kind = DateTimeKind.Local;
+            });
+
+            context.AddCapEventBus(capOptions =>
+            {
+                // capOptions.UseSqlServer();
+                capOptions.UseInMemoryStorage();
+                capOptions.UseRabbitMQ(x =>
+                {
+                    x.HostName = "47.98.226.195";
+                    x.UserName = "admin";
+                    x.Password = "zxcvbnm";
+                    x.VirtualHost = "/";
+                });// 服务器地址配置，支持配置IP地址和密码
+                capOptions.UseDashboard();//CAP2.X版本以后官方提供了Dashboard页面访问。
             });
         }
     }
