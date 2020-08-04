@@ -52,6 +52,15 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
                 });
             });
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlite<BackgroundJobsDbContext>(x =>
+                {
+
+                });
+            });
+
+
 
             Configure<AbpDbContextOptions>(options =>
             {

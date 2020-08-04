@@ -27,6 +27,7 @@ namespace Abp.VNext.Hello
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpEventBusRabbitMqModule),
+        typeof(AbpBackgroundJobsAbstractionsModule),
         typeof(HelloApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),
         typeof(AbpPermissionManagementApplicationModule),
@@ -63,9 +64,9 @@ namespace Abp.VNext.Hello
                 options.DefaultFirstWaitDuration = 3600;
                 options.DefaultWaitFactor = Math.E;
             });
-            Configure<AbpBackgroundWorkerOptions>(options =>
+            Configure<AbpBackgroundJobOptions>(options =>
             {
-                options.IsEnabled = true;
+                options.IsJobExecutionEnabled = true;
             });
             Configure<AbpUnitOfWorkOptions>((options) =>
             {

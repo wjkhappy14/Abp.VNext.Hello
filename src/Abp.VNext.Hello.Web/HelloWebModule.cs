@@ -101,11 +101,6 @@ namespace Abp.VNext.Hello.Web
             {
                 options.Kind = DateTimeKind.Local;
             });
-            Configure<AbpBackgroundJobOptions>(options =>
-            {
-                options.IsJobExecutionEnabled = false;
-            });
-
         }
 
         private void ConfigureUrls(IConfiguration configuration)
