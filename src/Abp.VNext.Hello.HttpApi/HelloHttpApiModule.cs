@@ -1,4 +1,5 @@
-﻿using EasyAbp.EShop.Stores;
+﻿using EasyAbp.Abp.SettingUi;
+using EasyAbp.EShop.Stores;
 using EasyAbp.PrivateMessaging;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
@@ -14,6 +15,7 @@ namespace Abp.VNext.Hello
         typeof(HelloApplicationContractsModule),
         typeof(PrivateMessagingHttpApiModule),
         typeof(BloggingHttpApiModule),
+        typeof(SettingUiHttpApiModule),
         typeof(EShopStoresHttpApiModule),
         typeof(AbpAccountHttpApiModule),
         typeof(AbpIdentityHttpApiModule),

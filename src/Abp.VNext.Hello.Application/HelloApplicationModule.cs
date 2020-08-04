@@ -1,4 +1,5 @@
 ﻿using EasyAbp.Abp.EventBus.Cap;
+using EasyAbp.Abp.SettingUi;
 using EasyAbp.EShop.Stores;
 using EasyAbp.PrivateMessaging;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +8,6 @@ using System.Data;
 using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.BackgroundJobs;
-using Volo.Abp.BackgroundWorkers;
 using Volo.Abp.EventBus.RabbitMq;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -27,6 +27,7 @@ namespace Abp.VNext.Hello
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpEventBusRabbitMqModule),
+        typeof(SettingUiApplicationModule),
         typeof(AbpBackgroundJobsAbstractionsModule),
         typeof(HelloApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),

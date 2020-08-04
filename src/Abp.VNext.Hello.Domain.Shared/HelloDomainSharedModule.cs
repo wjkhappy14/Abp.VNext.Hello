@@ -1,4 +1,5 @@
 ﻿using Abp.VNext.Hello.Localization;
+using EasyAbp.Abp.SettingUi;
 using EasyAbp.EShop.Stores;
 using EasyAbp.PrivateMessaging;
 using Volo.Abp.AuditLogging;
@@ -20,6 +21,7 @@ namespace Abp.VNext.Hello
     [DependsOn(
         typeof(AbpAuditLoggingDomainSharedModule),
         typeof(EShopStoresDomainSharedModule),
+        typeof(SettingUiDomainSharedModule),
         typeof(AbpBackgroundJobsDomainSharedModule),
         typeof(PrivateMessagingDomainSharedModule),
         typeof(AbpFeatureManagementDomainSharedModule),
