@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="EasyAbp.EShop.Stores.Domain" Version="0.8.4" />
+	<PackageReference Include="EasyAbp.EShop.Domain" Version="0.8.6" />
     <PackageReference Include="Volo.Abp.Identity.Domain" Version="3.0.4" />
 	<PackageReference Include="Volo.Blogging.Domain" Version="3.0.4" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="3.0.4" />

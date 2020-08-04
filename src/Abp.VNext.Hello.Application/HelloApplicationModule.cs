@@ -1,6 +1,6 @@
 ﻿using EasyAbp.Abp.EventBus.Cap;
 using EasyAbp.Abp.SettingUi;
-using EasyAbp.EShop.Stores;
+using EasyAbp.EShop;
 using EasyAbp.PrivateMessaging;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -22,7 +22,7 @@ namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloDomainModule),
-        typeof(EShopStoresApplicationModule),
+        typeof(EShopApplicationModule),
         typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using EasyAbp.PrivateMessaging;
 using Volo.Blogging;
+using EasyAbp.EShop;
 
 namespace Abp.VNext.Hello
 {
@@ -21,6 +22,7 @@ namespace Abp.VNext.Hello
         typeof(HelloDomainSharedModule),
         typeof(PrivateMessagingDomainModule),
         typeof(BloggingDomainModule),
+        typeof(EShopDomainModule),
         typeof(AbpAuditLoggingDomainModule),
         typeof(AbpBackgroundJobsDomainModule),
         typeof(AbpFeatureManagementDomainModule),

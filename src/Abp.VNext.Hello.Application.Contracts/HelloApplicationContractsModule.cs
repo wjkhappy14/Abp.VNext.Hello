@@ -1,4 +1,4 @@
-﻿using EasyAbp.EShop.Stores;
+﻿using EasyAbp.EShop;
 using EasyAbp.PrivateMessaging;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
@@ -13,7 +13,7 @@ namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloDomainSharedModule),
-        typeof(EShopStoresApplicationContractsModule),
+        typeof(EShopApplicationContractsModule),
         typeof(PrivateMessagingApplicationContractsModule),
         typeof(AbpAccountApplicationContractsModule),
         typeof(AbpFeatureManagementApplicationContractsModule),
