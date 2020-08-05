@@ -64,4 +64,10 @@
 		<PackageReference Include="EasyAbp.Abp.SettingUi.Web" Version="1.1.9" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="Abp.VNext.Hello.db">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
