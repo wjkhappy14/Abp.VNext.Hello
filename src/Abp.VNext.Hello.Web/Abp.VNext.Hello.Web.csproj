@@ -13,6 +13,8 @@
 		<MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
 		<PreserveCompilationReferences>true</PreserveCompilationReferences>
 		<UserSecretsId>Abp.VNext.Hello-4681b4fd-151f-4221-84a4-929d86723e4c</UserSecretsId>
+
+		<ServerGarbageCollection>true</ServerGarbageCollection>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,7 +34,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		
+
 		<PackageReference Include="Serilog.AspNetCore" Version="3.4.0-dev-00173" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0-dev-00880" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.4.1-dev-00073" />
@@ -65,9 +67,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="Abp.VNext.Hello.db">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
+		<None Update="Abp.VNext.Hello.db">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>
