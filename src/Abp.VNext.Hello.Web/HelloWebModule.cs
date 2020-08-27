@@ -39,6 +39,8 @@ using Volo.Blogging;
 using Volo.Abp.AspNetCore.SignalR;
 using EasyAbp.EShop.Stores.Web;
 using EasyAbp.Abp.SettingUi.Web;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -264,7 +266,6 @@ namespace Abp.VNext.Hello.Web
 
             app.UseAuthorization();
 
-
             app.UseAbpRequestLocalization();
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -274,6 +275,27 @@ namespace Abp.VNext.Hello.Web
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.OnStarting(() =>
+                {
+                    context.Response.Headers["Now"] = $"{DateTime.Now.ToLocalTime()}";
+                    return Task.CompletedTask;
+                });
+                await next();
+            });
+
+            app.Map("/time", time =>
+            {
+                //终止中间件
+                time.Run(async context =>
+                {
+                    await context
+                      .Response
+                      .WriteAsync($"{DateTime.Now.ToLocalTime()}");
+                });
+            });
         }
     }
 }

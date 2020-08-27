@@ -29,7 +29,9 @@ namespace Abp.VNext.Hello.Web
             {
                 Log.Information("Starting web host.");
                 Console.WriteLine($"Http Host Running on {url} {Environment.NewLine}TCP(Netty) Running on Port:666");
-                await CreateHostBuilder(args).Build().RunAsync();
+                await CreateHostBuilder(args)
+                    .Build()
+                    .RunAsync();
                 await XServerBootstrap.RunServerAsync(666);
                 return 0;
             }
