@@ -41,6 +41,7 @@ using EasyAbp.EShop.Stores.Web;
 using EasyAbp.Abp.SettingUi.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using IdentityServer4.Extensions;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -295,6 +296,11 @@ namespace Abp.VNext.Hello.Web
                       .Response
                       .WriteAsync($"{DateTime.Now.ToLocalTime()}");
                 });
+            });
+            app.Run(async (context) =>
+            {
+                //https://docs.microsoft.com/zh-cn/archive/msdn-magazine/2019/june/cutting-edge-revisiting-the-asp-net-core-pipeline
+                await context.Response.WriteJsonAsync(context.Request.Path);
             });
         }
     }
