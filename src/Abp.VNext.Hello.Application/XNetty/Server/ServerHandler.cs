@@ -8,16 +8,12 @@ namespace Abp.VNext.Hello.XNetty.Server
     public class ServerHandler : SimpleChannelInboundHandler<string>
     {
         private static Lazy<ServerHandler> _handler = new Lazy<ServerHandler>(() => new ServerHandler(), true);
-       
-
-        public event EventHandler<IChannelHandlerContext> OnChannelActive;
-        public event EventHandler<string> OnChannelRead0;
 
         public static ServerHandler Handler => _handler.Value;
 
         private ServerHandler()
         {
-           
+
         }
         static volatile IChannelGroup group;
 
@@ -34,21 +30,33 @@ namespace Abp.VNext.Hello.XNetty.Server
                     }
                 }
             }
-            this.OnChannelActive(this, contex);
-            contex.WriteAndFlushAsync(string.Format("欢迎 to {0} secure chat server!\n", Dns.GetHostName()));
+            base.ChannelActive(contex);
+            string msg = $"欢迎 to {0} secure chat server! { Dns.GetHostName()}\n";
+
+            ReplyContent<string> reply = new ReplyContent<string>()
+            {
+                ConnectionId = $"{contex.Channel.Id}",
+                Cmd = 0,
+                Scope = 0,
+                Message = msg
+            };
+            contex.WriteAndFlushAsync(reply.ToString());
             g.Add(contex.Channel);
         }
 
 
         protected override void ChannelRead0(IChannelHandlerContext contex, string msg)
         {
-            msg = $"收到来自{ contex.Channel.RemoteAddress}的消息：{msg}";
-            string response = string.Format("收到：\n", msg);
+            RequestCommand<string> cmd = RequestCommand<string>.GetCommand(msg);
+            ReplyContent<string> reply = new ReplyContent<string>()
+            {
+                ConnectionId = $"{contex.Channel}",
+                Cmd = cmd.Cmd,
+                Scope = cmd.Scope
+            };
 
-            Group.WriteAndFlushAsync(msg, new AllChannelMatcher(contex.Channel.Id));
-
-            OnChannelRead0(this, msg);
-            contex.WriteAndFlushAsync(response);
+            // Group.WriteAndFlushAsync(reply, new AllChannelMatcher(contex.Channel.Id));
+            contex.WriteAndFlushAsync(reply.ToString());
 
             if (string.Equals("bye", msg, StringComparison.OrdinalIgnoreCase))
             {

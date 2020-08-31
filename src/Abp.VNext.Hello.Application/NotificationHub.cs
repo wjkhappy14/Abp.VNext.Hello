@@ -46,17 +46,6 @@ namespace Abp.VNext.Hello
             _lookupNormalizer = lookupNormalizer;
             _identityUserRepository = identityUserRepository;
             // Subscribe("new_order");
-            ServerHandler.Handler.OnChannelActive += Handler_OnChannelActive;
-            ServerHandler.Handler.OnChannelRead0 += (e, s) =>
-            {
-                ReplyContent<object> reply = new ReplyContent<object>
-                {
-                    Scope = "tcp",
-                    Cmd = "push",
-                    Message = s
-                };
-                Clients.All.SendAsync(reply.ToString());
-            };
         }
         private void Subscribe(string channel)
         {
@@ -77,8 +66,8 @@ namespace Abp.VNext.Hello
         {
             ReplyContent<object> reply = new ReplyContent<object>
             {
-                Cmd = "active",
-                Scope = "tcp",
+                Cmd = 0,
+                Scope =0,
             };
             Clients.All.SendAsync("", reply);
         }
@@ -94,8 +83,8 @@ namespace Abp.VNext.Hello
             {
                 ConnectionId = Context.ConnectionId,
                 Message = "连接成功",// $"{CurrentUser.UserName}",
-                Scope = id,
-                Cmd = "connecte"
+                Scope = 0,
+                Cmd = 2
             };
             return Clients.All.SendAsync("connected", reply);
         }
@@ -107,7 +96,7 @@ namespace Abp.VNext.Hello
             {
                 ConnectionId = Context.ConnectionId,
                 Message = $"{id} left the chat",
-                Cmd = "disconnected"
+                Cmd = 0
             };
             return Clients.All.SendAsync("disconnected", reply);
         }
@@ -117,8 +106,8 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "send"
+                Scope =0,
+                Cmd =0
             };
             return Clients.All.SendAsync("send", reply);
         }
@@ -129,8 +118,8 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "SendToOthers"
+                Scope = 0,
+                Cmd = 8
             };
             return Clients.Others.SendAsync("sendToOthers", reply);
         }
@@ -141,8 +130,8 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "SendToGroup"
+                Scope = 0,
+                Cmd = 2
             };
             return Clients.Group(groupName).SendAsync("toGroup", reply);
         }
@@ -153,8 +142,8 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "SendToOthersInGroup"
+                Scope = 0,
+                Cmd = 2
             };
             return Clients.OthersInGroup(groupName).SendAsync("toOthers", reply);
         }
@@ -165,8 +154,8 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "JoinGroup"
+                Scope =0,
+                Cmd =2
             };
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
@@ -178,8 +167,8 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "LeaveGroup"
+                Scope = 0,
+                Cmd = 2
             };
 
             await Clients.Group(groupName).SendAsync("leave", reply);
@@ -211,8 +200,8 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = connectionId,
-                Scope = "hub",
-                Cmd = "login"
+                Scope = 0,
+                Cmd = 2
             };
             return Clients.Caller.SendAsync("receive", reply);
         }
@@ -223,8 +212,8 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = connectionId,
-                Scope = "hub",
-                Cmd = "token"
+                Scope = 0,
+                Cmd = 2
             };
             return Clients.Caller.SendAsync("receive", reply);
         }
@@ -234,9 +223,10 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Message = message,
-                Cmd = "sendTo"
+                Scope = 0,
+                Cmd = 2,
+                Message = message
+              
             };
             return Clients.Client(connectionId).SendAsync("sendTo", reply);
         }

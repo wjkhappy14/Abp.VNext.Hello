@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Text;
 
 namespace Abp.VNext.Hello.XNetty
@@ -26,13 +27,13 @@ namespace Abp.VNext.Hello.XNetty
         /// <summary>
         /// 模块ID
         /// </summary>
-        public string Scope { get; set; }
+        public int Scope { get; set; }
 
         /// <summary>
         /// 指令ID
         /// </summary>
         /// 
-        public string Cmd { get; set; }
+        public int Cmd { get; set; }
 
     }
 
@@ -44,11 +45,12 @@ namespace Abp.VNext.Hello.XNetty
     /// 
     public class RequestCommand<T> : RequestCommand
     {
-        public static string GetRequestCommand(RequestCommand<T> requestCommand) => "";
+        public static string GetRequest(RequestCommand<T> cmd) => JsonConvert.SerializeObject(cmd);
+        public static RequestCommand<T> GetCommand(string cmd) => JsonConvert.DeserializeObject<RequestCommand<T>>(cmd);
 
         public static byte[] EncodeRequestCommand(RequestCommand<T> requestCommand)
         {
-            string cmd = GetRequestCommand(requestCommand);
+            string cmd = GetRequest(requestCommand);
             byte[] messageBytes = Encoding.UTF8.GetBytes(cmd);
             return messageBytes;
         }
@@ -58,8 +60,8 @@ namespace Abp.VNext.Hello.XNetty
         /// </summary>
 
         public T Data { get; set; } = default(T);
-        public override string ToString() => GetRequestCommand(this);
-        public void SetModule(Tuple<string, string> tuple)
+        public override string ToString() => GetRequest(this);
+        public void SetModule(Tuple<int, int> tuple)
         {
             Scope = tuple.Item1;
             Cmd = tuple.Item2;

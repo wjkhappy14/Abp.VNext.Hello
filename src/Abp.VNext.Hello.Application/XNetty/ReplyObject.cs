@@ -4,8 +4,6 @@ using Volo.Abp.EventBus;
 
 namespace Abp.VNext.Hello.XNetty
 {
-
-
     public abstract class ReplyObject
     {
         public ReplyObject()
@@ -24,13 +22,13 @@ namespace Abp.VNext.Hello.XNetty
         /// <summary>
         /// 模块ID
         /// </summary>
-        public string Scope { get; set; } //1,
+        public int Scope { get; set; } //1,
 
         /// <summary>
         /// 指令ID
         /// </summary>
         [JsonProperty("cmd")]
-        public string Cmd { get; set; }// 1,
+        public int Cmd { get; set; }// 1,
 
         /// <summary>
         /// 状态码，200为正常，其他状态码为业务异常
@@ -66,18 +64,13 @@ namespace Abp.VNext.Hello.XNetty
         public ReplyContent()
         {
         }
-        public static ReplyContent<T> GetReplyContent(string json) => JsonConvert.DeserializeObject<ReplyContent<T>>(json);
+        public static string GetContent(string json) => JsonConvert.SerializeObject(json);
         /// <summary>
         /// 响应实体对象
         /// </summary>
         [JsonProperty("result")]
         public T Result { get; set; }
 
-        public static ReplyContent<T> GetModuleInfo(string json)
-        {
-            //ReplyObject result = JsonConvert.DeserializeObject<ReplyObject>(json);
-            // return result;
-            return new ReplyContent<T>() { Cmd = "100", RequestNo = "Hello", Message = json };
-        }
+        public static ReplyContent<T> GetModuleInfo(string json) => JsonConvert.DeserializeObject<ReplyContent<T>>(json);
     }
 }

@@ -13,7 +13,7 @@ namespace Abp.VNext.Hello.XNetty
         static Lazy<Account> lazy = new Lazy<Account>(() => new Account(), true);
         public string SessionToken => "";
         public static Account Instance => lazy.Value;
-        public Dictionary<Tuple<string, string>, Action<string>> AccountActions { get; } = new Dictionary<Tuple<string, string>, Action<string>>();
+        public Dictionary<Tuple<int, int>, Action<string>> AccountActions { get; } = new Dictionary<Tuple<int, int>, Action<string>>();
 
         public string HeartBeatNow { get; private set; } = string.Empty;
         /// <summary>
@@ -29,7 +29,6 @@ namespace Abp.VNext.Hello.XNetty
         /// </summary>
         private void Register()
         {
-            AccountActions.Add(Login, OnLogin);
         }
 
 
@@ -100,9 +99,8 @@ namespace Abp.VNext.Hello.XNetty
         /// <param name="json"></param>
         private void OnServerTime(string json)
         {
-            ReplyContent<long> replyObject = ReplyContent<long>.GetReplyContent(json);
+            ReplyContent<long> replyObject = ReplyContent<long>.GetModuleInfo(json);
             long clientTime = replyObject.ClientTime;
-            CoreDispatcher.Dispatcher.TimeDiff = TimeSpan.FromMilliseconds(clientTime - replyObject.Result);
         }
 
         #region 回调事件
