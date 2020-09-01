@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
 
@@ -10,7 +11,7 @@ namespace Abp.VNext.Hello.XNetty.Server
         private static Lazy<ServerHandler> _handler = new Lazy<ServerHandler>(() => new ServerHandler(), true);
 
         public static ServerHandler Handler => _handler.Value;
-
+        public Func<IChannelHandlerContext, Task> OnMessageReceived { get; set; } = context => Task.CompletedTask;
         private ServerHandler()
         {
 
@@ -54,10 +55,10 @@ namespace Abp.VNext.Hello.XNetty.Server
                 Cmd = cmd.Cmd,
                 Scope = cmd.Scope
             };
-
+            //OnMessageReceived
             // Group.WriteAndFlushAsync(reply, new AllChannelMatcher(contex.Channel.Id));
             contex.WriteAndFlushAsync(reply.ToString());
-
+            OnMessageReceived(contex);
             if (string.Equals("bye", msg, StringComparison.OrdinalIgnoreCase))
             {
                 contex.CloseAsync();

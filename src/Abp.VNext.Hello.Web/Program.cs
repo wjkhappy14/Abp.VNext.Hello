@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Abp.VNext.Hello.XNetty;
 using Abp.VNext.Hello.XNetty.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -28,8 +29,6 @@ namespace Abp.VNext.Hello.Web
             try
             {
                 Log.Information("Starting web host.");
-                Console.WriteLine($"Http Host Running on {url} {Environment.NewLine}TCP(Netty) Running on Port:443");
-                await XServerBootstrap.RunServerAsync(443);
                 await CreateHostBuilder(args)
                     .Build()
                     .RunAsync();
@@ -83,6 +82,8 @@ namespace Abp.VNext.Hello.Web
                     });
                 })
                 .UseAutofac()
-                .UseSerilog();
+                .UseSerilog()
+                .UseNettyAsync()
+            ;
     }
 }

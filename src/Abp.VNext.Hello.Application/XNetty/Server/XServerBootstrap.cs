@@ -5,12 +5,13 @@ using DotNetty.Transport.Channels.Sockets;
 using System.Threading.Tasks;
 using DotNetty.Transport.Bootstrapping;
 using System.Text;
+using System.Net;
 
 namespace Abp.VNext.Hello.XNetty.Server
 {
     public class XServerBootstrap
     {
-        public static async Task RunServerAsync(int port)
+        public static async Task RunServerAsync(IPAddress ip, int port)
         {
             MultithreadEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             MultithreadEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
@@ -37,7 +38,7 @@ namespace Abp.VNext.Hello.XNetty.Server
                         pipeline.AddLast(ServerHandler.Handler);
                     }));
 
-                IChannel bootstrapChannel = await bootstrap.BindAsync(port);
+                IChannel bootstrapChannel = await bootstrap.BindAsync(ip, port);
 
                 // await bootstrapChannel.CloseAsync();
             }

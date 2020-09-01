@@ -245,11 +245,9 @@ namespace Abp.VNext.Hello.Web
                 app.UseErrorPage();
             }
             //启用目录浏览
-            //app.UseDirectoryBrowser();
-
-            //静态文件中间件
+            app.UseDirectoryBrowser();
+            //静态文件
             app.UseStaticFiles();
-
             //状态码页面
             app.UseStatusCodePages();
             app.UseVirtualFiles();
