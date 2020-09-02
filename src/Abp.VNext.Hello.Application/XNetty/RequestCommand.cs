@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using NUglify.JavaScript;
 using System;
 using System.Text;
 
@@ -46,7 +47,16 @@ namespace Abp.VNext.Hello.XNetty
     public class RequestCommand<T> : RequestCommand
     {
         public static string GetRequest(RequestCommand<T> cmd) => JsonConvert.SerializeObject(cmd);
-        public static RequestCommand<T> GetCommand(string cmd) => JsonConvert.DeserializeObject<RequestCommand<T>>(cmd);
+        public static bool TryGetCommand(string cmd, out RequestCommand<T> request)
+        {
+            if (string.IsNullOrEmpty(JsonParser.Validate(cmd)))
+            {
+                request = default;
+                return false;
+            }
+            request = JsonConvert.DeserializeObject<RequestCommand<T>>(cmd);
+            return true;
+        }
 
         public static byte[] EncodeRequestCommand(RequestCommand<T> requestCommand)
         {

@@ -1,4 +1,5 @@
-﻿using EasyAbp.Abp.EventBus.Cap;
+﻿using Abp.VNext.Hello.XNetty.Server;
+using EasyAbp.Abp.EventBus.Cap;
 using EasyAbp.Abp.SettingUi;
 using EasyAbp.EShop;
 using EasyAbp.PrivateMessaging;
@@ -21,6 +22,7 @@ using Volo.Blogging;
 namespace Abp.VNext.Hello
 {
     [DependsOn(
+        typeof(DotNettyModule),
         typeof(HelloDomainModule),
         typeof(EShopApplicationModule),
         typeof(PrivateMessagingApplicationModule),

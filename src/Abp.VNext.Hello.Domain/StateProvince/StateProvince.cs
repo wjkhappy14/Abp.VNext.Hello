@@ -17,7 +17,7 @@ namespace Abp.VNext.Hello
         public virtual string StateProvinceCode { get; set; }
         public virtual string Territory { get; set; }
         public virtual string CountryCode { get; set; }
-        public virtual string CountryId { get; set; }
+        public virtual int CountryId { get; set; }
         public virtual ICollection<City> Cities { get; set; }
     }
 

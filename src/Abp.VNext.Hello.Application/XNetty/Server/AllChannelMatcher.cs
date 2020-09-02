@@ -4,7 +4,7 @@ using DotNetty.Transport.Channels.Groups;
 namespace Abp.VNext.Hello.XNetty.Server
 {
 
-    class AllChannelMatcher : IChannelMatcher
+    public class AllChannelMatcher : IChannelMatcher
     {
         readonly IChannelId id;
 

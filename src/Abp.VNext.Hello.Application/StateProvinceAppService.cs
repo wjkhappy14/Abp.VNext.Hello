@@ -24,14 +24,10 @@ namespace Abp.VNext.Hello
             return ObjectMapper.Map<StateProvince, StateProvinceDto>(item);
         }
 
-
-
         public Task Delete(int id)
         {
             return _stateProvinceRepository.DeleteAsync(id);
         }
-
-
 
         public async Task<StateProvinceDto> GetAsync(int id)
         {
@@ -48,8 +44,6 @@ namespace Abp.VNext.Hello
 
         public async Task<ListResultDto<StateProvinceDto>> GetListAsync()
         {
-            string email = CurrentUser.Email;
-
             List<StateProvince> items = await _stateProvinceRepository.GetListAsync();
 
             return new ListResultDto<StateProvinceDto>(

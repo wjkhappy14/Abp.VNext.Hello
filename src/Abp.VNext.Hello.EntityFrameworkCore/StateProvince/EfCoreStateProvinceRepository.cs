@@ -23,7 +23,7 @@ namespace Abp.VNext.Hello
             _dapperRepository = new DapperRepository<HelloDbContext>(dbContextProvider);
         }
 
-        public IQueryable<StateProvince> FindByCountryIdAsync(string countryId)
+        public IQueryable<StateProvince> FindByCountryIdAsync(int countryId)
         {
             return DbSet.Where(x => x.CountryId == countryId);
         }
@@ -34,7 +34,7 @@ namespace Abp.VNext.Hello
         }
 
 
-        private Dictionary<string, List<StateProvince>> W()
+        private Dictionary<int, List<StateProvince>> W()
         {
             return base.DbContext.StateProvinces
                  .GroupBy(c => c.CountryId)
@@ -46,13 +46,19 @@ namespace Abp.VNext.Hello
               }).OrderByDescending(x => x.Items.Count)
                 .ToDictionary(g => g.CountryId, g => g.Items);
         }
-        private void c()
+        private void GroupJoin()
         {
-            var groupJoin = 
+            var groupJoin =
                 DbContext.StateProvinces.GroupJoin(
-                DbContext.Countries, stateProvince => stateProvince.CountryId,
+                DbContext.Countries,
+                stateProvince => stateProvince.CountryId,
                 country => country.Id,
-                (c, p) => new { c.CountryId, Provinces = p });
+                (c, p) => new
+                {
+                    c.CountryId,
+                    Provinces = p
+                }
+                );
 
         }
 

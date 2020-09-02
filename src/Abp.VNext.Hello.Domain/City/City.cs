@@ -7,11 +7,11 @@ namespace Abp.VNext.Hello
         public City()
         {
         }
-        public virtual string StateProvinceId { get; set; }
+        public virtual int StateProvinceId { get; set; }
         public virtual string Location { get; set; }
         public virtual string Name { get; set; }
         public virtual string StateProvinceCode { get; set; }
-        public virtual string CountryId { get; set; }
+        public virtual int CountryId { get; set; }
         public virtual string CountryCode { get; set; }
         public virtual string Latitude { get; set; }
         public virtual string Longitude { get; set; }

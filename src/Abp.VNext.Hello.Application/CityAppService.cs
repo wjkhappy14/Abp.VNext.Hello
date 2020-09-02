@@ -42,7 +42,6 @@ namespace Abp.VNext.Hello
         public async Task<PagedResultDto<CityDto>> GetListAsync(PagedAndSortedResultRequestDto input)
         {
             List<City> items = await _cityRepository.GetListAsync(includeDetails: true);
-
             List<CityDto> result = ObjectMapper.Map<List<City>, List<CityDto>>(items);
 
             long totalCount = await _cityRepository.GetCountAsync();

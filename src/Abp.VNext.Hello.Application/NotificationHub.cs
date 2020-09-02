@@ -16,7 +16,6 @@ using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.EventBus.Distributed;
 using Volo.Abp.Identity;
 using Volo.Abp.SettingManagement;
-using Volo.Abp.Users;
 
 namespace Abp.VNext.Hello
 {

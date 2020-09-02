@@ -13,7 +13,7 @@ namespace Abp.VNext.Hello.XNetty
             Task.Run(async () =>
             {
                 Console.WriteLine($"TCP(Netty) Running on Port:443");
-                await XServerBootstrap.RunServerAsync(IPAddress.Any, 443);
+                await XServerBootstrap.RunServerAsync(IPAddress.Any, 444);
             });
             return builder;
         }

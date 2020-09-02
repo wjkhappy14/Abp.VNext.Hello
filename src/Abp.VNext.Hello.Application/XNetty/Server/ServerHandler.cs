@@ -8,13 +8,13 @@ namespace Abp.VNext.Hello.XNetty.Server
 {
     public class ServerHandler : SimpleChannelInboundHandler<string>
     {
-        private static Lazy<ServerHandler> _handler = new Lazy<ServerHandler>(() => new ServerHandler(), true);
-
+        private static Lazy<ServerHandler> _handler = new Lazy<ServerHandler>(() => new ServerHandler(new ServiceHub()), true);
+        private ServiceHub ServiceHub { get; }
         public static ServerHandler Handler => _handler.Value;
         public Func<IChannelHandlerContext, Task> OnMessageReceived { get; set; } = context => Task.CompletedTask;
-        private ServerHandler()
+        private ServerHandler(ServiceHub serviceHub)
         {
-
+            ServiceHub = serviceHub;
         }
         static volatile IChannelGroup group;
 
@@ -25,10 +25,7 @@ namespace Abp.VNext.Hello.XNetty.Server
             {
                 lock (this)
                 {
-                    if (Group == null)
-                    {
-                        g = Group = new DefaultChannelGroup(contex.Executor);
-                    }
+                    g = Group ?? (Group = new DefaultChannelGroup(contex.Executor));
                 }
             }
             base.ChannelActive(contex);
@@ -48,7 +45,11 @@ namespace Abp.VNext.Hello.XNetty.Server
 
         protected override void ChannelRead0(IChannelHandlerContext contex, string msg)
         {
-            RequestCommand<string> cmd = RequestCommand<string>.GetCommand(msg);
+            if (!RequestCommand<string>.TryGetCommand(msg, out RequestCommand<string> cmd))
+            {
+                contex.WriteAndFlushAsync("无法识别的JSON指令;" + msg);
+                return;
+            }
             ReplyContent<string> reply = new ReplyContent<string>()
             {
                 ConnectionId = $"{contex.Channel}",

@@ -7,7 +7,7 @@ namespace Abp.VNext.Hello
     /// <summary>
     /// https://docs.abp.io/zh-Hans/abp/latest/Entities
     /// </summary>
-    public partial class Country : Entity<string>
+    public partial class Country : Entity<int>
     {
         public Country()
         {

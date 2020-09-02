@@ -10,7 +10,7 @@ namespace Abp.VNext.Hello
 
         Task<StateProvince> FindByNameAsync(string name);
 
-        IQueryable<StateProvince> FindByCountryIdAsync(string countryId);
+        IQueryable<StateProvince> FindByCountryIdAsync(int countryId);
 
     }
 }
