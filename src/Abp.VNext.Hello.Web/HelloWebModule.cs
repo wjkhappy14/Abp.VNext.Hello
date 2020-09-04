@@ -42,6 +42,7 @@ using EasyAbp.Abp.SettingUi.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -294,6 +295,17 @@ namespace Abp.VNext.Hello.Web
                       .Response
                       .WriteAsync($"{DateTime.Now.ToLocalTime()}");
                 });
+            });
+            app.Map("/features", feature =>
+            {
+                feature.Run(async http =>
+                {
+                    IFeatureCollection features = http.Features;
+                    await http
+                     .Response
+                     .WriteAsync(features.ToString());
+                }
+                );
             });
             app.Run(async (context) =>
             {

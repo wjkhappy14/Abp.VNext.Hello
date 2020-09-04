@@ -2,19 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using DotNetCore.CAP;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
 namespace Abp.VNext.Hello
 {
-    [Authorize]
+    [RemoteService(false)]
     public class BlobService : ApplicationService, IBlobService
     {
         private readonly IBlobRepository _repository;
-        public BlobService(IBlobRepository repository)
+        private readonly ICapPublisher _capBus;
+        public BlobService(IBlobRepository repository, ICapPublisher capPublisher)
         {
             _repository = repository;
+            _capBus = capPublisher;
         }
         public async Task<ListResultDto<BlobItemDto>> SearchAsync(DateTime begin, DateTime end, IDictionary tags)
         {
@@ -32,12 +35,18 @@ namespace Abp.VNext.Hello
 
         public Task<BlobItemDto> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            _capBus.PublishAsync("Now", $"{DateTime.Now}");
+            return Task.FromResult(new BlobItemDto());
         }
 
-        public Task<BlobItemDto> CreateAsync(BlobItemDto input)
+        public Task<int> CreateAsync(BlobItemDto input)
         {
-            throw new NotImplementedException();
+            _capBus.PublishAsync(input.Name, new BlobItemEto()
+            {
+                Name = input.Name,
+                Content = input.Content
+            });
+            return Task.FromResult(1);
         }
 
         public Task<BlobItemDto> UpdateAsync(int id, BlobItemDto input)

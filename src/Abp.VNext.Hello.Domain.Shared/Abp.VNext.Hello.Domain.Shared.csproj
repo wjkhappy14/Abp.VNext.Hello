@@ -14,6 +14,7 @@
 		<PackageReference Include="Volo.Abp.IdentityServer.Domain.Shared" Version="3.0.4" />
 		<PackageReference Include="Volo.Abp.BackgroundJobs.Domain.Shared" Version="3.0.4" />
 		<PackageReference Include="Volo.Abp.AuditLogging.Domain.Shared" Version="3.0.4" />
+		<PackageReference Include="Volo.Abp.EventBus" Version="3.0.4"></PackageReference>
 		<PackageReference Include="Volo.Abp.TenantManagement.Domain.Shared" Version="3.0.4" />
 		<PackageReference Include="Volo.Abp.FeatureManagement.Domain.Shared" Version="3.0.4" />
 		<PackageReference Include="Volo.Abp.PermissionManagement.Domain.Shared" Version="3.0.4" />

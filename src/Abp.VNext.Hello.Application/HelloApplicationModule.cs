@@ -9,7 +9,7 @@ using System.Data;
 using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.BackgroundJobs;
-using Volo.Abp.EventBus.RabbitMq;
+//using Volo.Abp.EventBus.RabbitMq;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
@@ -28,7 +28,7 @@ namespace Abp.VNext.Hello
         typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
-        typeof(AbpEventBusRabbitMqModule),
+       // typeof(AbpEventBusRabbitMqModule),
         typeof(SettingUiApplicationModule),
         typeof(AbpBackgroundJobsAbstractionsModule),
         typeof(HelloApplicationContractsModule),
@@ -52,12 +52,12 @@ namespace Abp.VNext.Hello
                 options.AddMaps<HelloApplicationModule>();
             });
 
-            Configure<AbpRabbitMqEventBusOptions>(options =>
-            {
-                options.ClientName = "hello-abp";
-                options.ExchangeName = "hello-exchange";
-                options.ConnectionName = "Hello";
-            });
+            //Configure<AbpRabbitMqEventBusOptions>(options =>
+            //{
+            //    options.ClientName = "hello-abp";
+            //    options.ExchangeName = "hello-exchange";
+            //    options.ConnectionName = "Hello";
+            //});
 
             Configure<AbpBackgroundJobWorkerOptions>(options =>
             {
@@ -84,6 +84,21 @@ namespace Abp.VNext.Hello
             context.AddCapEventBus(capOptions =>
             {
                 // capOptions.UseSqlServer();
+                capOptions.DefaultGroup = "Abp.VNext.Hello.Cap-Queue";
+                capOptions.FailedThresholdCallback = (failed) =>
+                {
+                    switch (failed.MessageType)
+                    {
+                        case DotNetCore.CAP.Messages.MessageType.Publish:
+                            System.Diagnostics.Debug.WriteLine(failed.Message);
+                            break;
+                        case DotNetCore.CAP.Messages.MessageType.Subscribe:
+                            System.Diagnostics.Debug.WriteLine(failed.Message);
+                            break;
+                        default:
+                            break;
+                    }
+                };
                 capOptions.UseInMemoryStorage();
                 capOptions.UseRabbitMQ(x =>
                 {

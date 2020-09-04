@@ -15,11 +15,11 @@ namespace Abp.VNext.Hello
         Task<BlobItemDto> GetAsync(int id);
 
 
-        Task<BlobItemDto> CreateAsync(BlobItemDto input);
+        Task<int> CreateAsync(BlobItemDto input);
 
         Task<BlobItemDto> UpdateAsync(int id, BlobItemDto input);
 
-        Task DeleteAsync(string  hash);
+        Task DeleteAsync(string hash);
 
         Task<ListResultDto<BlobItemDto>> SearchAsync(DateTime begin, DateTime end, IDictionary tags);
     }
