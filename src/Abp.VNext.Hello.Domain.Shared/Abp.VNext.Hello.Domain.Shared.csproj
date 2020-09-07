@@ -20,7 +20,7 @@
 		<PackageReference Include="Volo.Abp.PermissionManagement.Domain.Shared" Version="3.1.0" />
 		<PackageReference Include="Volo.Abp.SettingManagement.Domain.Shared" Version="3.1.0" />
 		<PackageReference Include="EasyAbp.PrivateMessaging.Domain.Shared" Version="0.4.3" />
-		<PackageReference Include="EasyAbp.Abp.SettingUi.Domain.Shared" Version="1.1.9" />
+		<PackageReference Include="EasyAbp.Abp.SettingUi.Domain.Shared" Version="1.1.10" />
 	</ItemGroup>
 
 	<ItemGroup>

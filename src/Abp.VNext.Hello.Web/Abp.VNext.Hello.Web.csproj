@@ -62,7 +62,7 @@
 		<PackageReference Include="Volo.Abp.AspNetCore.SignalR" Version="3.1.0" />
 		<PackageReference Include="Volo.Abp.EventBus.RabbitMQ" Version="3.1.0" />
 		<PackageReference Include="EasyAbp.EShop.Web" Version="0.14.1" />
-		<PackageReference Include="EasyAbp.Abp.SettingUi.Web" Version="1.1.9" />
+		<PackageReference Include="EasyAbp.Abp.SettingUi.Web" Version="1.1.10" />
 	</ItemGroup>
 
 	<ItemGroup>
