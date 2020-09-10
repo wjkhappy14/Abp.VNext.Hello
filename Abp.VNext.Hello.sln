@@ -25,6 +25,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.VNext.Hello.HttpApi.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.VNext.Hello.DbMigrator", "src\Abp.VNext.Hello.DbMigrator\Abp.VNext.Hello.DbMigrator.csproj", "{AA94D832-1CCC-4715-95A9-A483F23A1A5D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer4", "IdentityServer4", "{D69A0CD2-1173-47D3-A522-CDA9CDE83957}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4", "..\IdentityServer4\src\IdentityServer4\src\IdentityServer4.csproj", "{2A90BFA7-6673-4445-AAE0-4F60C35F4D3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.AspNetIdentity", "..\IdentityServer4\src\AspNetIdentity\src\IdentityServer4.AspNetIdentity.csproj", "{D179BB7C-0076-44D0-B238-E8107F801D30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.AccessTokenValidation", "..\IdentityServer4.AccessTokenValidation\src\IdentityServer4.AccessTokenValidation.csproj", "{94D0F17C-2156-4454-901A-BA8E11B3FAB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +79,18 @@ Global
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A90BFA7-6673-4445-AAE0-4F60C35F4D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A90BFA7-6673-4445-AAE0-4F60C35F4D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A90BFA7-6673-4445-AAE0-4F60C35F4D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A90BFA7-6673-4445-AAE0-4F60C35F4D3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D179BB7C-0076-44D0-B238-E8107F801D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D179BB7C-0076-44D0-B238-E8107F801D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D179BB7C-0076-44D0-B238-E8107F801D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D179BB7C-0076-44D0-B238-E8107F801D30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94D0F17C-2156-4454-901A-BA8E11B3FAB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94D0F17C-2156-4454-901A-BA8E11B3FAB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94D0F17C-2156-4454-901A-BA8E11B3FAB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94D0F17C-2156-4454-901A-BA8E11B3FAB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +106,9 @@ Global
 		{4164BDF7-F527-4E85-9CE6-E3C2D7426A27} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{3B5A0094-670D-4BB1-BFDD-61B88A8773DC} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
+		{2A90BFA7-6673-4445-AAE0-4F60C35F4D3F} = {D69A0CD2-1173-47D3-A522-CDA9CDE83957}
+		{D179BB7C-0076-44D0-B238-E8107F801D30} = {D69A0CD2-1173-47D3-A522-CDA9CDE83957}
+		{94D0F17C-2156-4454-901A-BA8E11B3FAB6} = {D69A0CD2-1173-47D3-A522-CDA9CDE83957}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}

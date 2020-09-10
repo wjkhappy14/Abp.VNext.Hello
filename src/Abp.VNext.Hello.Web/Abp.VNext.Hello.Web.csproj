@@ -46,6 +46,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\IdentityServer4.AccessTokenValidation\src\IdentityServer4.AccessTokenValidation.csproj" />
+		<ProjectReference Include="..\..\..\IdentityServer4\src\AspNetIdentity\src\IdentityServer4.AspNetIdentity.csproj" />
+		<ProjectReference Include="..\..\..\IdentityServer4\src\IdentityServer4\src\IdentityServer4.csproj" />
 		<ProjectReference Include="..\Abp.VNext.Hello.Application\Abp.VNext.Hello.Application.csproj" />
 		<ProjectReference Include="..\Abp.VNext.Hello.HttpApi\Abp.VNext.Hello.HttpApi.csproj" />
 		<ProjectReference Include="..\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations.csproj" />
