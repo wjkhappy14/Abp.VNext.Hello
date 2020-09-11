@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -12,17 +12,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Identity.Domain" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.IdentityServer" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="2.6.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="3.1.3" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.3" />
+	<PackageReference Include="EasyAbp.EShop.Domain" Version="0.14.1" />
+    <PackageReference Include="Volo.Abp.Identity.Domain" Version="3.1.0" />
+	<PackageReference Include="Volo.Blogging.Domain" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.IdentityServer" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="3.1.7" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.7" />
+	<PackageReference Include="EasyAbp.PrivateMessaging.Domain" Version="0.4.3" />
+	  <PackageReference Include="EasyAbp.Abp.SettingUi.Domain" Version="1.1.10" />
   </ItemGroup>
 
 </Project>

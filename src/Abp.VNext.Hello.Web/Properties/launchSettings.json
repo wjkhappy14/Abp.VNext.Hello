@@ -2,7 +2,7 @@
   "iisSettings": {
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://0.0.0.0:8080/",
+      "applicationUrl": "https://0.0.0.0/",
       "sslPort": 9527
     },
     "windowsAuthentication": false
@@ -14,7 +14,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://0.0.0.0:8080/"
+      "applicationUrl": "http://0.0.0.0/"
     },
     "IIS Express": {
       "commandName": "IISExpress",

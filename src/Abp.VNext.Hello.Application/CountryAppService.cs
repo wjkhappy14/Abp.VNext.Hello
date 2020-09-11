@@ -25,7 +25,7 @@ namespace Abp.VNext.Hello
             return ObjectMapper.Map<Country, CountryDto>(result);
         }
 
-        public Task Delete(string id)
+        public Task Delete(int id)
         {
             return _countryRepository.DeleteAsync(id);
         }
@@ -36,21 +36,16 @@ namespace Abp.VNext.Hello
             throw new System.NotImplementedException();
         }
 
-        public async Task<CountryDto> GetAsync(string id)
+        public async Task<CountryDto> GetAsync(int id)
         {
             Country result = await _countryRepository.GetAsync(id);
             return ObjectMapper.Map<Country, CountryDto>(result);
         }
 
-
-
-        public async Task<ListResultDto<CountryDto>> GetListAsync()
+        public async Task<List<CountryDto>> GetListAsync()
         {
             List<Country> items = await _countryRepository.GetListAsync();
-
-            return new ListResultDto<CountryDto>(
-                ObjectMapper.Map<List<Country>, List<CountryDto>>(items)
-            );
+            return ObjectMapper.Map<List<Country>, List<CountryDto>>(items);
         }
 
         public Task<IList<CountryDto>> Search(string keyword)

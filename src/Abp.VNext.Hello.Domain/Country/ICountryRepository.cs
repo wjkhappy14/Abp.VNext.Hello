@@ -4,12 +4,12 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Abp.VNext.Hello
 {
-    public interface ICountryRepository : IBasicRepository<Country, string>
+    public interface ICountryRepository : IBasicRepository<Country, int>
     {
 
         Task<Country> GetByNameAsync(string name);
         IQueryable<Country> Search(string keyword);
 
-        Task<Country> GetCountryByIdAsync(string id);
+        Task<Country> GetCountryByIdAsync(int id);
     }
 }

@@ -2,42 +2,49 @@
 using Abp.VNext.Hello.XNetty.Server;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Groups;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Threading.Channels;
 using System.Threading.Tasks;
+using Volo.Abp.AspNetCore.SignalR;
+using Volo.Abp.EventBus.Distributed;
+using Volo.Abp.Identity;
+using Volo.Abp.SettingManagement;
 
 namespace Abp.VNext.Hello
 {
-
-    public class NotificationHub : DynamicHub
+    [AllowAnonymous]
+    public class NotificationHub : AbpHub
     {
         private static List<HubCallerContext> Connections { get; } = new List<HubCallerContext>();//HubConnectionContext
+        private readonly IIdentityUserRepository _identityUserRepository;
+        private readonly ISettingManager _settingManager;
+        private readonly ILookupNormalizer _lookupNormalizer;
+        private readonly IDistributedEventBus _eventBus;
+        private static ConnectionMultiplexer Redis => RedisHelper.RedisMultiplexer();
 
-        private static ConnectionMultiplexer Redis = RedisHelper.RedisMultiplexer();
-        ILogger<string> _logger;
+        readonly ILogger<string> _logger;
 
         private IChannelGroup ChannelGroup => ServerHandler.Group;
 
-        public NotificationHub(ILogger<string> logger)
+        public NotificationHub(IIdentityUserRepository identityUserRepository,
+            ILookupNormalizer lookupNormalizer,
+            ILogger<string> logger,
+            IDistributedEventBus eventBus,
+            ISettingManager settingManager)
         {
             _logger = logger;
-
-            Subscribe("new_order");
-            ServerHandler.Handler.OnChannelActive += Handler_OnChannelActive;
-            ServerHandler.Handler.OnChannelRead0 += (e, s) =>
-            {
-                ReplyContent<object> reply = new ReplyContent<object>
-                {
-                    Scope = "tcp",
-                    Cmd = "push",
-                    Message = s
-                };
-                Clients.All.Send(reply);
-            };
+            _eventBus = eventBus;
+            _settingManager = settingManager;
+            _lookupNormalizer = lookupNormalizer;
+            _identityUserRepository = identityUserRepository;
+            // Subscribe("new_order");
         }
         private void Subscribe(string channel)
         {
@@ -51,46 +58,46 @@ namespace Abp.VNext.Hello
                 {
                 };
                 reply.Result = new { };
-                Clients.All.Send(reply);
+                Clients.All.SendAsync("", reply);
             });
         }
         private void Handler_OnChannelActive(object sender, IChannelHandlerContext e)
         {
             ReplyContent<object> reply = new ReplyContent<object>
             {
-                Cmd = "active",
-                Scope = "tcp",
+                Cmd = 0,
+                Scope =0,
             };
-            Clients.All.Send(reply);
+            Clients.All.SendAsync("", reply);
         }
 
         public override Task OnConnectedAsync()
         {
-            StringValues names = Context.GetHttpContext().Request.Query["name"];
-            string name = names.Count >= 1 ? names[0] : "unknown";
+            StringValues id = Context.GetHttpContext().Request.Query["id"];
             Connections.Add(this.Context);
 
+            //var targetUser =  _identityUserRepository.FindByNormalizedUserNameAsync(_lookupNormalizer.NormalizeName(name));
 
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Message = $"{name} join the chat",
-                Scope = "hub",
-                Cmd = "connected"
+                Message = "连接成功",// $"{CurrentUser.UserName}",
+                Scope = 0,
+                Cmd = 2
             };
-            return Clients.All.Send(reply);
+            return Clients.All.SendAsync("connected", reply);
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            var name = Context.GetHttpContext().Request.Query["name"];
+            var id = Context.GetHttpContext().Request.Query["id"];
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Message = $"{name} left the chat",
-                Cmd = "disconnected"
+                Message = $"{id} left the chat",
+                Cmd = 0
             };
-            return Clients.All.Send(reply);
+            return Clients.All.SendAsync("disconnected", reply);
         }
 
         public Task Send(string name, string message)
@@ -98,10 +105,10 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "send"
+                Scope =0,
+                Cmd =0
             };
-            return Clients.All.Send(reply);
+            return Clients.All.SendAsync("send", reply);
         }
 
         public Task SendToOthers(string name, string message)
@@ -110,10 +117,10 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "SendToOthers"
+                Scope = 0,
+                Cmd = 8
             };
-            return Clients.Others.Send(reply);
+            return Clients.Others.SendAsync("sendToOthers", reply);
         }
 
         public Task SendToGroup(string groupName, string name, string message)
@@ -122,10 +129,10 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "SendToGroup"
+                Scope = 0,
+                Cmd = 2
             };
-            return Clients.Group(groupName).Send(reply);
+            return Clients.Group(groupName).SendAsync("toGroup", reply);
         }
 
         public Task SendToOthersInGroup(string groupName, string name, string message)
@@ -134,10 +141,10 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "SendToOthersInGroup"
+                Scope = 0,
+                Cmd = 2
             };
-            return Clients.OthersInGroup(groupName).Send(reply);
+            return Clients.OthersInGroup(groupName).SendAsync("toOthers", reply);
         }
 
         public async Task JoinGroup(string groupName, string name)
@@ -146,12 +153,12 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "JoinGroup"
+                Scope =0,
+                Cmd =2
             };
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-            await Clients.Group(groupName).Send(reply);
+            await Clients.Group(groupName).SendAsync("join", reply);
         }
 
         public async Task LeaveGroup(string groupName, string name)
@@ -159,31 +166,31 @@ namespace Abp.VNext.Hello
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "LeaveGroup"
+                Scope = 0,
+                Cmd = 2
             };
 
-            await Clients.Group(groupName).Send(reply);
+            await Clients.Group(groupName).SendAsync("leave", reply);
 
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
 
-        public Task Handler(string scope, string cmd, string message)
+        public Task Handler(RequestCommand request)
         {
-            if (ChannelGroup != null && ChannelGroup.Count > 0)
-            {
-                ChannelGroup.WriteAndFlushAsync(message, ChannelMatchers.All());
-            }
-
-            string connectionId = Context.ConnectionId;
+            //if (ChannelGroup != null && ChannelGroup.Count > 0)
+            //{
+            //    ChannelGroup.WriteAndFlushAsync(request, ChannelMatchers.All());
+            //}
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = scope,
-                Message = message,
-                Cmd = "handler"
+                Scope = request.Scope,
+                Message = request.Message,
+                Cmd = request.Cmd
             };
-            return Clients.Caller.Send(reply);
+            _eventBus.PublishAsync(typeof(object), reply);
+
+            return Clients.Caller.SendAsync("receive", reply);
         }
 
         public Task Login(RequestCommand request)
@@ -191,11 +198,11 @@ namespace Abp.VNext.Hello
             string connectionId = Context.ConnectionId;
             ReplyContent<object> reply = new ReplyContent<object>
             {
-                ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "login"
+                ConnectionId = connectionId,
+                Scope = 0,
+                Cmd = 2
             };
-            return Clients.Caller.Send(reply);
+            return Clients.Caller.SendAsync("receive", reply);
         }
 
         public Task Token(string request)
@@ -203,26 +210,48 @@ namespace Abp.VNext.Hello
             string connectionId = Context.ConnectionId;
             ReplyContent<object> reply = new ReplyContent<object>
             {
-                ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "token"
+                ConnectionId = connectionId,
+                Scope = 0,
+                Cmd = 2
             };
-            return Clients.Caller.Send(reply);
+            return Clients.Caller.SendAsync("receive", reply);
         }
 
-
-        public Task SendToConnection(string connectionId, string name, string message)
+        public Task SendTo(string connectionId, string message)
         {
-            string connectionIdFrom = Context.ConnectionId;
             ReplyContent<object> reply = new ReplyContent<object>
             {
                 ConnectionId = Context.ConnectionId,
-                Scope = "hub",
-                Cmd = "SendToConnection"
+                Scope = 0,
+                Cmd = 2,
+                Message = message
+              
             };
-            return Clients.Client(connectionId).Send(reply);
+            return Clients.Client(connectionId).SendAsync("sendTo", reply);
         }
 
-    }
+        /// <summary>
+        /// 流式传输
+        /// 有些场景中，服务器返回的数据量较大，等待时间较长，客户端不得不等待服务器返回所有数据后，再进行相应的操作。这时使用流式传输，
+        /// 将服务器数据碎片化，当每个数据碎片读取完成之后，就只传输完成的部分，而不需要等待所有数据都读取完成。
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
+        public async Task<ChannelReader<int>> DelayCounterAsync(int delay)
+        {
+            Channel<int> channel = Channel.CreateUnbounded<int>();
+            await WriteItems(channel.Writer, 20, delay);
+            return channel.Reader;
+        }
 
+        private async Task<bool> WriteItems(ChannelWriter<int> writer, int count, int delay)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                await writer.WriteAsync(i);
+                await Task.Delay(delay);
+            }
+            return writer.TryComplete();
+        }
+    }
 }

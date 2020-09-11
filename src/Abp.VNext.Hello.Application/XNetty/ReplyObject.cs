@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Volo.Abp.EventBus;
 
 namespace Abp.VNext.Hello.XNetty
 {
@@ -23,12 +22,13 @@ namespace Abp.VNext.Hello.XNetty
         /// <summary>
         /// 模块ID
         /// </summary>
-        public string Scope { get; set; } //1,
+        public int Scope { get; set; } //1,
 
         /// <summary>
         /// 指令ID
         /// </summary>
-        public string Cmd { get; set; }// 1,
+        [JsonProperty("cmd")]
+        public int Cmd { get; set; }// 1,
 
         /// <summary>
         /// 状态码，200为正常，其他状态码为业务异常
@@ -41,7 +41,7 @@ namespace Abp.VNext.Hello.XNetty
         /// </summary>
         public string Message { get; set; }// "响应成功"
 
-        public long ServerTime { get; set; }
+        public long ServerTime => DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
         public long ClientTime { get; set; }
         public long GetTimeElapsed() => ClientTime - ServerTime;
@@ -57,25 +57,20 @@ namespace Abp.VNext.Hello.XNetty
     /// <summary>
     /// tcp响应统一格式
     /// </summary>
+    [EventName("Reply.Handler")]
+    [Serializable]
     public class ReplyContent<T> : ReplyObject
     {
         public ReplyContent()
         {
         }
-        public static ReplyContent<T> GetReplyContent(string json) => JsonConvert.DeserializeObject<ReplyContent<T>>(json);
+        public static string GetContent(string json) => JsonConvert.SerializeObject(json);
         /// <summary>
         /// 响应实体对象
         /// </summary>
         [JsonProperty("result")]
         public T Result { get; set; }
 
-        public static ReplyContent<T> GetModuleInfo(string json)
-        {
-            //ReplyObject result = JsonConvert.DeserializeObject<ReplyObject>(json);
-            // return result;
-            return new ReplyContent<T>() { Cmd = "100", RequestNo = "Hello", Message = json };
-
-
-        }
+        public static ReplyContent<T> GetModuleInfo(string json) => JsonConvert.DeserializeObject<ReplyContent<T>>(json);
     }
 }

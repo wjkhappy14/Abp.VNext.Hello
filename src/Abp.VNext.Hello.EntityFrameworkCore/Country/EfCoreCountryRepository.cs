@@ -7,7 +7,7 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace Abp.VNext.Hello
 {
-    public class EfCoreCountryRepository : EfCoreRepository<HelloDbContext, Country, string>, ICountryRepository
+    public class EfCoreCountryRepository : EfCoreRepository<HelloDbContext, Country, int>, ICountryRepository
     {
 
         public EfCoreCountryRepository(IDbContextProvider<HelloDbContext> dbContextProvider)
@@ -18,14 +18,14 @@ namespace Abp.VNext.Hello
 
         public IQueryable<Country> Search(string keyword)
         {
-            return DbSet.Where(w => w.CountryName == keyword);
+            return DbSet.Where(w => w.Name == keyword);
         }
 
         public async Task<Country> GetByNameAsync(string name)
         {
-            return await DbSet.FirstOrDefaultAsync(p => p.CountryName == name);
+            return await DbSet.FirstOrDefaultAsync(p => p.Name == name);
         }
-        public Task<Country> GetCountryByIdAsync(string id)
+        public Task<Country> GetCountryByIdAsync(int id)
         {
             Task<Country> country = DbContext.Countries
                                .AsNoTracking()

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -12,11 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Account.HttpApi.Client" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" Version="2.6.0" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi.Client" Version="2.6.0" />
+	<PackageReference Include="EasyAbp.EShop.HttpApi.Client" Version="0.14.1" />
+    <PackageReference Include="Volo.Abp.Account.HttpApi.Client" Version="3.1.0" />
+	<PackageReference Include="Volo.Blogging.HttpApi.Client" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.Identity.HttpApi.Client" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.HttpApi.Client" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.TenantManagement.HttpApi.Client" Version="3.1.0" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.HttpApi.Client" Version="3.1.0" />
+	<PackageReference Include="EasyAbp.PrivateMessaging.HttpApi.Client" Version="0.4.3" />
+	<PackageReference Include="EasyAbp.Abp.SettingUi.HttpApi.Client" Version="1.1.10" />
   </ItemGroup>
 
 </Project>

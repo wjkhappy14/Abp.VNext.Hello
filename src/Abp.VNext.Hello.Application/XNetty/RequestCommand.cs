@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using NUglify.JavaScript;
+using System;
 using System.Text;
 
 namespace Abp.VNext.Hello.XNetty
 {
+
+
+    [Serializable]
     public class RequestCommand
     {
         /// <summary>
@@ -23,13 +28,13 @@ namespace Abp.VNext.Hello.XNetty
         /// <summary>
         /// 模块ID
         /// </summary>
-        public string Scope { get; set; }
+        public int Scope { get; set; }
 
         /// <summary>
         /// 指令ID
         /// </summary>
         /// 
-        public string Cmd { get; set; }
+        public int Cmd { get; set; }
 
     }
 
@@ -38,14 +43,24 @@ namespace Abp.VNext.Hello.XNetty
     /// 请求指令
     /// </summary>
     /// <typeparam name="T"></typeparam>
-
+    /// 
     public class RequestCommand<T> : RequestCommand
     {
-        public static string GetRequestCommand(RequestCommand<T> requestCommand) => "";
+        public static string GetRequest(RequestCommand<T> cmd) => JsonConvert.SerializeObject(cmd);
+        public static bool TryGetCommand(string cmd, out RequestCommand<T> request)
+        {
+            if (string.IsNullOrEmpty(JsonParser.Validate(cmd)))
+            {
+                request = default;
+                return false;
+            }
+            request = JsonConvert.DeserializeObject<RequestCommand<T>>(cmd);
+            return true;
+        }
 
         public static byte[] EncodeRequestCommand(RequestCommand<T> requestCommand)
         {
-            string cmd = GetRequestCommand(requestCommand);
+            string cmd = GetRequest(requestCommand);
             byte[] messageBytes = Encoding.UTF8.GetBytes(cmd);
             return messageBytes;
         }
@@ -55,8 +70,8 @@ namespace Abp.VNext.Hello.XNetty
         /// </summary>
 
         public T Data { get; set; } = default(T);
-        public override string ToString() => GetRequestCommand(this);
-        public void SetModule(Tuple<string, string> tuple)
+        public override string ToString() => GetRequest(this);
+        public void SetModule(Tuple<int, int> tuple)
         {
             Scope = tuple.Item1;
             Cmd = tuple.Item2;

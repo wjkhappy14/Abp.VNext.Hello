@@ -31,19 +31,36 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using Volo.Abp.Timing;
 using Serilog;
+using EasyAbp.PrivateMessaging.Web;
+using EasyAbp.PrivateMessaging;
+using System.Linq;
+using Microsoft.AspNetCore.Cors;
+using Volo.Blogging;
+using Volo.Abp.AspNetCore.SignalR;
+using EasyAbp.EShop.Stores.Web;
+using EasyAbp.Abp.SettingUi.Web;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Abp.VNext.Hello.Web
 {
     [DependsOn(
         typeof(HelloHttpApiModule),
+        typeof(EShopStoresWebModule),
         typeof(HelloApplicationModule),
+        typeof(PrivateMessagingWebModule),
+        typeof(BloggingWebModule),
         typeof(HelloEntityFrameworkCoreDbMigrationsModule),
         typeof(AbpAutofacModule),
+        typeof(SettingUiWebModule),
         typeof(AbpIdentityWebModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(AbpTenantManagementWebModule),
+        typeof(AbpAspNetCoreSignalRModule),
         typeof(AbpAspNetCoreSerilogModule)
         )]
     public class HelloWebModule : AbpModule
@@ -67,13 +84,14 @@ namespace Abp.VNext.Hello.Web
         {
             context.Services.AddObjectAccessor<IHubContext<NotificationHub>>();
             IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
-            var configuration = context.Services.GetConfiguration();
+            IConfiguration configuration = context.Services.GetConfiguration();
 
             ConfigureUrls(configuration);
             ConfigureAuthentication(context, configuration);
             ConfigureAutoMapper();
             ConfigureVirtualFileSystem(hostingEnvironment);
             ConfigureLocalizationServices();
+            ConfigureCors(context, configuration);
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
@@ -143,12 +161,33 @@ namespace Abp.VNext.Hello.Web
                     .AddBaseTypes(
                         typeof(AbpUiResource)
                     );
-
                 options.Languages.Add(new LanguageInfo("en", "en", "English"));
                 options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
+
             });
         }
 
+        private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
+        {
+            context.Services.AddCors(options =>
+            {
+                options.AddPolicy("Default", builder =>
+                {
+                    builder
+                        .WithOrigins(
+                            configuration["App:CorsOrigins"]
+                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                .Select(o => o.RemovePostFix("/"))
+                                .ToArray()
+                        )
+                        .WithAbpExposedHeaders()
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+        }
         private void ConfigureNavigationServices()
         {
             Configure<AbpNavigationOptions>(options =>
@@ -162,6 +201,7 @@ namespace Abp.VNext.Hello.Web
             Configure<AbpAspNetCoreMvcOptions>(options =>
             {
                 options.MinifyGeneratedScript = true;
+                options.ConventionalControllers.Create(typeof(PrivateMessagingApplicationModule).Assembly);
                 options.ConventionalControllers.Create(typeof(HelloApplicationModule).Assembly,
                   opts =>
                   {
@@ -206,27 +246,15 @@ namespace Abp.VNext.Hello.Web
                 app.UseErrorPage();
             }
             //启用目录浏览
-            //app.UseDirectoryBrowser();
-
-            //静态文件中间件
+            app.UseDirectoryBrowser();
+            //静态文件
             app.UseStaticFiles();
-
             //状态码页面
             app.UseStatusCodePages();
             app.UseVirtualFiles();
             app.UseRouting();
 
-            app.UseCors(builder =>
-            {
-                builder.WithOrigins("http://hello.com",
-                                    "http://www.123.com",
-                                    "http://119.23.207.114",
-                                    "http://119.23.207.115",
-                                    "http://localhost")
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod()
-                                    .AllowCredentials();
-            });
+            app.UseCors("Default");
             app.UseAuthentication();
             app.UseJwtTokenMiddleware();
 
@@ -235,8 +263,8 @@ namespace Abp.VNext.Hello.Web
                 app.UseMultiTenancy();
             }
             app.UseIdentityServer();
-            app.UseAuthorization();
 
+            app.UseAuthorization();
 
             app.UseAbpRequestLocalization();
             app.UseSwagger();
@@ -244,17 +272,46 @@ namespace Abp.VNext.Hello.Web
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Hello API");
             });
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHub<NotificationHub>("/Notification", (options) =>
-                {
-
-                });
-                endpoints.MapConnectionHandler<MessagesConnectionHandler>("/Message");
-            });
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
-            app.UseMvcWithDefaultRouteAndArea();
+            app.UseConfiguredEndpoints();
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.OnStarting(() =>
+                {
+                    context.Response.Headers["Now"] = $"{DateTime.Now.ToLocalTime()}";
+                    return Task.CompletedTask;
+                });
+                await next();
+            });
+
+            app.Map("/time", time =>
+            {
+                //终止中间件
+                time.Run(async context =>
+                {
+                    await context
+                      .Response
+                      .WriteAsync($"{DateTime.Now.ToLocalTime()}");
+                });
+            });
+            app.Map("/features", feature =>
+            {
+                feature.Run(async http =>
+                {
+                    IFeatureCollection features = http.Features;
+                    await http
+                     .Response
+                     .WriteAsync(features.ToString());
+                }
+                );
+            });
+            app.Run(async (context) =>
+            {
+                //https://docs.microsoft.com/zh-cn/archive/msdn-magazine/2019/june/cutting-edge-revisiting-the-asp-net-core-pipeline
+                await context.Response.WriteJsonAsync(context.Request.Path);
+            });
         }
     }
 }

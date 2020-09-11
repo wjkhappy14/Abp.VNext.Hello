@@ -23,18 +23,18 @@ namespace Abp.VNext.Hello
             _dapperRepository = new DapperRepository<HelloDbContext>(dbContextProvider);
         }
 
-        public IQueryable<StateProvince> FindByCountryIdAsync(string countryId)
+        public IQueryable<StateProvince> FindByCountryIdAsync(int countryId)
         {
             return DbSet.Where(x => x.CountryId == countryId);
         }
 
         public Task<StateProvince> FindByNameAsync(string name)
         {
-            return DbSet.FirstOrDefaultAsync(p => p.StateProvinceName == name);
+            return DbSet.FirstOrDefaultAsync(p => p.Name == name);
         }
 
 
-        private Dictionary<string, List<StateProvince>> W()
+        private Dictionary<int, List<StateProvince>> W()
         {
             return base.DbContext.StateProvinces
                  .GroupBy(c => c.CountryId)
@@ -46,29 +46,34 @@ namespace Abp.VNext.Hello
               }).OrderByDescending(x => x.Items.Count)
                 .ToDictionary(g => g.CountryId, g => g.Items);
         }
-        private void c()
+        private void GroupJoin()
         {
-            var groupJoin = 
+            var groupJoin =
                 DbContext.StateProvinces.GroupJoin(
-                DbContext.Countries, stateProvince => stateProvince.CountryId,
+                DbContext.Countries,
+                stateProvince => stateProvince.CountryId,
                 country => country.Id,
-                (c, p) => new { c.CountryId, Provinces = p });
+                (c, p) => new
+                {
+                    c.CountryId,
+                    Provinces = p
+                }
+                );
 
         }
 
         void GroupBy(string provinceName)
         {
             var queryable = base.DbContext.StateProvinces
-                .Where(x => x.StateProvinceName == provinceName)
+                .Where(x => x.Name == provinceName)
                 .OrderByDescending(x => x.ChineseName)
-                .GroupBy(x => new { x.CountryId, x.StateProvinceName })
+                .GroupBy(x => new { x.CountryId, x.Name })
                 .Select(g => new
                 {
-                    SumOfCountryPopulation = g.Sum(x => x.Population),
                     CityCount = g.Sum(x => x.Cities.Count),
                     StateProvinces = g.ToList(),
                     g.Key.CountryId,
-                    g.Key.StateProvinceName
+                    g.Key.Name
                 });
             var result = queryable;
         }

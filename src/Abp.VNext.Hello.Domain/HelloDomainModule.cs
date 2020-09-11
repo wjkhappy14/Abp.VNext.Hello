@@ -10,14 +10,19 @@ using Volo.Abp.PermissionManagement.Identity;
 using Volo.Abp.PermissionManagement.IdentityServer;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using EasyAbp.PrivateMessaging;
+using Volo.Blogging;
+using EasyAbp.EShop;
 
 namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloDomainSharedModule),
+        typeof(PrivateMessagingDomainModule),
+        typeof(BloggingDomainModule),
+        typeof(EShopDomainModule),
         typeof(AbpAuditLoggingDomainModule),
         typeof(AbpBackgroundJobsDomainModule),
         typeof(AbpFeatureManagementDomainModule),

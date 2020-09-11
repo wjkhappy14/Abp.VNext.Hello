@@ -20,14 +20,14 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             builder.Entity<City>(b =>
             {
-                b.ToTable(options.TablePrefix + "Cities", options.Schema);
+                b.ToTable(options.TablePrefix + "Cities");
                 b.HasOne<StateProvince>().WithMany().HasForeignKey(ur => ur.StateProvinceId);
                 b.HasIndex(q => q.Id);
             });
 
             builder.Entity<StateProvince>(b =>
             {
-                b.ToTable(options.TablePrefix + "StateProvinces", options.Schema);
+                b.ToTable(options.TablePrefix + "StateProvinces");
                 b.HasOne<Country>().WithMany().HasForeignKey(ur => ur.CountryId);
                 b.HasMany(u => u.Cities).WithOne().HasForeignKey(uc => uc.StateProvinceId);
                 b.HasIndex(q => q.Id);
@@ -35,7 +35,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             builder.Entity<Country>(b =>
             {
-                b.ToTable(options.TablePrefix + "Countries", options.Schema);
+                b.ToTable(options.TablePrefix + "Countries");
                 b.HasMany(u => u.StateProvinces).WithOne().HasForeignKey(uc => uc.CountryId);
                 b.HasIndex(q => q.Id);
             });

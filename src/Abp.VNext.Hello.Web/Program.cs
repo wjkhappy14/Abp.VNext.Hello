@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Abp.VNext.Hello.XNetty;
 using Abp.VNext.Hello.XNetty.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -12,7 +13,7 @@ namespace Abp.VNext.Hello.Web
 {
     public class Program
     {
-        static string url = "http://0.0.0.0:8080/";
+        static string url = "http://0.0.0.0/";
         public static async Task<int> Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -28,9 +29,10 @@ namespace Abp.VNext.Hello.Web
             try
             {
                 Log.Information("Starting web host.");
-                Console.WriteLine($"Http Host Running on {url} {Environment.NewLine}TCP(Netty) Running on Port:666");
-                await CreateHostBuilder(args).Build().RunAsync();
-                await XServerBootstrap.RunServerAsync(666);
+                await CreateHostBuilder(args)
+                    .Build()
+                    .RunAsync();
+
                 return 0;
             }
             catch (Exception ex)
@@ -80,6 +82,8 @@ namespace Abp.VNext.Hello.Web
                     });
                 })
                 .UseAutofac()
-                .UseSerilog();
+                .UseSerilog()
+                .UseNettyAsync()
+            ;
     }
 }

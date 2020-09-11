@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Abp.VNext.Hello.XNetty.Server;
+using EasyAbp.Abp.EventBus.Cap;
+using EasyAbp.Abp.SettingUi;
+using EasyAbp.EShop;
+using EasyAbp.PrivateMessaging;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Data;
 using Volo.Abp.Account;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.BackgroundJobs;
-using Volo.Abp.BackgroundWorkers;
-using Volo.Abp.EventBus.RabbitMq;
+//using Volo.Abp.EventBus.RabbitMq;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
@@ -12,12 +17,20 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.Timing;
 using Volo.Abp.Uow;
+using Volo.Blogging;
 
 namespace Abp.VNext.Hello
 {
     [DependsOn(
+        typeof(DotNettyModule),
         typeof(HelloDomainModule),
+        typeof(EShopApplicationModule),
+        typeof(PrivateMessagingApplicationModule),
+        typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
+       // typeof(AbpEventBusRabbitMqModule),
+        typeof(SettingUiApplicationModule),
+        typeof(AbpBackgroundJobsAbstractionsModule),
         typeof(HelloApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),
         typeof(AbpPermissionManagementApplicationModule),
@@ -32,7 +45,6 @@ namespace Abp.VNext.Hello
             base.PreConfigureServices(context);
         }
 
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             Configure<AbpAutoMapperOptions>(options =>
@@ -40,12 +52,12 @@ namespace Abp.VNext.Hello
                 options.AddMaps<HelloApplicationModule>();
             });
 
-            Configure<AbpRabbitMqEventBusOptions>(options =>
-            {
-                options.ClientName = "hello-abp";
-                options.ExchangeName = "hello-exchange";
-                options.ConnectionName = "Hello";
-            });
+            //Configure<AbpRabbitMqEventBusOptions>(options =>
+            //{
+            //    options.ClientName = "hello-abp";
+            //    options.ExchangeName = "hello-exchange";
+            //    options.ConnectionName = "Hello";
+            //});
 
             Configure<AbpBackgroundJobWorkerOptions>(options =>
             {
@@ -55,9 +67,9 @@ namespace Abp.VNext.Hello
                 options.DefaultFirstWaitDuration = 3600;
                 options.DefaultWaitFactor = Math.E;
             });
-            Configure<AbpBackgroundWorkerOptions>(options =>
+            Configure<AbpBackgroundJobOptions>(options =>
             {
-                options.IsEnabled = true;
+                options.IsJobExecutionEnabled = true;
             });
             Configure<AbpUnitOfWorkOptions>((options) =>
             {
@@ -67,6 +79,35 @@ namespace Abp.VNext.Hello
             Configure<AbpClockOptions>(options =>
             {
                 options.Kind = DateTimeKind.Local;
+            });
+
+            context.AddCapEventBus(capOptions =>
+            {
+                // capOptions.UseSqlServer();
+                capOptions.DefaultGroup = "Abp.VNext.Hello.Cap-Queue";
+                capOptions.FailedThresholdCallback = (failed) =>
+                {
+                    switch (failed.MessageType)
+                    {
+                        case DotNetCore.CAP.Messages.MessageType.Publish:
+                            System.Diagnostics.Debug.WriteLine(failed.Message);
+                            break;
+                        case DotNetCore.CAP.Messages.MessageType.Subscribe:
+                            System.Diagnostics.Debug.WriteLine(failed.Message);
+                            break;
+                        default:
+                            break;
+                    }
+                };
+                capOptions.UseInMemoryStorage();
+                capOptions.UseRabbitMQ(x =>
+                {
+                    x.HostName = "47.98.226.195";
+                    x.UserName = "admin";
+                    x.Password = "zxcvbnm";
+                    x.VirtualHost = "/";
+                });// 服务器地址配置，支持配置IP地址和密码
+                capOptions.UseDashboard();//CAP2.X版本以后官方提供了Dashboard页面访问。
             });
         }
     }

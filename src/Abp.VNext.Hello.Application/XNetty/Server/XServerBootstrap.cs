@@ -4,20 +4,17 @@ using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using System.Threading.Tasks;
 using DotNetty.Transport.Bootstrapping;
+using System.Text;
+using System.Net;
 
 namespace Abp.VNext.Hello.XNetty.Server
 {
     public class XServerBootstrap
     {
-        public static async Task RunServerAsync(int port)
+        public static async Task RunServerAsync(IPAddress ip, int port)
         {
             MultithreadEventLoopGroup bossGroup = new MultithreadEventLoopGroup(1);
             MultithreadEventLoopGroup workerGroup = new MultithreadEventLoopGroup();
-
-            StringEncoder STRING_ENCODER = new StringEncoder();
-            StringDecoder STRING_DECODER = new StringDecoder();
-            ServerHandler SERVER_HANDLER =  ServerHandler.Handler;
-
 
             try
             {
@@ -31,11 +28,17 @@ namespace Abp.VNext.Hello.XNetty.Server
                     {
                         IChannelPipeline pipeline = channel.Pipeline;
 
-                        pipeline.AddLast(new DelimiterBasedFrameDecoder(8192, Delimiters.LineDelimiter()));
-                        pipeline.AddLast(STRING_ENCODER, STRING_DECODER, SERVER_HANDLER);
+                        // pipeline.AddLast(new LoggingHandler());
+                        // pipeline.AddLast("framing-Encoder", new LengthFieldPrepender(4));
+                        // pipeline.AddLast("framing-Decoder", new LengthFieldBasedFrameDecoder(int.MaxValue, 0, 4, 0, 4));
+
+                        pipeline.AddLast(new StringEncoder(Encoding.UTF8));
+                        pipeline.AddLast(new StringDecoder(Encoding.UTF8));
+
+                        pipeline.AddLast(ServerHandler.Handler);
                     }));
 
-                IChannel bootstrapChannel = await bootstrap.BindAsync(port);
+                IChannel bootstrapChannel = await bootstrap.BindAsync(ip, port);
 
                 // await bootstrapChannel.CloseAsync();
             }

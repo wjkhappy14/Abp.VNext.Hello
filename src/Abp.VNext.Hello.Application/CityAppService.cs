@@ -4,19 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
+using Volo.Abp.Caching;
 
 namespace Abp.VNext.Hello
 {
 
-    // [Authorize]
-    public class CityAppService : ApplicationService, ICityAppService
+    [AllowAnonymous]
+    public class CityAppService : HelloAppService, ICityAppService
     {
         ICityRepository _cityRepository;
 
-        public CityAppService(ICityRepository cityRepository)
+        private IDistributedCache<string> DistributedCache { get; }
+
+        public CityAppService(ICityRepository cityRepository, IDistributedCache<string> distributedCache)
         {
             _cityRepository = cityRepository;
+            DistributedCache = distributedCache;
         }
 
         public Task<CityDto> CreateAsync(CityDto input)
@@ -39,7 +42,6 @@ namespace Abp.VNext.Hello
         public async Task<PagedResultDto<CityDto>> GetListAsync(PagedAndSortedResultRequestDto input)
         {
             List<City> items = await _cityRepository.GetListAsync(includeDetails: true);
-
             List<CityDto> result = ObjectMapper.Map<List<City>, List<CityDto>>(items);
 
             long totalCount = await _cityRepository.GetCountAsync();
