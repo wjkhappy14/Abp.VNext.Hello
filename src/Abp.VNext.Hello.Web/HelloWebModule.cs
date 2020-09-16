@@ -43,6 +43,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http.Features;
+using IdentityServer4.Configuration;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -95,7 +96,7 @@ namespace Abp.VNext.Hello.Web
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
-
+            ConfigureIdentityServerOptions(configuration);
             context.Services.AddConnections();
             context.Services.AddSignalR(options =>
             {
@@ -126,6 +127,23 @@ namespace Abp.VNext.Hello.Web
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "Hello";
                 });
+        }
+        private void ConfigureIdentityServerOptions(IConfiguration configuration)
+        {
+            Configure<IdentityServerOptions>(options =>
+            {
+                options.Events.RaiseSuccessEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.IssuerUri = configuration["AuthServer:IssuerUri"];
+                options.PublicOrigin = configuration["AuthServer:PublicOrigin"];
+                options.LowerCaseIssuerUri = true;
+                options.MutualTls.Enabled = true;
+                options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
+
+                System.Diagnostics.Debug.WriteLine(options);
+            });
         }
 
         private void ConfigureAutoMapper()
@@ -254,6 +272,16 @@ namespace Abp.VNext.Hello.Web
             app.UseVirtualFiles();
             app.UseRouting();
 
+            //定义终结点
+            app.UseEndpoints(endpoints =>
+            {
+                //endpoints.MapGet("/hello/{name:kitty}", async context =>
+                //{
+                //    object name = context.Request.RouteValues["name"];
+                //    await context.Response.WriteAsync($"Hello {name}!");
+                //});
+            });
+
             app.UseCors("Default");
             app.UseAuthentication();
             app.UseJwtTokenMiddleware();
@@ -307,11 +335,11 @@ namespace Abp.VNext.Hello.Web
                 }
                 );
             });
-            app.Run(async (context) =>
-            {
-                //https://docs.microsoft.com/zh-cn/archive/msdn-magazine/2019/june/cutting-edge-revisiting-the-asp-net-core-pipeline
-                await context.Response.WriteJsonAsync(context.Request.Path);
-            });
+            //app.Run(async (context) =>
+            //{
+            //    //https://docs.microsoft.com/zh-cn/archive/msdn-magazine/2019/june/cutting-edge-revisiting-the-asp-net-core-pipeline
+            //    await context.Response.WriteJsonAsync(context.Request.Path);
+            //});
         }
     }
 }
