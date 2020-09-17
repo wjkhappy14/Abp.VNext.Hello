@@ -26,6 +26,7 @@ namespace Abp.VNext.Hello
 
         public IApplicationBuilder GetApplicationBuilder()
         {
+  
             IApplicationBuilder appBuilder = ServiceProvider.GetRequiredService<IApplicationBuilder>();
             return appBuilder;
         }

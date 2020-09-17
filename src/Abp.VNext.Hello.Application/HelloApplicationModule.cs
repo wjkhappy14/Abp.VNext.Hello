@@ -3,7 +3,9 @@ using EasyAbp.Abp.EventBus.Cap;
 using EasyAbp.Abp.SettingUi;
 using EasyAbp.EShop;
 using EasyAbp.PrivateMessaging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Data;
 using Volo.Abp.Account;
@@ -28,7 +30,7 @@ namespace Abp.VNext.Hello
         typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
-       // typeof(AbpEventBusRabbitMqModule),
+        // typeof(AbpEventBusRabbitMqModule),
         typeof(SettingUiApplicationModule),
         typeof(AbpBackgroundJobsAbstractionsModule),
         typeof(HelloApplicationContractsModule),
@@ -47,6 +49,7 @@ namespace Abp.VNext.Hello
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            context.Services.TryAddSingleton<IHttpContextAccessor>();
             Configure<AbpAutoMapperOptions>(options =>
             {
                 options.AddMaps<HelloApplicationModule>();
