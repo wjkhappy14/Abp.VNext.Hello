@@ -76,7 +76,7 @@ namespace Abp.VNext.Hello
             });
             Configure<AbpUnitOfWorkOptions>((options) =>
             {
-                options.IsolationLevel = IsolationLevel.ReadCommitted;
+                options.IsolationLevel = IsolationLevel.ReadUncommitted;
                 options.IsTransactional = true;
             });
             Configure<AbpClockOptions>(options =>

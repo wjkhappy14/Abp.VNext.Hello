@@ -96,7 +96,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
             {
                 options.UseSqlite<IdentityDbContext>(x =>
                 {
-
+                    x.CommandTimeout(6_000);
                 });
             });
 
@@ -112,7 +112,8 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
             {
                 options.UseSqlite<IdentityServerDbContext>(x =>
                 {
-
+                    x.MaxBatchSize(4096);
+                    x.CommandTimeout(6_000);
                 });
             });
 
