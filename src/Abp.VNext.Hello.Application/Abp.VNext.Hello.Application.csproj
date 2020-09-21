@@ -13,14 +13,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EasyAbp.EShop.Application" Version="0.14.1" />
-		<PackageReference Include="Volo.Abp.Account.Application" Version="3.1.0" />
-		<PackageReference Include="Volo.Abp.AspNetCore.SignalR" Version="3.1.0" />
-		<PackageReference Include="Volo.Blogging.Application" Version="3.1.0" />
-		<PackageReference Include="Volo.Abp.Identity.Application" Version="3.1.0" />
-		<PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="3.1.0" />
-		<PackageReference Include="Volo.Abp.TenantManagement.Application" Version="3.1.0" />
-		<PackageReference Include="Volo.Abp.FeatureManagement.Application" Version="3.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+		<PackageReference Include="Volo.Abp.Autofac" Version="3.1.2" />
+		<PackageReference Include="EasyAbp.EShop.Application" Version="1.0.1" />
+		<PackageReference Include="Volo.Abp.Account.Application" Version="3.1.2" />
+		<PackageReference Include="Volo.Abp.AspNetCore.SignalR" Version="3.1.2" />
+		<PackageReference Include="Volo.Blogging.Application" Version="3.1.2" />
+		<PackageReference Include="Volo.Abp.Identity.Application" Version="3.1.2" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="3.1.2" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Application" Version="3.1.2" />
+		<PackageReference Include="Volo.Abp.FeatureManagement.Application" Version="3.1.2" />
 		<PackageReference Include="StackExchange.Redis" Version="2.1.58" />
 		<PackageReference Include="DotNetty.Transport" Version="0.6.0" />
 		<PackageReference Include="DotNetty.Buffers" Version="0.6.0" />

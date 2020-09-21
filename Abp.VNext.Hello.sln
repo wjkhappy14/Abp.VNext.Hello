@@ -33,6 +33,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.AspNetIdent
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.AccessTokenValidation", "..\IdentityServer4.AccessTokenValidation\src\IdentityServer4.AccessTokenValidation.csproj", "{94D0F17C-2156-4454-901A-BA8E11B3FAB6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityModel", "IdentityModel", "{428A63CF-CDC3-4389-9926-AC9105F4B124}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityModel", "..\IdentityModel\src\IdentityModel.csproj", "{5BEFBACE-0AD7-4DAD-8046-FBB1F41BA961}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityModel.AspNetCore.OAuth2Introspection", "..\IdentityModel.AspNetCore.OAuth2Introspection\src\IdentityModel.AspNetCore.OAuth2Introspection.csproj", "{221A9F80-FC1D-48DA-945E-29B16FCA2FD2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.Storage", "..\IdentityServer4\src\Storage\src\IdentityServer4.Storage.csproj", "{9A919926-B172-4E03-91CD-417E724CC4A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +99,18 @@ Global
 		{94D0F17C-2156-4454-901A-BA8E11B3FAB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94D0F17C-2156-4454-901A-BA8E11B3FAB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94D0F17C-2156-4454-901A-BA8E11B3FAB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BEFBACE-0AD7-4DAD-8046-FBB1F41BA961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BEFBACE-0AD7-4DAD-8046-FBB1F41BA961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BEFBACE-0AD7-4DAD-8046-FBB1F41BA961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BEFBACE-0AD7-4DAD-8046-FBB1F41BA961}.Release|Any CPU.Build.0 = Release|Any CPU
+		{221A9F80-FC1D-48DA-945E-29B16FCA2FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{221A9F80-FC1D-48DA-945E-29B16FCA2FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{221A9F80-FC1D-48DA-945E-29B16FCA2FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{221A9F80-FC1D-48DA-945E-29B16FCA2FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A919926-B172-4E03-91CD-417E724CC4A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A919926-B172-4E03-91CD-417E724CC4A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A919926-B172-4E03-91CD-417E724CC4A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A919926-B172-4E03-91CD-417E724CC4A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +129,9 @@ Global
 		{2A90BFA7-6673-4445-AAE0-4F60C35F4D3F} = {D69A0CD2-1173-47D3-A522-CDA9CDE83957}
 		{D179BB7C-0076-44D0-B238-E8107F801D30} = {D69A0CD2-1173-47D3-A522-CDA9CDE83957}
 		{94D0F17C-2156-4454-901A-BA8E11B3FAB6} = {D69A0CD2-1173-47D3-A522-CDA9CDE83957}
+		{5BEFBACE-0AD7-4DAD-8046-FBB1F41BA961} = {428A63CF-CDC3-4389-9926-AC9105F4B124}
+		{221A9F80-FC1D-48DA-945E-29B16FCA2FD2} = {428A63CF-CDC3-4389-9926-AC9105F4B124}
+		{9A919926-B172-4E03-91CD-417E724CC4A1} = {D69A0CD2-1173-47D3-A522-CDA9CDE83957}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}

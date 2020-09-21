@@ -25,6 +25,7 @@ namespace Abp.VNext.Hello.Controllers
             BlobItemDto item = await BlobService.GetAsync(id);
             return Json(item);
         }
+        [RequestSizeLimit(100000000)]
         [HttpPost]
         [Route("blob/upload")]
         public async Task<JsonResult> Upload(IFormFile file)

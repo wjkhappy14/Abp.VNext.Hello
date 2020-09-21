@@ -41,8 +41,8 @@ using EasyAbp.EShop.Stores.Web;
 using EasyAbp.Abp.SettingUi.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http.Features;
+using IdentityServer4.Configuration;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -95,7 +95,7 @@ namespace Abp.VNext.Hello.Web
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
-
+            ConfigureIdentityServerOptions(configuration);
             context.Services.AddConnections();
             context.Services.AddSignalR(options =>
             {
@@ -119,13 +119,36 @@ namespace Abp.VNext.Hello.Web
         private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
             //http://www.identityserver.com.cn/
-            context.Services.AddAuthentication()
+            context.Services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
-                    options.ApiName = "Hello";
+                    // options.ApiName = "Hello";
+                    //options.ApiSecret = "1234QWERasdf";
+                    options.EnableCaching = true;
+                    options.CacheDuration = TimeSpan.FromMinutes(120);
+                    options.SaveToken = true;
+                    options.LegacyAudienceValidation = true;
+
                 });
+        }
+        private void ConfigureIdentityServerOptions(IConfiguration configuration)
+        {
+            Configure<IdentityServerOptions>(options =>
+            {
+                options.Events.RaiseSuccessEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.IssuerUri = configuration["AuthServer:IssuerUri"];
+                options.PublicOrigin = configuration["AuthServer:PublicOrigin"];
+                options.LowerCaseIssuerUri = true;
+                options.MutualTls.Enabled = true;
+                options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
+
+                System.Diagnostics.Debug.WriteLine(options);
+            });
         }
 
         private void ConfigureAutoMapper()
@@ -232,7 +255,7 @@ namespace Abp.VNext.Hello.Web
             IWebHostEnvironment env = context.GetEnvironment();
             //https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-5.0
             app.UseCorrelationId();
-
+            app.UseMiddleware<RequestIdMiddleware>();
             app.UseSerilogRequestLogging();
 
             if (env.IsDevelopment())
@@ -246,13 +269,23 @@ namespace Abp.VNext.Hello.Web
                 app.UseErrorPage();
             }
             //启用目录浏览
-            app.UseDirectoryBrowser();
+            //app.UseDirectoryBrowser();
             //静态文件
             app.UseStaticFiles();
             //状态码页面
             app.UseStatusCodePages();
             app.UseVirtualFiles();
             app.UseRouting();
+
+            //定义终结点
+            app.UseEndpoints(endpoints =>
+            {
+                //endpoints.MapGet("/hello/{name:kitty}", async context =>
+                //{
+                //    object name = context.Request.RouteValues["name"];
+                //    await context.Response.WriteAsync($"Hello {name}!");
+                //});
+            });
 
             app.UseCors("Default");
             app.UseAuthentication();
@@ -307,11 +340,11 @@ namespace Abp.VNext.Hello.Web
                 }
                 );
             });
-            app.Run(async (context) =>
-            {
-                //https://docs.microsoft.com/zh-cn/archive/msdn-magazine/2019/june/cutting-edge-revisiting-the-asp-net-core-pipeline
-                await context.Response.WriteJsonAsync(context.Request.Path);
-            });
+            //app.Run(async (context) =>
+            //{
+            //    //https://docs.microsoft.com/zh-cn/archive/msdn-magazine/2019/june/cutting-edge-revisiting-the-asp-net-core-pipeline
+            //    await context.Response.WriteJsonAsync(context.Request.Path);
+            //});
         }
     }
 }
