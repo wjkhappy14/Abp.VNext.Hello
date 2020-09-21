@@ -41,7 +41,6 @@ using EasyAbp.EShop.Stores.Web;
 using EasyAbp.Abp.SettingUi.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using IdentityServer4.Configuration;
 
@@ -120,12 +119,18 @@ namespace Abp.VNext.Hello.Web
         private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
             //http://www.identityserver.com.cn/
-            context.Services.AddAuthentication()
+            context.Services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
-                    options.ApiName = "Hello";
+                    // options.ApiName = "Hello";
+                    //options.ApiSecret = "1234QWERasdf";
+                    options.EnableCaching = true;
+                    options.CacheDuration = TimeSpan.FromMinutes(120);
+                    options.SaveToken = true;
+                    options.LegacyAudienceValidation = true;
+
                 });
         }
         private void ConfigureIdentityServerOptions(IConfiguration configuration)

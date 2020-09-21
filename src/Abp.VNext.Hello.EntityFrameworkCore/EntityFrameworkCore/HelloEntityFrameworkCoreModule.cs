@@ -94,7 +94,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>((options) =>
             {
-                options.UseSqlite<IdentityDbContext>(x =>
+                options.UseSqlServer<IdentityDbContext>(x =>
                 {
                     x.CommandTimeout(6_000);
                 });
@@ -102,15 +102,15 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>((options) =>
             {
-                options.UseSqlite<PermissionManagementDbContext>(x =>
+                options.UseSqlServer<PermissionManagementDbContext>(x =>
                 {
-
+                    x.CommandTimeout(6_000);
                 });
             });
 
             Configure<AbpDbContextOptions>((options) =>
             {
-                options.UseSqlite<IdentityServerDbContext>(x =>
+                options.UseSqlServer<IdentityServerDbContext>(x =>
                 {
                     x.MaxBatchSize(4096);
                     x.CommandTimeout(6_000);
