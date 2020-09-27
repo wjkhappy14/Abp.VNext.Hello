@@ -47,14 +47,14 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlite<HelloDbContext>(x =>
+                options.UseSqlServer<HelloDbContext>(x =>
                 {
 
                 });
             });
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlite<BackgroundJobsDbContext>(x =>
+                options.UseSqlServer<BackgroundJobsDbContext>(x =>
                 {
 
                 });
@@ -64,14 +64,14 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlite<AbpAuditLoggingDbContext>(x =>
+                options.UseSqlServer<AbpAuditLoggingDbContext>(x =>
                 {
                 });
             });
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlite<TenantManagementDbContext>(x =>
+                options.UseSqlServer<TenantManagementDbContext>(x =>
                 {
 
                 });
@@ -79,14 +79,14 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlite<SettingManagementDbContext>(x =>
+                options.UseSqlServer<SettingManagementDbContext>(x =>
                 {
 
                 });
             });
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlite<PrivateMessagingDbContext>(x =>
+                options.UseSqlServer<PrivateMessagingDbContext>(x =>
                 {
 
                 });
@@ -96,7 +96,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
             {
                 options.UseSqlServer<IdentityDbContext>(x =>
                 {
-                    x.CommandTimeout(6_000);
+                   // x.CommandTimeout(6_000);
                 });
             });
 
@@ -112,8 +112,8 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
             {
                 options.UseSqlServer<IdentityServerDbContext>(x =>
                 {
-                    x.MaxBatchSize(4096);
-                    x.CommandTimeout(6_000);
+                    // x.MaxBatchSize(4096);
+                    // x.CommandTimeout(6_000);
                 });
             });
 

@@ -124,13 +124,11 @@ namespace Abp.VNext.Hello.Web
                 {
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
-                    // options.ApiName = "Hello";
-                    //options.ApiSecret = "1234QWERasdf";
+                    options.ApiName = "Dashboard";
                     options.EnableCaching = true;
                     options.CacheDuration = TimeSpan.FromMinutes(120);
                     options.SaveToken = true;
                     options.LegacyAudienceValidation = true;
-
                 });
         }
         private void ConfigureIdentityServerOptions(IConfiguration configuration)
