@@ -72,7 +72,7 @@ namespace Abp.VNext.Hello
             });
             Configure<AbpBackgroundJobOptions>(options =>
             {
-                options.IsJobExecutionEnabled = true;
+                options.IsJobExecutionEnabled = false;
             });
             Configure<AbpUnitOfWorkOptions>((options) =>
             {

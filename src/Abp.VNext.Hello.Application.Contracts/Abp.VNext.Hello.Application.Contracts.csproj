@@ -3,11 +3,13 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Abp.VNext.Hello</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\IdentityServer4\src\IdentityServer4\src\IdentityServer4.csproj" />
+    <ProjectReference Include="..\..\..\IdentityServer4\src\Storage\src\IdentityServer4.Storage.csproj" />
     <ProjectReference Include="..\Abp.VNext.Hello.Domain.Shared\Abp.VNext.Hello.Domain.Shared.csproj" />
   </ItemGroup>
 
