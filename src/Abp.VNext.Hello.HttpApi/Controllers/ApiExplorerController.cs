@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.IO.Pipelines;
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Abp.VNext.Hello.Controllers
 {
+    [RemoteService(Name = "ApiExplorer")]
     [RequestSizeLimit(500)]
     public class ApiExplorerController : AbpController
     {

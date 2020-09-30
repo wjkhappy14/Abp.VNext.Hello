@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Abp.VNext.Hello.Controllers
 {
+    [RemoteService(Name = "monitor")]
     [AutoValidateAntiforgeryToken]
     public class MonitorController : AbpController
     {

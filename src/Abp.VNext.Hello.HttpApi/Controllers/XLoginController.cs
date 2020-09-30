@@ -8,10 +8,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Abp.VNext.Hello.Controllers
 {
+    [RemoteService(Name = "XLogin")]
     [AllowAnonymous]
     public class XLoginController : AbpController
     {

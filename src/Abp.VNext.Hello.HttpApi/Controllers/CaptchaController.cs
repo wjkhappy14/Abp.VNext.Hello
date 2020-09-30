@@ -2,10 +2,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 
 namespace Abp.VNext.Hello.Controllers
 {
+    [RemoteService(Name = "captcha")]
     [Route("api/captcha")]
     public class CaptchaController : AbpController
     {

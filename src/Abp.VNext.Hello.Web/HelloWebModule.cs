@@ -144,7 +144,7 @@ namespace Abp.VNext.Hello.Web
                 options.LowerCaseIssuerUri = true;
                 options.MutualTls.Enabled = true;
                 options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
-
+                options.UserInteraction.DeviceVerificationUrl = "/device";
                 System.Diagnostics.Debug.WriteLine(options);
             });
         }

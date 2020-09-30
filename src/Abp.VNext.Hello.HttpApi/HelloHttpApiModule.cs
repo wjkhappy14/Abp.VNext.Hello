@@ -11,6 +11,7 @@ using System.Text;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
+using Volo.Abp.IdentityServer;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.TenantManagement;
@@ -19,6 +20,7 @@ using Volo.Blogging;
 namespace Abp.VNext.Hello
 {
     [DependsOn(
+        typeof(AbpIdentityServerDomainModule),
         typeof(HelloApplicationContractsModule),
         typeof(PrivateMessagingHttpApiModule),
         typeof(BloggingHttpApiModule),
@@ -32,6 +34,15 @@ namespace Abp.VNext.Hello
         )]
     public class HelloHttpApiModule : AbpModule
     {
+
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            PreConfigure<IMvcBuilder>(mvcBuilder =>
+            {
+                mvcBuilder.AddApplicationPartIfNotExists(typeof(HelloHttpApiModule).Assembly);
+            });
+        }
+
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             base.ConfigureServices(context);
