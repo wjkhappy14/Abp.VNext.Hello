@@ -43,6 +43,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using IdentityServer4.Configuration;
+using IdentityModel.Client;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -128,7 +129,15 @@ namespace Abp.VNext.Hello.Web
                     options.EnableCaching = true;
                     options.CacheDuration = TimeSpan.FromMinutes(120);
                     options.SaveToken = true;
-                    options.LegacyAudienceValidation = true;
+                    options.LegacyAudienceValidation = false;
+                    options.IntrospectionDiscoveryPolicy = new DiscoveryPolicy()
+                    {
+                        ValidateIssuerName = false,
+                        RequireHttps = false,
+                        AllowHttpOnLoopback = true
+                    };
+                    System.Diagnostics.Debug.WriteLine("IdentityServer Authentication Options", options);
+
                 });
         }
         private void ConfigureIdentityServerOptions(IConfiguration configuration)
