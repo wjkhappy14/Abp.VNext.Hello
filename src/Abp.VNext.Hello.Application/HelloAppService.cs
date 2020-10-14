@@ -1,29 +1,16 @@
-﻿using Abp.VNext.Hello.Localization;
-using Microsoft.AspNetCore.Http;
-using System.Diagnostics;
-using System.Security.Claims;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Abp.VNext.Hello.Localization;
 using Volo.Abp.Application.Services;
-using Volo.Abp.EventBus.Distributed;
 
 namespace Abp.VNext.Hello
 {
-
-   // [DebuggerStepThrough]
+    /* Inherit your application services from this class.
+     */
     public abstract class HelloAppService : ApplicationService
     {
-        private IHttpContextAccessor _httpContextAccessor;
-        public IHttpContextAccessor HttpContext => LazyGetRequiredService(ref _httpContextAccessor);
-
-
-        public Claim Merchant => CurrentUser.FindClaim("Merchant");
-
-
-        private IDistributedEventBus _eventBus;
-
-        public IDistributedEventBus EventBus => LazyGetRequiredService(ref _eventBus);
-
-
-        public HelloAppService()
+        protected HelloAppService()
         {
             LocalizationResource = typeof(HelloResource);
         }

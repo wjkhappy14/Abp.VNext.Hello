@@ -1,67 +1,64 @@
-﻿using System.IO;
-using Localization.Resources.AbpUi;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Abp.VNext.Hello.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Abp.VNext.Hello.Localization;
 using Abp.VNext.Hello.MultiTenancy;
 using Abp.VNext.Hello.Web.Menus;
+using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 using Volo.Abp;
-using Volo.Abp.Account.Web;
-using Volo.Abp.AspNetCore.Authentication.JwtBearer;
-using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Authentication.OAuth;
+using Volo.Abp.AspNetCore.Authentication.OpenIdConnect;
+using Volo.Abp.AspNetCore.MultiTenancy;
+using Volo.Abp.AspNetCore.Mvc.Client;
 using Volo.Abp.AspNetCore.Mvc.Localization;
+using Volo.Abp.AspNetCore.Mvc.UI;
+using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.Caching;
+using Volo.Abp.Caching.StackExchangeRedis;
+using Volo.Abp.FeatureManagement;
+using Volo.Abp.Http.Client.IdentityModel.Web;
 using Volo.Abp.Identity.Web;
-using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
+using Volo.Abp.MultiTenancy;
+using Volo.Abp.PermissionManagement.Web;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.UI.Navigation.Urls;
+using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
-using Microsoft.AspNetCore.SignalR;
-using System;
-using Volo.Abp.Timing;
-using Serilog;
-using EasyAbp.PrivateMessaging.Web;
-using EasyAbp.PrivateMessaging;
-using System.Linq;
-using Microsoft.AspNetCore.Cors;
-using Volo.Blogging;
-using Volo.Abp.AspNetCore.SignalR;
-using EasyAbp.EShop.Stores.Web;
-using EasyAbp.Abp.SettingUi.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using IdentityServer4.Configuration;
-using IdentityModel.Client;
 
 namespace Abp.VNext.Hello.Web
 {
     [DependsOn(
         typeof(HelloHttpApiModule),
-        typeof(EShopStoresWebModule),
-        typeof(HelloApplicationModule),
-        typeof(PrivateMessagingWebModule),
-        typeof(BloggingWebModule),
-        typeof(HelloEntityFrameworkCoreDbMigrationsModule),
-        typeof(AbpAutofacModule),
-        typeof(SettingUiWebModule),
-        typeof(AbpIdentityWebModule),
-        typeof(AbpAccountWebIdentityServerModule),
+        typeof(HelloHttpApiClientModule),
+        typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
+        typeof(AbpAspNetCoreMvcClientModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
-        typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
+        typeof(AbpAutofacModule),
+        typeof(AbpCachingStackExchangeRedisModule),
+        typeof(AbpFeatureManagementWebModule),
+        typeof(AbpHttpClientIdentityModelWebModule),
+        typeof(AbpIdentityWebModule),
         typeof(AbpTenantManagementWebModule),
-        typeof(AbpAspNetCoreSignalRModule),
         typeof(AbpAspNetCoreSerilogModule)
         )]
     public class HelloWebModule : AbpModule
@@ -72,9 +69,7 @@ namespace Abp.VNext.Hello.Web
             {
                 options.AddAssemblyResource(
                     typeof(HelloResource),
-                    typeof(HelloDomainModule).Assembly,
                     typeof(HelloDomainSharedModule).Assembly,
-                    typeof(HelloApplicationModule).Assembly,
                     typeof(HelloApplicationContractsModule).Assembly,
                     typeof(HelloWebModule).Assembly
                 );
@@ -83,29 +78,25 @@ namespace Abp.VNext.Hello.Web
 
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddObjectAccessor<IHubContext<NotificationHub>>();
-            IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
-            IConfiguration configuration = context.Services.GetConfiguration();
+            var hostingEnvironment = context.Services.GetHostingEnvironment();
+            var configuration = context.Services.GetConfiguration();
 
+            ConfigureCache(configuration);
+            ConfigureRedis(context, configuration, hostingEnvironment);
             ConfigureUrls(configuration);
             ConfigureAuthentication(context, configuration);
             ConfigureAutoMapper();
             ConfigureVirtualFileSystem(hostingEnvironment);
-            ConfigureLocalizationServices();
-            ConfigureCors(context, configuration);
-            ConfigureNavigationServices();
-            ConfigureAutoApiControllers();
+            ConfigureNavigationServices(configuration);
+            ConfigureMultiTenancy();
             ConfigureSwaggerServices(context.Services);
-            ConfigureIdentityServerOptions(configuration);
-            context.Services.AddConnections();
-            context.Services.AddSignalR(options =>
-            {
-                options.KeepAliveInterval = TimeSpan.FromSeconds(5);
-            });
+        }
 
-            Configure<AbpClockOptions>(options =>
+        private void ConfigureCache(IConfiguration configuration)
+        {
+            Configure<AbpDistributedCacheOptions>(options =>
             {
-                options.Kind = DateTimeKind.Local;
+                options.KeyPrefix = "Hello:";
             });
         }
 
@@ -117,45 +108,42 @@ namespace Abp.VNext.Hello.Web
             });
         }
 
+        private void ConfigureMultiTenancy()
+        {
+            Configure<AbpMultiTenancyOptions>(options =>
+            {
+                options.IsEnabled = MultiTenancyConsts.IsEnabled;
+            });
+        }
+
         private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
-            //http://www.identityserver.com.cn/
-            context.Services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(options =>
+            context.Services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = "Cookies";
+                    options.DefaultChallengeScheme = "oidc";
+                })
+                .AddCookie("Cookies", options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromDays(365);
+                })
+                .AddAbpOpenIdConnect("oidc", options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = false;
-                    options.ApiName = "Dashboard";
-                    options.EnableCaching = true;
-                    options.CacheDuration = TimeSpan.FromMinutes(120);
-                    options.SaveToken = true;
-                    options.LegacyAudienceValidation = false;
-                    options.IntrospectionDiscoveryPolicy = new DiscoveryPolicy()
-                    {
-                        ValidateIssuerName = false,
-                        RequireHttps = false,
-                        AllowHttpOnLoopback = true
-                    };
-                    System.Diagnostics.Debug.WriteLine("IdentityServer Authentication Options", options);
+                    options.RequireHttpsMetadata = true;
+                    options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
 
+                    options.ClientId = configuration["AuthServer:ClientId"];
+                    options.ClientSecret = configuration["AuthServer:ClientSecret"];
+
+                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+
+                    options.Scope.Add("role");
+                    options.Scope.Add("email");
+                    options.Scope.Add("phone");
+                    options.Scope.Add("Hello");
                 });
-        }
-        private void ConfigureIdentityServerOptions(IConfiguration configuration)
-        {
-            Configure<IdentityServerOptions>(options =>
-            {
-                options.Events.RaiseSuccessEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.IssuerUri = configuration["AuthServer:IssuerUri"];
-                options.PublicOrigin = configuration["AuthServer:PublicOrigin"];
-                options.LowerCaseIssuerUri = true;
-                options.MutualTls.Enabled = true;
-                options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
-                options.UserInteraction.DeviceVerificationUrl = "/device";
-                System.Diagnostics.Debug.WriteLine(options);
-            });
         }
 
         private void ConfigureAutoMapper()
@@ -163,7 +151,6 @@ namespace Abp.VNext.Hello.Web
             Configure<AbpAutoMapperOptions>(options =>
             {
                 options.AddMaps<HelloWebModule>();
-
             });
         }
 
@@ -173,70 +160,18 @@ namespace Abp.VNext.Hello.Web
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
-                    options.FileSets.ReplaceEmbeddedByPhysical<HelloDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VNext.Hello.Domain.Shared"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<HelloDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VNext.Hello.Domain"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<HelloDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VNext.Hello.Domain"));
                     options.FileSets.ReplaceEmbeddedByPhysical<HelloApplicationContractsModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VNext.Hello.Application.Contracts"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<HelloApplicationModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VNext.Hello.Application"));
                     options.FileSets.ReplaceEmbeddedByPhysical<HelloWebModule>(hostingEnvironment.ContentRootPath);
                 });
             }
         }
 
-        private void ConfigureLocalizationServices()
-        {
-            Configure<AbpLocalizationOptions>(options =>
-            {
-                options.Resources
-                    .Get<HelloResource>()
-                    .AddBaseTypes(
-                        typeof(AbpUiResource)
-                    );
-                options.Languages.Add(new LanguageInfo("en", "en", "English"));
-                options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
-
-            });
-        }
-
-        private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
-        {
-            context.Services.AddCors(options =>
-            {
-                options.AddPolicy("Default", builder =>
-                {
-                    builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
-            });
-        }
-        private void ConfigureNavigationServices()
+        private void ConfigureNavigationServices(IConfiguration configuration)
         {
             Configure<AbpNavigationOptions>(options =>
             {
-                options.MenuContributors.Add(new HelloMenuContributor());
-            });
-        }
-
-        private void ConfigureAutoApiControllers()
-        {
-            Configure<AbpAspNetCoreMvcOptions>(options =>
-            {
-                options.MinifyGeneratedScript = true;
-                options.ConventionalControllers.Create(typeof(PrivateMessagingApplicationModule).Assembly);
-                options.ConventionalControllers.Create(typeof(HelloApplicationModule).Assembly,
-                  opts =>
-                  {
-                      opts.RootPath = "hello/angkor";
-                  });
+                options.MenuContributors.Add(new HelloMenuContributor(configuration));
             });
         }
 
@@ -252,56 +187,55 @@ namespace Abp.VNext.Hello.Web
             );
         }
 
-        /// <summary>
-        /// ASP.NET Core 中间件
-        /// </summary>
-        /// <param name="context"></param>
+        private void ConfigureRedis(
+            ServiceConfigurationContext context,
+            IConfiguration configuration,
+            IWebHostEnvironment hostingEnvironment)
+        {
+            if (!hostingEnvironment.IsDevelopment())
+            {
+                var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
+                context.Services
+                    .AddDataProtection()
+                    .PersistKeysToStackExchangeRedis(redis, "Hello-Protection-Keys");
+            }
+        }
+
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            IApplicationBuilder app = context.GetApplicationBuilder();
-            IWebHostEnvironment env = context.GetEnvironment();
-            //https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/middleware/?view=aspnetcore-5.0
-            app.UseCorrelationId();
-            app.UseMiddleware<RequestIdMiddleware>();
-            app.UseSerilogRequestLogging();
+            var app = context.GetApplicationBuilder();
+            var env = context.GetEnvironment();
 
             if (env.IsDevelopment())
             {
-                //开发人员异常页 
                 app.UseDeveloperExceptionPage();
             }
 
-            else
+            app.UseAbpRequestLocalization();
+
+            if (!env.IsDevelopment())
             {
                 app.UseErrorPage();
             }
-            //启用目录浏览
-            //app.UseDirectoryBrowser();
-            //静态文件
-            app.UseStaticFiles();
-            //状态码页面
-            app.UseStatusCodePages();
+
+            app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
-
-            app.UseCors("Default");
             app.UseAuthentication();
-            app.UseJwtTokenMiddleware();
 
             if (MultiTenancyConsts.IsEnabled)
             {
                 app.UseMultiTenancy();
             }
-            app.UseIdentityServer();
 
             app.UseAuthorization();
 
-            app.UseAbpRequestLocalization();
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "Hello API");
             });
+
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();

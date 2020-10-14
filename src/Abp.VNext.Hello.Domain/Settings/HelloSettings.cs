@@ -5,6 +5,6 @@
         private const string Prefix = "Hello";
 
         //Add your own setting names here. Example:
-        public const string Port = Prefix + "Tcp.Port";
+        //public const string MySetting1 = Prefix + ".MySetting1";
     }
 }
