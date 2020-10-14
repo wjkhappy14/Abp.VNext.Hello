@@ -284,16 +284,6 @@ namespace Abp.VNext.Hello.Web
             app.UseVirtualFiles();
             app.UseRouting();
 
-            //定义终结点
-            app.UseEndpoints(endpoints =>
-            {
-                //endpoints.MapGet("/hello/{name:kitty}", async context =>
-                //{
-                //    object name = context.Request.RouteValues["name"];
-                //    await context.Response.WriteAsync($"Hello {name}!");
-                //});
-            });
-
             app.UseCors("Default");
             app.UseAuthentication();
             app.UseJwtTokenMiddleware();
@@ -315,43 +305,6 @@ namespace Abp.VNext.Hello.Web
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
-
-            app.Use(async (context, next) =>
-            {
-                context.Response.OnStarting(() =>
-                {
-                    context.Response.Headers["Now"] = $"{DateTime.Now.ToLocalTime()}";
-                    return Task.CompletedTask;
-                });
-                await next();
-            });
-
-            app.Map("/time", time =>
-            {
-                //终止中间件
-                time.Run(async context =>
-                {
-                    await context
-                      .Response
-                      .WriteAsync($"{DateTime.Now.ToLocalTime()}");
-                });
-            });
-            app.Map("/features", feature =>
-            {
-                feature.Run(async http =>
-                {
-                    IFeatureCollection features = http.Features;
-                    await http
-                     .Response
-                     .WriteAsync(features.ToString());
-                }
-                );
-            });
-            //app.Run(async (context) =>
-            //{
-            //    //https://docs.microsoft.com/zh-cn/archive/msdn-magazine/2019/june/cutting-edge-revisiting-the-asp-net-core-pipeline
-            //    await context.Response.WriteJsonAsync(context.Request.Path);
-            //});
         }
     }
 }
