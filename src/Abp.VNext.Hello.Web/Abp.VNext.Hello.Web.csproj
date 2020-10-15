@@ -1,57 +1,63 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <Import Project="..\..\common.props" />
+	<Import Project="..\..\common.props" />
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Abp.VNext.Hello.Web</RootNamespace>
-    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <PreserveCompilationContext>true</PreserveCompilationContext>
-    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
-    <PreserveCompilationReferences>true</PreserveCompilationReferences>
-    <UserSecretsId>Abp.VNext.Hello-4681b4fd-151f-4221-84a4-929d86723e4c</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<RootNamespace>Abp.VNext.Hello.Web</RootNamespace>
+		<AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+		<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+		<MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+		<PreserveCompilationReferences>true</PreserveCompilationReferences>
+		<UserSecretsId>Abp.VNext.Hello-4681b4fd-151f-4221-84a4-929d86723e4c</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
-    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="3.1.6" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+		<PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="3.1.6" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.Client" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Authentication.OpenIdConnect" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel.Web" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.Identity.Web" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.Web" Version="3.2.1" />
-    <ProjectReference Include="..\Abp.VNext.Hello.HttpApi\Abp.VNext.Hello.HttpApi.csproj" />
-    <ProjectReference Include="..\Abp.VNext.Hello.HttpApi.Client\Abp.VNext.Hello.HttpApi.Client.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.Autofac" Version="3.2.1" />
+		<PackageReference Include="AutoMapper" Version="10.0.0" />
+		<PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.Client" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Authentication.OpenIdConnect" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.Http.Client.IdentityModel.Web" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.Identity.Web" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Web" Version="3.2.1" />
+		<PackageReference Include="Volo.Abp.FeatureManagement.Web" Version="3.2.1" />
+		<ProjectReference Include="..\Abp.VNext.Hello.HttpApi\Abp.VNext.Hello.HttpApi.csproj" />
+		<ProjectReference Include="..\Abp.VNext.Hello.HttpApi.Client\Abp.VNext.Hello.HttpApi.Client.csproj" />
 
-  <ItemGroup>
-    <Compile Remove="Logs\**" />
-    <Content Remove="Logs\**" />
-    <EmbeddedResource Remove="Logs\**" />
-    <None Remove="Logs\**" />
-  </ItemGroup>
+		<ProjectReference Include="..\..\..\IdentityModel.AspNetCore.OAuth2Introspection\src\IdentityModel.AspNetCore.OAuth2Introspection.csproj" />
+		<ProjectReference Include="..\..\..\IdentityModel\src\IdentityModel.csproj" />
+		<ProjectReference Include="..\..\..\IdentityServer4.AccessTokenValidation\src\IdentityServer4.AccessTokenValidation.csproj" />
+		<ProjectReference Include="..\..\..\IdentityServer4\src\IdentityServer4\src\IdentityServer4.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Pages\**\*.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Pages\**\*.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Logs\**" />
+		<Content Remove="Logs\**" />
+		<EmbeddedResource Remove="Logs\**" />
+		<None Remove="Logs\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Pages\**\*.js">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Pages\**\*.css">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

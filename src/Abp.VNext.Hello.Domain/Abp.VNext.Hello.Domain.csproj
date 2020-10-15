@@ -8,11 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\IdentityModel.AspNetCore.OAuth2Introspection\src\IdentityModel.AspNetCore.OAuth2Introspection.csproj" />
+    <ProjectReference Include="..\..\..\IdentityModel\src\IdentityModel.csproj" />
+    <ProjectReference Include="..\..\..\IdentityServer4.AccessTokenValidation\src\IdentityServer4.AccessTokenValidation.csproj" />
+    <ProjectReference Include="..\..\..\IdentityServer4\src\AspNetIdentity\src\IdentityServer4.AspNetIdentity.csproj" />
+    <ProjectReference Include="..\..\..\IdentityServer4\src\IdentityServer4\src\IdentityServer4.csproj" />
+    <ProjectReference Include="..\..\..\IdentityServer4\src\Storage\src\IdentityServer4.Storage.csproj" />
     <ProjectReference Include="..\Abp.VNext.Hello.Domain.Shared\Abp.VNext.Hello.Domain.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Emailing" Version="3.2.1" />
+	<PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="Volo.Abp.Identity.Domain" Version="3.2.1" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="3.2.1" />
     <PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="3.2.1" />
