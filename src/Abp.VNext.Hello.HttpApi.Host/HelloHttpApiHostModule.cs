@@ -93,7 +93,7 @@ namespace Abp.VNext.Hello
                 .AddJwtBearer(options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
-                    options.RequireHttpsMetadata = true;
+                    options.RequireHttpsMetadata = false;
                     options.Audience = "Hello";
                 });
         }

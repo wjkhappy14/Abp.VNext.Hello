@@ -3,7 +3,7 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44338",
+      "applicationUrl": "https://localhost:60",
       "sslPort": 44338
     }
   },
@@ -18,7 +18,7 @@
     "Abp.VNext.Hello.IdentityServer": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44338",
+      "applicationUrl": "https://localhost:60",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
