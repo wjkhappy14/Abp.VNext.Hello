@@ -54,7 +54,13 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
                 });
             });
 
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlServer<FeatureManagementDbContext>(x =>
+                {
 
+                });
+            });
 
             Configure<AbpDbContextOptions>(options =>
             {
@@ -78,12 +84,12 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
                 });
             });
-          
+
             Configure<AbpDbContextOptions>((options) =>
             {
                 options.UseSqlServer<IdentityDbContext>(x =>
                 {
-                   // x.CommandTimeout(6_000);
+                    // x.CommandTimeout(6_000);
                 });
             });
 

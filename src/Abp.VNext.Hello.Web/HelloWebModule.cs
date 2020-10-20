@@ -44,6 +44,8 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using IdentityServer4;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -80,6 +82,7 @@ namespace Abp.VNext.Hello.Web
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
             var configuration = context.Services.GetConfiguration();
+            // context.Services.AddOidcStateDataFormatterCache();
 
             ConfigureCache(configuration);
             ConfigureRedis(context, configuration, hostingEnvironment);
@@ -132,6 +135,8 @@ namespace Abp.VNext.Hello.Web
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
                     options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.SignOutScheme = IdentityServerConstants.SignoutScheme;
 
                     options.ClientId = configuration["AuthServer:ClientId"];
                     options.ClientSecret = configuration["AuthServer:ClientSecret"];
@@ -143,6 +148,7 @@ namespace Abp.VNext.Hello.Web
                     options.Scope.Add("email");
                     options.Scope.Add("phone");
                     options.Scope.Add("Hello");
+
                 });
         }
 
@@ -206,6 +212,10 @@ namespace Abp.VNext.Hello.Web
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
 
+            //https://www.bilibili.com/read/cv6013297
+            ForwardedHeadersOptions forward = new ForwardedHeadersOptions() { };
+
+            app.UseForwardedHeaders(forward);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

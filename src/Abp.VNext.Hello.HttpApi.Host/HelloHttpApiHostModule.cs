@@ -94,6 +94,7 @@ namespace Abp.VNext.Hello
                 {
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
+                    options.IncludeErrorDetails = false;
                     options.Audience = "Hello";
                 });
         }
