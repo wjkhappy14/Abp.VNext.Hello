@@ -1,12 +1,9 @@
-﻿using EasyAbp.EShop.EntityFrameworkCore;
-using EasyAbp.PrivateMessaging.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Dapper;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -22,14 +19,11 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
     [DependsOn(
         typeof(HelloDomainModule),
         typeof(AbpDapperModule),
-        typeof(EShopEntityFrameworkCoreModule),
-        typeof(PrivateMessagingEntityFrameworkCoreModule),
         typeof(BloggingEntityFrameworkCoreModule),
         typeof(AbpIdentityEntityFrameworkCoreModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
-        typeof(AbpEntityFrameworkCoreSqliteModule),
         typeof(AbpEntityFrameworkCoreSqlServerModule),
         typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
@@ -60,7 +54,13 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
                 });
             });
 
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlServer<FeatureManagementDbContext>(x =>
+                {
 
+                });
+            });
 
             Configure<AbpDbContextOptions>(options =>
             {
@@ -84,19 +84,12 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
                 });
             });
-            Configure<AbpDbContextOptions>(options =>
-            {
-                options.UseSqlServer<PrivateMessagingDbContext>(x =>
-                {
-
-                });
-            });
 
             Configure<AbpDbContextOptions>((options) =>
             {
                 options.UseSqlServer<IdentityDbContext>(x =>
                 {
-                   // x.CommandTimeout(6_000);
+                    // x.CommandTimeout(6_000);
                 });
             });
 

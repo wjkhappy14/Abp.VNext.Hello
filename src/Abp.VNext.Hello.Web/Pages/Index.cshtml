@@ -1,6 +1,10 @@
 ﻿@page
-@inherits Abp.VNext.Hello.Web.Pages.HelloPage
 @model Abp.VNext.Hello.Web.Pages.IndexModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Abp.VNext.Hello.Localization
+@using Volo.Abp.Users
+@inject IHtmlLocalizer<HelloResource> L
+@inject ICurrentUser CurrentUser
 @section styles {
     <abp-style-bundle>
         <abp-style src="/Pages/Index.css" />
@@ -11,38 +15,15 @@
         <abp-script src="/Pages/Index.js" />
     </abp-script-bundle>
 }
-<div class="jumbotron text-center">
-    <h1>@L["Welcome"] @this.HttpContext.Connection.RemoteIpAddress.ToString()</h1>
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-            <h2>@L["LongWelcomeMessage"]</h2>
-            <hr class="my-4" />
-        </div>
-    </div>
-    <a href="https://github.com/wjkhappy14/Abp.VNext.Hello" target="_blank" class="btn btn-primary px-4">abp.io</a>
-    @if (!CurrentUser.IsAuthenticated)
-    {
-        <a abp-button="Primary" href="/Account/Login" class="px-4"><i class="fa fa-sign-in"></i> @L["Login"]</a>
-    }
-</div>
-<div>
-    <span>Environment Variables</span>
-    <ul>
-        @foreach (System.Collections.DictionaryEntry item in Environment.GetEnvironmentVariables())
+<abp-card>
+    <abp-card-header>@L["Welcome"]</abp-card-header>
+    <abp-card-body>
+        <p>@L["LongWelcomeMessage"]</p>
+        @if (!CurrentUser.IsAuthenticated)
         {
-            <li><span>@item.Key</span>:<b>@item.Value</b></li>
+            <a abp-button="Primary" href="~/Account/Login" class="px-4"><i class="fa fa-sign-in"></i> @L["Login"]</a>
         }
-    </ul>
-</div>
-
-
-<div>
-    <span> Request Headers</span>
-    <ul>
-        @foreach (var item in Request.Headers)
-        {
-            <li><span>@item.Key</span>:<b>@item.Value</b></li>
-        }
-    </ul>
-</div>
-<div><h3>@DateTime.Now.ToString()</h3><b>CurrentCulture:@System.Threading.Thread.CurrentThread.CurrentCulture.Name</b></div>
+        <hr />
+        <p class="text-right"><a href="https://abp.io?ref=tmpl" target="_blank">abp.io</a></p>
+    </abp-card-body>
+</abp-card>

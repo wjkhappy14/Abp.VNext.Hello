@@ -20,11 +20,9 @@ namespace Abp.VNext.Hello
         public override async Task<ClaimsPrincipal> CreateAsync(Volo.Abp.Identity.IdentityUser user)
         {
             ClaimsPrincipal principal = await base.CreateAsync(user);
-
             principal.Identities
                   .First()
-                  .AddClaim(new Claim("Merchant", "Hello Angkor"));
-
+                  .AddClaim(new Claim("merchant", "Angkor"));
             return principal;
         }
 

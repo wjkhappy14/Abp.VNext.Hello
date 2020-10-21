@@ -1,7 +1,6 @@
 ﻿using Abp.VNext.Hello.XNetty.Server;
 using EasyAbp.Abp.EventBus.Cap;
 using EasyAbp.Abp.SettingUi;
-using EasyAbp.EShop;
 using EasyAbp.PrivateMessaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +25,6 @@ namespace Abp.VNext.Hello
     [DependsOn(
         typeof(DotNettyModule),
         typeof(HelloDomainModule),
-        typeof(EShopApplicationModule),
         typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),

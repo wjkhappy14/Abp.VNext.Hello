@@ -1,7 +1,4 @@
 ﻿using EasyAbp.Abp.SettingUi;
-using EasyAbp.EShop;
-using EasyAbp.PrivateMessaging;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,10 +19,8 @@ namespace Abp.VNext.Hello
     [DependsOn(
         typeof(AbpIdentityServerDomainModule),
         typeof(HelloApplicationContractsModule),
-        typeof(PrivateMessagingHttpApiModule),
         typeof(BloggingHttpApiModule),
         typeof(SettingUiHttpApiModule),
-        typeof(EShopHttpApiModule),
         typeof(AbpAccountHttpApiModule),
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),

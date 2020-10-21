@@ -252,7 +252,6 @@ paket-files/
 *.sln.iml
 
 # Hello
-src/Abp.VNext.Hello.Web/appsettings.json
 src/Abp.VNext.Hello.Web/Logs/*
 src/Abp.VNext.Hello.Web.Host/Logs/*
 src/Abp.VNext.Hello.IdentityServer/Logs/*

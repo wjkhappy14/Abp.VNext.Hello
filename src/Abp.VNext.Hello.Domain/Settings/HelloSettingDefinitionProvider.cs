@@ -6,7 +6,8 @@ namespace Abp.VNext.Hello.Settings
     {
         public override void Define(ISettingDefinitionContext context)
         {
-            context.Add(new SettingDefinition(HelloSettings.Port));
+            //Define your own settings here. Example:
+            //context.Add(new SettingDefinition(HelloSettings.MySetting1));
         }
     }
 }

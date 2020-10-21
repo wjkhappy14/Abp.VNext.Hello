@@ -1,4 +1,4 @@
-# Abp.VNext.Hello 数据库使用的是SQLite 拉取代码，然后就可以跑起来了哦！
+
 # ABP Application modules
 ## account/
 ## audit-logging/
