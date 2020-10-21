@@ -37,10 +37,9 @@ namespace Abp.VNext.Hello
             {
                 options.IsEnabled = MultiTenancyConsts.IsEnabled;
             });
-
-#if DEBUG
+            context.Services.Replace(ServiceDescriptor.Transient<AbpUserClaimsPrincipalFactory, MyUserClaimsPrincipalFactory>());
             context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
-#endif
+
         }
     }
 }

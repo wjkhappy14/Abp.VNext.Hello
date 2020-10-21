@@ -14,8 +14,6 @@ using StackExchange.Redis;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
-using Volo.Abp.AspNetCore.Mvc.UI;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
@@ -27,8 +25,9 @@ using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.UI;
 using Volo.Abp.VirtualFileSystem;
+using IdentityServer4.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace Abp.VNext.Hello
 {
@@ -49,7 +48,7 @@ namespace Abp.VNext.Hello
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
             var configuration = context.Services.GetConfiguration();
-
+            ConfigureIdentityServerOptions(configuration);
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
@@ -126,6 +125,29 @@ namespace Abp.VNext.Hello
                 });
             });
         }
+
+
+
+
+        private void ConfigureIdentityServerOptions(IConfiguration configuration)
+        {
+            Configure<IdentityServerOptions>(options =>
+            {
+                options.Events.RaiseSuccessEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.IssuerUri = configuration["App:IssuerUri"];
+                options.PublicOrigin = configuration["App:PublicOrigin"];
+                options.LowerCaseIssuerUri = true;
+                options.MutualTls.Enabled = true;
+                options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
+
+                System.Diagnostics.Debug.WriteLine(options);
+            });
+        }
+
+
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {

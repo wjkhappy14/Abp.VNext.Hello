@@ -5,6 +5,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Blogging;
 
 namespace Abp.VNext.Hello
 {
@@ -13,6 +14,7 @@ namespace Abp.VNext.Hello
         typeof(AbpAccountApplicationContractsModule),
         typeof(AbpFeatureManagementApplicationContractsModule),
         typeof(AbpIdentityApplicationContractsModule),
+        typeof(BloggingApplicationContractsModule),
         typeof(AbpPermissionManagementApplicationContractsModule),
         typeof(AbpTenantManagementApplicationContractsModule),
         typeof(AbpObjectExtendingModule)

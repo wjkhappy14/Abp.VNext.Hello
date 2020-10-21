@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 
 namespace Abp.VNext.Hello
 {
@@ -9,6 +10,8 @@ namespace Abp.VNext.Hello
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            //ShowPII
+            IdentityModelEventSource.ShowPII = true;
             services.AddApplication<HelloHttpApiHostModule>();
         }
 
