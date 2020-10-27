@@ -1,10 +1,13 @@
 ﻿@page
 @model Abp.VNext.Hello.Web.Pages.IndexModel
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Authentication;
 @using Abp.VNext.Hello.Localization
 @using Volo.Abp.Users
 @inject IHtmlLocalizer<HelloResource> L
 @inject ICurrentUser CurrentUser
+@inject IAuthenticationSchemeProvider AuthenticationSchemeProvider
+
 @section styles {
     <abp-style-bundle>
         <abp-style src="/Pages/Index.css" />
@@ -26,4 +29,16 @@
         <hr />
         <p class="text-right"><a href="https://abp.io?ref=tmpl" target="_blank">abp.io</a></p>
     </abp-card-body>
+    <div class="panel-body">
+        <ul class="list-inline">
+            @foreach (AuthenticationScheme scheme in await AuthenticationSchemeProvider.GetAllSchemesAsync())
+            {
+                <li>
+                    <span> @scheme.DisplayName</span>
+                    <i>@scheme.Name</i>
+                    <p>@scheme.HandlerType.FullName</p>
+                </li>
+            }
+        </ul>
+    </div>
 </abp-card>

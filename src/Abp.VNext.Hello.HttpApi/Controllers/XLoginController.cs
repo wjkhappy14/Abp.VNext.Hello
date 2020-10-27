@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -17,11 +18,13 @@ namespace Abp.VNext.Hello.Controllers
     [AllowAnonymous]
     public class XLoginController : AbpController
     {
-        IAuthorizationService AuthorizationService { get; }
+        IAuthenticationSchemeProvider AuthenticationSchemeProvider { get; }
+        RoleManager<IdentityRole> RoleManager { get; }
+        UserManager<IdentityUser> UserManager { get; }
 
-        public XLoginController(IAuthorizationService authorizationService, IAuthorizationHandler authorizationHandler)
+        public XLoginController(IAuthenticationSchemeProvider  authenticationSchemeProvider, IAuthorizationHandler authorizationHandler)
         {
-            AuthorizationService = authorizationService;
+            AuthenticationSchemeProvider = authenticationSchemeProvider;
         }
 
         [HttpPost]

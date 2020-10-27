@@ -1,31 +1,21 @@
-using System;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.OAuth.Claims;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Abp.VNext.Hello.Localization;
 using Abp.VNext.Hello.MultiTenancy;
 using Abp.VNext.Hello.Web.Menus;
 using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 using Volo.Abp;
-using Volo.Abp.AspNetCore.Authentication.OAuth;
 using Volo.Abp.AspNetCore.Authentication.OpenIdConnect;
-using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc.Client;
 using Volo.Abp.AspNetCore.Mvc.Localization;
-using Volo.Abp.AspNetCore.Mvc.UI;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
@@ -38,14 +28,12 @@ using Volo.Abp.Http.Client.IdentityModel.Web;
 using Volo.Abp.Identity.Web;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.PermissionManagement.Web;
 using Volo.Abp.TenantManagement.Web;
 using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using IdentityServer4;
-using Microsoft.AspNetCore.HttpOverrides;
+using Ardalis.ListStartupServices;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -149,6 +137,17 @@ namespace Abp.VNext.Hello.Web
                     options.Scope.Add("phone");
                     options.Scope.Add("Hello");
 
+                })
+                .AddOpenIdConnect("Google", "谷歌", options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.ForwardSignOut = IdentityServerConstants.DefaultCookieAuthenticationScheme;
+
+                    options.Authority = "https://accounts.google.com/";
+                    options.ClientId = "708996912208-9m4dkjb5hscn7cjrn5u0r4tbgkbj1fko.apps.googleusercontent.com";
+
+                    options.CallbackPath = "/signin-google";
+                    options.Scope.Add("email");
                 });
         }
 
@@ -219,14 +218,14 @@ namespace Abp.VNext.Hello.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseShowAllServicesMiddleware();
             }
-
-            app.UseAbpRequestLocalization();
-
-            if (!env.IsDevelopment())
+            else
             {
                 app.UseErrorPage();
+                app.UseExceptionHandler("/Error");
             }
+            app.UseAbpRequestLocalization();
 
             app.UseCorrelationId();
             app.UseVirtualFiles();
