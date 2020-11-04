@@ -5,7 +5,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Abp.VNext.Hello.EntityFrameworkCore
 {
 
-    [ConnectionStringName("Default")]
+    [ConnectionStringName("Awesome")]
     public class HelloDbContext : AbpDbContext<HelloDbContext>
     {
 

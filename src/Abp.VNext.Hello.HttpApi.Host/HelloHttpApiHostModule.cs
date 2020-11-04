@@ -90,12 +90,15 @@ namespace Abp.VNext.Hello
         private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
             context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+                .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
-                    options.IncludeErrorDetails = false;
-                    options.Audience = "Hello";
+                   // options.IncludeErrorDetails = false;
+                   // options.Audience = configuration["AuthServer:Authority"]; //"Awesome_Web";
+                   // options.BackchannelTimeout = TimeSpan.FromMinutes(3);
+                    options.SaveToken = true;
+                    options.ApiName = "Awesome_Web";
                 });
         }
 

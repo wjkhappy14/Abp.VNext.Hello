@@ -34,6 +34,7 @@ using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using IdentityServer4;
 using Ardalis.ListStartupServices;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Abp.VNext.Hello.Web
 {
@@ -213,8 +214,9 @@ namespace Abp.VNext.Hello.Web
 
             //https://www.bilibili.com/read/cv6013297
             ForwardedHeadersOptions forward = new ForwardedHeadersOptions() { };
-
+            forward.ForwardedHeaders = ForwardedHeaders.XForwardedProto;
             app.UseForwardedHeaders(forward);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
