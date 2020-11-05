@@ -98,6 +98,7 @@ namespace Abp.VNext.Hello
                    // options.Audience = configuration["AuthServer:Authority"]; //"Awesome_Web";
                    // options.BackchannelTimeout = TimeSpan.FromMinutes(3);
                     options.SaveToken = true;
+                    options.LegacyAudienceValidation= true;
                     options.ApiName = "Awesome_Web";
                 });
         }
