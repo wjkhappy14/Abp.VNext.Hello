@@ -27,12 +27,14 @@ namespace Abp.VNext.Hello.Devices
             return ObjectMapper.Map<DeviceFlowCodes, DeviceFlowCodesDto>(item);
         }
 
-        public async Task<List<DeviceFlowCodesDto>> GetListByExpirationAsync(
-            DateTime maxExpirationDate,
-            int maxResultCount = 50
-        )
+        public async Task<List<DeviceFlowCodesDto>> GetListByExpirationAsync(DateTime maxExpirationDate, int maxResultCount = 50)
         {
             List<DeviceFlowCodes> items = await DeviceFlowCodesRepository.GetListByExpirationAsync(maxExpirationDate, maxResultCount);
+            return ObjectMapper.Map<List<DeviceFlowCodes>, List<DeviceFlowCodesDto>>(items);
+        }
+        public async Task<List<DeviceFlowCodesDto>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting)
+        {
+            List<DeviceFlowCodes> items = await DeviceFlowCodesRepository.GetPagedListAsync(skipCount, maxResultCount, sorting);
             return ObjectMapper.Map<List<DeviceFlowCodes>, List<DeviceFlowCodesDto>>(items);
         }
     }

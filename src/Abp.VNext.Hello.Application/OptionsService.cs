@@ -5,6 +5,9 @@ using IdentityServer4.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using System;
+using Newtonsoft.Json;
 
 namespace Abp.VNext.Hello
 {
@@ -26,15 +29,12 @@ namespace Abp.VNext.Hello
         {
             return ServiceProvider.GetRequiredService<IOptions<RouteOptions>>();
         }
-        public object GetKestrelServerOptions()
+        public KestrelServerOptions GetKestrelServerOptions()
         {
             IOptions<KestrelServerOptions> options = ServiceProvider.GetRequiredService<IOptions<KestrelServerOptions>>();
             options.Value.ApplicationServices = null;
             options.Value.ConfigurationLoader = null;
-            return new
-            {
-                options.Value
-            };
+            return options.Value;
         }
 
         public IdentityServerOptions GetIdentityServerOptions()
@@ -50,10 +50,13 @@ namespace Abp.VNext.Hello
 
         public object GetMvcOptions()
         {
-            IOptions<MvcOptions> options = ServiceProvider.GetRequiredService<IOptions<MvcOptions>>();
-            return new { options.Value };
+            var options = ServiceProvider.GetRequiredService<IOptions<MvcOptions>>();
+            return new
+            {
+                options.Value.Filters,
+                options.Value.ValueProviderFactories,
+                options.Value.Conventions
+            };
         }
-
-
     }
 }

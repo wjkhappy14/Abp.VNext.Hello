@@ -16,16 +16,15 @@ namespace Abp.VNext.Hello.Clients
         {
             ClientRepository = clientRepository;
         }
-        public async Task<ClientDto> FindByCliendIdAsync(
-             [NotNull] string clientId
-         )
+        public async Task<ClientDto> FindByCliendIdAsync([NotNull] string clientId)
         {
             Client item = await ClientRepository.FindByCliendIdAsync(clientId);
-            return ObjectMapper.Map<Client, ClientDto>(item);
+            ClientDto dto = ObjectMapper.Map<Client, ClientDto>(item);
+            return dto;
         }
 
         public Task<bool> CheckClientIdExistAsync(
-            string clientId,
+           [NotNull] string clientId,
             Guid? expectedId = null
         ) => ClientRepository.CheckClientIdExistAsync(clientId, expectedId);
 

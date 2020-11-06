@@ -1,5 +1,4 @@
 ﻿using Abp.VNext.Hello.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -7,7 +6,7 @@ using Volo.Abp.Application.Services;
 
 namespace Abp.VNext.Hello
 {
-    [Authorize]
+    // [Authorize]
     public class StateProvinceAppService : ApplicationService, IStateProvinceAppService
     {
         IStateProvinceRepository _stateProvinceRepository;
@@ -56,6 +55,12 @@ namespace Abp.VNext.Hello
             StateProvince item = await _stateProvinceRepository.UpdateAsync(new StateProvince() { });
 
             return ObjectMapper.Map<StateProvince, StateProvinceDto>(item);
+        }
+
+        public async Task<List<StateProvinceDto>> GetPagedListAsync(int skipCount, int maxResultCount=50, string sorting="Name")
+        {
+            List<StateProvince> items = await _stateProvinceRepository.GetPagedListAsync(skipCount, maxResultCount, sorting);
+            return ObjectMapper.Map<List<StateProvince>, List<StateProvinceDto>>(items);
         }
     }
 }

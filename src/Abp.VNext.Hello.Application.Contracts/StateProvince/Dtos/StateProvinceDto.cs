@@ -1,15 +1,24 @@
-﻿using Volo.Abp.Application.Dtos;
+﻿using System.Collections.Generic;
+using Volo.Abp.Application.Dtos;
 
 namespace Abp.VNext.Hello.Dtos
 {
 
     public class StateProvinceDto : EntityDto<int>
     {
-        public virtual string StateProvinceCode { get; set; }
-        public virtual string StateProvinceName { get; set; }
+        public StateProvinceDto()
+        {
+            Cities = new List<CityDto>();
+        }
 
-        public virtual string ChineseName { get; set; }
-        public virtual int CountryId { get; set; }
+        public string StateProvinceCode { get; set; }
+        public string CountryCode { get; set; }
+        public string Territory { get; set; }
+        public string Name { get; set; }
+        public string ChineseName { get; set; }
+        public int CountryId { get; set; }
+
+        public ICollection<CityDto> Cities { get; set; }
 
     }
 }
