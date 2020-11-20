@@ -17,9 +17,12 @@ namespace Abp.VNext.Hello
     {
         public HelloApplicationAutoMapperProfile()
         {
-            CreateMap<Country, CountryDto>();
+            CreateMap<Country, CountryDto>().ForMember(dest => dest.NationalFlagUrl, opt => opt.MapFrom(src => src.NationalFlag));
+            CreateMap<CountryDto, Country>().ForMember(dest => dest.NationalFlag, opt => opt.MapFrom(src => src.NationalFlagUrl));
             CreateMap<StateProvince, StateProvinceDto>();
+            CreateMap<StateProvinceDto, StateProvince>();
             CreateMap<City, CityDto>();//.Ignore(x=>x.);
+            CreateMap<CityDto, City>();
 
             CreateMap<Client, ClientDto>();
             CreateMap<ClientClaim, ClientClaimDto>();

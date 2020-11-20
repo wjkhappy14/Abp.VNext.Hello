@@ -28,6 +28,8 @@ namespace Abp.VNext.Hello
         public virtual string Border { get; set; }
         public virtual string ChineseName { get; set; }
         public virtual string IsoAlpha2Code { get; set; }
+        public virtual string NationalFlag { get; set; }
+        public long Population { get; set; }
 
         public virtual ICollection<StateProvince> StateProvinces { get; protected set; } = new HashSet<StateProvince>();
     }

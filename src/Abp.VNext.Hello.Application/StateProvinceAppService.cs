@@ -52,12 +52,12 @@ namespace Abp.VNext.Hello
 
         public async Task<StateProvinceDto> Update(int id, StateProvinceDto input)
         {
-            StateProvince item = await _stateProvinceRepository.UpdateAsync(new StateProvince() { });
-
+            StateProvince item = ObjectMapper.Map<StateProvinceDto, StateProvince>(input);
+            item = await _stateProvinceRepository.UpdateAsync(item);
             return ObjectMapper.Map<StateProvince, StateProvinceDto>(item);
         }
 
-        public async Task<List<StateProvinceDto>> GetPagedListAsync(int skipCount, int maxResultCount=50, string sorting="Name")
+        public async Task<List<StateProvinceDto>> GetPagedListAsync(int skipCount, int maxResultCount = 50, string sorting = "Name")
         {
             List<StateProvince> items = await _stateProvinceRepository.GetPagedListAsync(skipCount, maxResultCount, sorting);
             return ObjectMapper.Map<List<StateProvince>, List<StateProvinceDto>>(items);

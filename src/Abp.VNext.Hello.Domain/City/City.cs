@@ -16,7 +16,7 @@ namespace Abp.VNext.Hello
         public virtual string Latitude { get; set; }
         public virtual string Longitude { get; set; }
         public virtual string ChineseName { get; set; }
-
+        public int Population { get; set; }
 
         //https://docs.microsoft.com/zh-cn/sql/t-sql/spatial-geography/spatial-types-geography?view=sql-server-ver15
         // [JsonIgnore]

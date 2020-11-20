@@ -39,17 +39,12 @@ namespace Abp.VNext.Hello
             return ObjectMapper.Map<City, CityDto>(item);
         }
 
-        public async Task<PagedResultDto<CityDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        public async Task<List<CityDto>> GetPagedListAsync(PagedAndSortedResultRequestDto input)
         {
-            List<City> items = await _cityRepository.GetListAsync(includeDetails: true);
+            List<City> items = await _cityRepository.GetPagedListAsync(input.SkipCount, input.MaxResultCount, input.Sorting, true);
             List<CityDto> result = ObjectMapper.Map<List<City>, List<CityDto>>(items);
-
             long totalCount = await _cityRepository.GetCountAsync();
-
-            return new PagedResultDto<CityDto>(
-                totalCount,
-                result
-                );
+            return result;
         }
 
         [Authorize(HelloPermissions.City.Search)]
@@ -61,6 +56,11 @@ namespace Abp.VNext.Hello
 
         [Authorize(HelloPermissions.City.Update)]
         public Task<CityDto> UpdateAsync(int id, CityDto input)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<PagedResultDto<CityDto>> GetListAsync(PagedAndSortedResultRequestDto input)
         {
             throw new System.NotImplementedException();
         }
