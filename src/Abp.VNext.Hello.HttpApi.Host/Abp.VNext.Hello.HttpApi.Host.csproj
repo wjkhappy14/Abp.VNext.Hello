@@ -35,13 +35,6 @@
 		<Content Remove="Logs\**" />
 		<EmbeddedResource Remove="Logs\**" />
 		<None Remove="Logs\**" />
-	
-	  <ProjectReference Include="..\..\..\IdentityModel.AspNetCore.OAuth2Introspection\src\IdentityModel.AspNetCore.OAuth2Introspection.csproj" />
-	  <ProjectReference Include="..\..\..\IdentityModel\src\IdentityModel.csproj" />
-	  <ProjectReference Include="..\..\..\IdentityServer4.AccessTokenValidation\src\IdentityServer4.AccessTokenValidation.csproj" />
-	  <ProjectReference Include="..\..\..\IdentityServer4\src\AspNetIdentity\src\IdentityServer4.AspNetIdentity.csproj" />
-	  <ProjectReference Include="..\..\..\IdentityServer4\src\IdentityServer4\src\IdentityServer4.csproj" />
-	  <ProjectReference Include="..\..\..\IdentityServer4\src\Storage\src\IdentityServer4.Storage.csproj" />
 </ItemGroup>
 
 </Project>

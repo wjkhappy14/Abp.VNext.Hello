@@ -9,8 +9,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Abp.VNext.Hello.Domain.Shared\Abp.VNext.Hello.Domain.Shared.csproj" />
-		<ProjectReference Include="..\..\..\IdentityServer4\src\IdentityServer4\src\IdentityServer4.csproj" />
-		<ProjectReference Include="..\..\..\IdentityServer4\src\Storage\src\IdentityServer4.Storage.csproj" />
 		<ProjectReference Include="..\Abp.VNext.Hello.Domain.Shared\Abp.VNext.Hello.Domain.Shared.csproj" />
 	</ItemGroup>
 
@@ -23,8 +21,6 @@
 		<PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="3.2.1" />
 		<PackageReference Include="Volo.Abp.TenantManagement.Application.Contracts" Version="3.2.1" />
 		<PackageReference Include="Volo.Abp.FeatureManagement.Application.Contracts" Version="3.2.1" />
-		<ProjectReference Include="..\..\..\IdentityServer4\src\IdentityServer4\src\IdentityServer4.csproj" />
-		<ProjectReference Include="..\..\..\IdentityServer4\src\Storage\src\IdentityServer4.Storage.csproj" />
 		<ProjectReference Include="..\Abp.VNext.Hello.Domain.Shared\Abp.VNext.Hello.Domain.Shared.csproj" />
 </ItemGroup>
 
