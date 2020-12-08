@@ -47,6 +47,12 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
                 {
                     opt.DefaultWithDetailsFunc = q => q.Include(p => p.Cities);
                 });
+
+                options.Entity<Contact>(opt =>
+                {
+                    opt.DefaultWithDetailsFunc = q => q.Include(p => p.Address);
+                });
+
             });
 
             Configure<AbpDbContextOptions>(options =>

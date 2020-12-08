@@ -39,6 +39,13 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
                 b.HasMany(u => u.StateProvinces).WithOne().HasForeignKey(uc => uc.CountryId);
                 b.HasIndex(q => q.Id);
             });
+
+            builder.Entity<Contact>(b =>
+            {
+                b.ToTable(options.TablePrefix + "Contacts");
+                b.HasMany(u => u.Address).WithOne().HasForeignKey(uc => uc.ContactId);
+                b.HasIndex(q => q.Id);
+            });
         }
 
         public static void ConfigureCustomUserProperties<TUser>(this EntityTypeBuilder<TUser> b)
