@@ -13,28 +13,15 @@ namespace Abp.VNext.Hello
             ContactRepository = contactRepository;
         }
 
-        public Task DeleteAsync(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+        public Task DeleteAsync(int id) => ContactRepository.DeleteAsync(id);
 
         public Task<Contact> GetAsync(int id) => ContactRepository.GetAsync(id, true);
 
-        public async Task<ContactDto> GetByNameAsync(string name)
-        {
-            Contact item = await ContactRepository.GetByNameAsync(name);
-            return ObjectMapper.Map<Contact, ContactDto>(item);
-        }
+        public async Task<ContactDto> GetByNameAsync(string name) => ObjectMapper.Map<Contact, ContactDto>(await ContactRepository.GetByNameAsync(name));
 
-        public Task<long> GetCountAsync()
-        {
-            throw new System.NotImplementedException();
-        }
+        public Task<long> GetCountAsync() => ContactRepository.GetCountAsync();
 
-        public Task<List<Contact>> GetPagedListAsync(int skip, int count, string sorting)
-        {
-            throw new System.NotImplementedException();
-        }
+        public Task<List<Contact>> GetPagedListAsync(int skip, int count, string sorting = "name") => ContactRepository.GetPagedListAsync(skip, count, sorting,true);
 
         public Task<Contact> InsertAsync(Contact item) => ContactRepository.InsertAsync(item);
 
@@ -44,7 +31,5 @@ namespace Abp.VNext.Hello
         }
 
         public Task<Contact> UpdateAsync(Contact entity) => ContactRepository.UpdateAsync(entity);
-
-
     }
 }
