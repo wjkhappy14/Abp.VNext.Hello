@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 
@@ -8,6 +9,11 @@ namespace Abp.VNext.Hello
     {
 
         Task<Contact> GetByNameAsync(string name);
-        IQueryable<Contact> Search(string keyword);
+        Task<List<Contact>> SearchAsync(
+        string sorting = null,
+        int maxResultCount = int.MaxValue,
+        int skipCount = 0,
+        string filter = null,
+        CancellationToken cancellationToken = default);
     }
 }

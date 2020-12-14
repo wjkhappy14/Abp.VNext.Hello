@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
 
@@ -21,15 +20,16 @@ namespace Abp.VNext.Hello
 
         public Task<long> GetCountAsync() => ContactRepository.GetCountAsync();
 
-        public Task<List<Contact>> GetPagedListAsync(int skip, int count, string sorting = "name") => ContactRepository.GetPagedListAsync(skip, count, sorting,true);
+        public Task<List<Contact>> GetPagedListAsync(int skip, int count = 50, string sorting = "name") => ContactRepository.GetPagedListAsync(skip, count, sorting, true);
 
         public Task<Contact> InsertAsync(Contact item) => ContactRepository.InsertAsync(item);
 
-        private IQueryable<ContactDto> Search(string keyword)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Task<Contact> UpdateAsync(Contact entity) => ContactRepository.UpdateAsync(entity);
+
+        public async Task<List<ContactDto>> SearchAsync(string sorting = "name", int maxResultCount = 50, int skipCount = 0, string filter = null)
+        {
+            List<Contact> items = await ContactRepository.SearchAsync(sorting, maxResultCount, skipCount, filter);
+            return ObjectMapper.Map<List<Contact>, List<ContactDto>>(items);
+        }
     }
 }

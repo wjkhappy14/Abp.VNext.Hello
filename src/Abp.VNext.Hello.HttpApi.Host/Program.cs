@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -10,6 +11,9 @@ namespace Abp.VNext.Hello
     {
         public static int Main(string[] args)
         {
+            Console.Title = "Abp.VNext.Hello.HttpApi.Host";
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+
             Log.Logger = new LoggerConfiguration()
 #if DEBUG
                 .MinimumLevel.Debug()
@@ -18,7 +22,7 @@ namespace Abp.VNext.Hello
 #endif
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.Async(c => c.File("Logs/logs.txt"))
+                .WriteTo.Async(c => c.File("Logs/Abp.VNext.Hello.HttpApi.Host.txt"))
 #if DEBUG
                 .WriteTo.Async(c => c.Console())
 #endif

@@ -8,14 +8,16 @@ using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using System.Collections.Generic;
 using System.Linq;
+using Volo.Abp;
 
 namespace Abp.VNext.Hello
 {
     public class DIService : ApplicationService
     {
-        public DIService(ILoggerFactory loggerFactory)
+        IAbpApplication AbpApplication { get; }
+        public DIService(ILoggerFactory loggerFactory, IAbpApplication abpApplication)
         {
-
+            AbpApplication = abpApplication;
         }
 
         public ContainerBuilder GetContainer()
