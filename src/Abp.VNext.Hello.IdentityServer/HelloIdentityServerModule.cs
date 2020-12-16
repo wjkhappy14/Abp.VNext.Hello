@@ -28,6 +28,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using IdentityServer4.Configuration;
 using Microsoft.Extensions.Configuration;
+using IdentityServer4.Extensions;
 
 namespace Abp.VNext.Hello
 {
@@ -138,7 +139,7 @@ namespace Abp.VNext.Hello
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.IssuerUri = configuration["App:IssuerUri"];
-               // options.PublicOrigin = configuration["App:PublicOrigin"];
+                // options.PublicOrigin = configuration["App:PublicOrigin"];
                 options.LowerCaseIssuerUri = true;
                 options.MutualTls.Enabled = true;
                 options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
@@ -153,7 +154,7 @@ namespace Abp.VNext.Hello
         {
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
-
+            IConfiguration configuration = context.GetConfiguration();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -165,7 +166,11 @@ namespace Abp.VNext.Hello
             {
                 app.UseErrorPage();
             }
-
+            app.Use(async (ctx, next) =>
+            {
+                ctx.SetIdentityServerOrigin(configuration["App:PublicOrigin"]);
+                await next();
+            });
             app.UseCorrelationId();
             app.UseVirtualFiles();
             app.UseRouting();
