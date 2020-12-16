@@ -138,7 +138,7 @@ namespace Abp.VNext.Hello
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.IssuerUri = configuration["App:IssuerUri"];
-                options.PublicOrigin = configuration["App:PublicOrigin"];
+               // options.PublicOrigin = configuration["App:PublicOrigin"];
                 options.LowerCaseIssuerUri = true;
                 options.MutualTls.Enabled = true;
                 options.MutualTls.ClientCertificateAuthenticationScheme = "x509";
