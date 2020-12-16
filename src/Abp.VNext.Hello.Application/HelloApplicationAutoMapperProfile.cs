@@ -7,7 +7,9 @@ using Abp.VNext.Hello.IdentityResources;
 using AutoMapper;
 using System;
 using System.Text;
+using Volo.Abp.Identity;
 using Volo.Abp.IdentityServer.ApiResources;
+using Volo.Abp.IdentityServer.ApiScopes;
 using Volo.Abp.IdentityServer.Clients;
 using Volo.Abp.IdentityServer.Devices;
 using Volo.Abp.IdentityServer.Grants;
@@ -41,7 +43,7 @@ namespace Abp.VNext.Hello
             CreateMap<ApiScopeClaim, ApiScopeClaimDto>();
             CreateMap<ApiResourceClaim, ApiResourceClaimDto>();
             CreateMap<ApiScope, ApiScopeDto>();
-            CreateMap<ApiSecret, ApiSecretDto>();
+            CreateMap<ApiResourceSecret, ApiSecretDto>();
 
             CreateMap<DeviceFlowCodes, DeviceFlowCodesDto>();
 

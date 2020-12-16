@@ -3,7 +3,7 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+	  <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Abp.VNext.Hello</RootNamespace>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,20 +32,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="3.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="3.2.1" />
-	  <PackageReference Include="AutoMapper" Version="10.0.0" />
-    <PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="3.2.1" />
-    <PackageReference Include="Volo.Abp.Account.Application" Version="3.2.1" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="4.0.1" />
+	  <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="4.0.1" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="4.0.1" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="4.0.1" />
+    <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="4.0.1" />
+    <PackageReference Include="Volo.Abp.Account.Application" Version="4.0.1" />
     <ProjectReference Include="..\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations.csproj" />
   </ItemGroup>
 

@@ -18,7 +18,7 @@ namespace Abp.VNext.Hello.Clients
         }
         public async Task<ClientDto> FindByCliendIdAsync([NotNull] string clientId)
         {
-            Client item = await ClientRepository.FindByCliendIdAsync(clientId);
+            Client item = await ClientRepository.FindByClientIdAsync(clientId);
             ClientDto dto = ObjectMapper.Map<Client, ClientDto>(item);
             return dto;
         }

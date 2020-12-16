@@ -15,9 +15,9 @@ namespace Abp.VNext.Hello.IdentityResources
             IdentityResourceRepository = identityResourceRepository;
         }
 
-        public async Task<List<IdentityResourceDto>> GetListByScopesAsync(string[] scopeNames)
+        public async Task<List<IdentityResourceDto>> GetListByScopeNameAsync(string[] scopeNames)
         {
-            List<IdentityResource> items = await IdentityResourceRepository.GetListByScopesAsync(scopeNames);
+            List<IdentityResource> items = await IdentityResourceRepository.GetListByScopeNameAsync(scopeNames);
             return ObjectMapper.Map<List<IdentityResource>, List<IdentityResourceDto>>(items);
         }
 

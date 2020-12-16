@@ -7,7 +7,7 @@ namespace Abp.VNext.Hello.IdentityResources
 {
     public interface IIdentityResourceService : IApplicationService
     {
-        Task<List<IdentityResourceDto>> GetListByScopesAsync(
+        Task<List<IdentityResourceDto>> GetListByScopeNameAsync(
             string[] scopeNames
         );
 
