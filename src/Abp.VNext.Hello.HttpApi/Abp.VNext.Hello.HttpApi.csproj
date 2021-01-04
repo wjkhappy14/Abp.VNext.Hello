@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Abp.VNext.Hello.Application.Contracts\Abp.VNext.Hello.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Abp.VNext.Hello.Application\Abp.VNext.Hello.Application.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

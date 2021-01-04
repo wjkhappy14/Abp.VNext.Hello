@@ -19,6 +19,7 @@ namespace Abp.VNext.Hello
     [DependsOn(
         typeof(AbpIdentityServerDomainModule),
         typeof(HelloApplicationContractsModule),
+        typeof(HelloApplicationModule),
         typeof(BloggingHttpApiModule),
         typeof(SettingUiHttpApiModule),
         typeof(AbpAccountHttpApiModule),

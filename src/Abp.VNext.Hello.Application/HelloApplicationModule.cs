@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Data;
 using Volo.Abp.Account;
+using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.BackgroundJobs;
 //using Volo.Abp.EventBus.RabbitMq;
@@ -35,6 +36,7 @@ namespace Abp.VNext.Hello
         typeof(AbpIdentityApplicationModule),
         typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpTenantManagementApplicationModule),
+        typeof(AbpAspNetCoreSignalRModule),
         typeof(AbpFeatureManagementApplicationModule)
         )]
     public class HelloApplicationModule : AbpModule
