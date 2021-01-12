@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  abp.vnext.hello.web:
+    image: ${DOCKER_REGISTRY-}abpvnexthelloweb
+    build:
+      context: .
+      dockerfile: src/Abp.VNext.Hello.Web/Dockerfile

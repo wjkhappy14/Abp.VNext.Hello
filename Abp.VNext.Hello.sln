@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.VNext.Hello.HttpApi.Hos
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abp.VNext.Hello.DbMigrator", "src\Abp.VNext.Hello.DbMigrator\Abp.VNext.Hello.DbMigrator.csproj", "{AA94D832-1CCC-4715-95A9-A483F23A1A5D}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F54E7A3E-ECC8-44EB-A822-95277FA22BA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F54E7A3E-ECC8-44EB-A822-95277FA22BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F54E7A3E-ECC8-44EB-A822-95277FA22BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F54E7A3E-ECC8-44EB-A822-95277FA22BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F54E7A3E-ECC8-44EB-A822-95277FA22BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
