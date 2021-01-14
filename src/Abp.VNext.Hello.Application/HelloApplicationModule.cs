@@ -1,6 +1,7 @@
 ﻿using Abp.VNext.Hello.XNetty.Server;
 using EasyAbp.Abp.EventBus.Cap;
 using EasyAbp.Abp.SettingUi;
+using EasyAbp.Abp.WeChat.MiniProgram;
 using EasyAbp.PrivateMessaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,7 +12,6 @@ using Volo.Abp.Account;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.BackgroundJobs;
-//using Volo.Abp.EventBus.RabbitMq;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
@@ -29,7 +29,6 @@ namespace Abp.VNext.Hello
         typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
-        // typeof(AbpEventBusRabbitMqModule),
         typeof(SettingUiApplicationModule),
         typeof(AbpBackgroundJobsAbstractionsModule),
         typeof(HelloApplicationContractsModule),
@@ -37,6 +36,7 @@ namespace Abp.VNext.Hello
         typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpTenantManagementApplicationModule),
         typeof(AbpAspNetCoreSignalRModule),
+        typeof(AbpWeChatMiniProgramModule),
         typeof(AbpFeatureManagementApplicationModule)
         )]
     public class HelloApplicationModule : AbpModule
