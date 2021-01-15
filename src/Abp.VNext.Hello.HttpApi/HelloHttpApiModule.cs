@@ -51,7 +51,7 @@ namespace Abp.VNext.Hello
             {
                 options.EnableEndpointRouting = false;
             });
-
+         
             //Configure<CookiePolicyOptions>(options =>
             //{
             //    options.MinimumSameSitePolicy = SameSiteMode.Unspecified;

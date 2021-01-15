@@ -26,6 +26,8 @@ using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
+using EasyAbp.Abp.WeChat.Pay;
+using EasyAbp.Abp.WeChat.Official;
 
 namespace Abp.VNext.Hello
 {
@@ -59,6 +61,21 @@ namespace Abp.VNext.Hello
             context.Services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.KnownProxies.Add(IPAddress.Parse("172.16.0.4"));
+            });
+            Configure<AbpWeChatPayOptions>(options =>
+            {
+                options.MchId = "Hello";
+                options.ApiKey = "Kitty";
+                options.NotifyUrl = "";
+                options.RefundNotifyUrl = "";
+            });
+            Configure<AbpWeChatOfficialOptions>(options =>
+            {
+                options.Token = "Hello ";
+                options.AppId = " Kitty";
+                options.AppSecret = " Kitty";
+                options.EncodingAesKey = "Hello ";
+                options.OAuthRedirectUrl = "Hello Kitty";
             });
         }
 
@@ -101,11 +118,11 @@ namespace Abp.VNext.Hello
                 {
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
-                   // options.IncludeErrorDetails = false;
-                   // options.Audience = configuration["AuthServer:Authority"]; //"Awesome_Web";
-                   // options.BackchannelTimeout = TimeSpan.FromMinutes(3);
+                    // options.IncludeErrorDetails = false;
+                    // options.Audience = configuration["AuthServer:Authority"]; //"Awesome_Web";
+                    // options.BackchannelTimeout = TimeSpan.FromMinutes(3);
                     options.SaveToken = true;
-                    options.LegacyAudienceValidation= true;
+                    options.LegacyAudienceValidation = true;
                     options.ApiName = "Awesome_Web";
                 });
         }
@@ -115,7 +132,7 @@ namespace Abp.VNext.Hello
             context.Services.AddSwaggerGen(
                 options =>
                 {
-                    options.SwaggerDoc("v1", new OpenApiInfo {Title = "Hello API", Version = "v1"});
+                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Hello API", Version = "v1" });
                     options.DocInclusionPredicate((docName, description) => true);
                 });
         }
