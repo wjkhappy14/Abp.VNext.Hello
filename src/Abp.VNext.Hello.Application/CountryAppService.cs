@@ -1,4 +1,5 @@
 ﻿using Abp.VNext.Hello.Dtos;
+using DotNetCore.CAP;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -8,7 +9,7 @@ using Volo.Abp.Uow;
 namespace Abp.VNext.Hello
 {
 
-    //[UnitOfWork]
+    [UnitOfWork]
     public class CountryAppService : ApplicationService, ICountryService
     {
         ICountryRepository _countryRepository;
@@ -41,7 +42,7 @@ namespace Abp.VNext.Hello
             Country result = await _countryRepository.GetAsync(id);
             return ObjectMapper.Map<Country, CountryDto>(result);
         }
-
+        [CapSubscribe("sample.rabbitmq.sqlserver")]
         public async Task<List<CountryDto>> GetListAsync()
         {
             List<Country> items = await _countryRepository.GetListAsync();

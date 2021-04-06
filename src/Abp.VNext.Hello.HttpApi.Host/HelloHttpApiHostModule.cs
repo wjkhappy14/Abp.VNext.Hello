@@ -28,6 +28,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
 using EasyAbp.Abp.WeChat.Pay;
 using EasyAbp.Abp.WeChat.Official;
+using System.Threading.Tasks;
+using Hello.Authentication.MiniProgram.WeChat;
 
 namespace Abp.VNext.Hello
 {
@@ -124,7 +126,20 @@ namespace Abp.VNext.Hello
                     options.SaveToken = true;
                     options.LegacyAudienceValidation = true;
                     options.ApiName = "Awesome_Web";
-                });
+                })
+              .AddWeChatMiniProgram(options =>
+              {
+                  options.WeChatAppId = configuration["WeChatMiniProgram:Appid"];
+                  options.WeChatSecret = configuration["WeChatMiniProgram:Secret"];
+                  options.SaveSessionKeyToCache = true;
+                  options.CustomerLoginState += RedirectToGiveToken;   //添加颁发JwtToken的步骤
+              });
+        }
+        public Task RedirectToGiveToken(CustomerLoginStateContext context)
+        {
+            var currentUrl = $"Login/CreateToken?key={context.SessionInfoKey}";
+            context.HttpContext.Response.Redirect(currentUrl);
+            return Task.CompletedTask;
         }
 
         private static void ConfigureSwaggerServices(ServiceConfigurationContext context)

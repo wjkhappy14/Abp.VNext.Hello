@@ -4,6 +4,7 @@ using EasyAbp.Abp.SettingUi;
 using EasyAbp.Abp.WeChat.MiniProgram;
 using EasyAbp.PrivateMessaging;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
@@ -50,6 +51,7 @@ namespace Abp.VNext.Hello
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.TryAddSingleton<IHttpContextAccessor>();
+            IConfiguration config =context.Services.GetConfiguration();
             Configure<AbpAutoMapperOptions>(options =>
             {
                 options.AddMaps<HelloApplicationModule>();
@@ -86,7 +88,6 @@ namespace Abp.VNext.Hello
 
             context.AddCapEventBus(capOptions =>
             {
-                // capOptions.UseSqlServer();
                 capOptions.DefaultGroup = "Abp.VNext.Hello.Cap-Queue";
                 capOptions.FailedThresholdCallback = (failed) =>
                 {
@@ -102,7 +103,7 @@ namespace Abp.VNext.Hello
                             break;
                     }
                 };
-                capOptions.UseInMemoryStorage();
+                capOptions.UseSqlServer(config["ConnectionStrings:Default"]);
                 capOptions.UseRabbitMQ(x =>
                 {
                     x.HostName = "47.98.226.195";
@@ -110,7 +111,9 @@ namespace Abp.VNext.Hello
                     x.Password = "zxcvbnm";
                     x.VirtualHost = "/";
                 });// 服务器地址配置，支持配置IP地址和密码
-                capOptions.UseDashboard();//CAP2.X版本以后官方提供了Dashboard页面访问。
+                capOptions.UseDashboard(dashboard => {
+                    dashboard.StatsPollingInterval = 600;
+                });
             });
         }
     }
