@@ -88,7 +88,7 @@ namespace Abp.VNext.Hello
 
             context.AddCapEventBus(capOptions =>
             {
-                capOptions.DefaultGroup = "Abp.VNext.Hello.Cap-Queue";
+                capOptions.DefaultGroupName = "Abp.VNext.Hello.Cap-Queue";
                 capOptions.FailedThresholdCallback = (failed) =>
                 {
                     switch (failed.MessageType)

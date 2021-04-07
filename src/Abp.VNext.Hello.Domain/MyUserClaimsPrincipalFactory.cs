@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Volo.Abp.Identity;
+using Volo.Abp.Security.Claims;
 
 namespace Abp.VNext.Hello
 {
@@ -12,8 +13,8 @@ namespace Abp.VNext.Hello
     /// </summary>
     public class MyUserClaimsPrincipalFactory : AbpUserClaimsPrincipalFactory
     {
-        public MyUserClaimsPrincipalFactory(UserManager<Volo.Abp.Identity.IdentityUser> userManager, RoleManager<Volo.Abp.Identity.IdentityRole> roleManager, IOptions<IdentityOptions> options)
-            : base(userManager, roleManager, options)
+        public MyUserClaimsPrincipalFactory(UserManager<Volo.Abp.Identity.IdentityUser> userManager, RoleManager<Volo.Abp.Identity.IdentityRole> roleManager, IOptions<IdentityOptions> options, ICurrentPrincipalAccessor currentPrincipalAccessor, IAbpClaimsPrincipalFactory abpClaimsPrincipalFactory)
+            : base(userManager, roleManager, options, currentPrincipalAccessor, abpClaimsPrincipalFactory)
         {
 
         }

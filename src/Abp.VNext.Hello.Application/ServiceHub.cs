@@ -4,7 +4,7 @@ namespace Abp.VNext.Hello
 {
     public class ServiceHub : ApplicationService
     {
-        public ICaptchaService CaptchaService => LazyGetRequiredService(ref captchaService);
+       // public ICaptchaService CaptchaService => LazyGetRequiredService(ref captchaService);
 
         public ICaptchaService captchaService;
 
