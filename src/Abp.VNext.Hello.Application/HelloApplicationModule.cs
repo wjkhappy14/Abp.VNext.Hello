@@ -88,6 +88,8 @@ namespace Abp.VNext.Hello
 
             context.AddCapEventBus(capOptions =>
             {
+                capOptions.ProducerThreadCount = Environment.ProcessorCount;
+                capOptions.ConsumerThreadCount = Environment.ProcessorCount;
                 capOptions.DefaultGroupName = "Abp.VNext.Hello.Cap-Queue";
                 capOptions.FailedThresholdCallback = (failed) =>
                 {
@@ -112,6 +114,7 @@ namespace Abp.VNext.Hello
                     x.VirtualHost = "/";
                 });// 服务器地址配置，支持配置IP地址和密码
                 capOptions.UseDashboard(dashboard => {
+                    //DotNetCore.CAP.Dashboard.LocalRequestsOnlyAuthorizationFilter
                     dashboard.StatsPollingInterval = 600;
                 });
             });
