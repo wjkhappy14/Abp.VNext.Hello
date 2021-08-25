@@ -3,7 +3,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace Abp.VNext.Hello.Grants
 {
-    public class PersistedGrantDto : AggregateRoot<Guid>
+    public class PersistedGrantDto 
     {
         public virtual string Key { get; set; }
 
@@ -26,7 +26,7 @@ namespace Abp.VNext.Hello.Grants
 
         public PersistedGrantDto(Guid id)
         {
-            Id = id;
+           
         }
     }
 }

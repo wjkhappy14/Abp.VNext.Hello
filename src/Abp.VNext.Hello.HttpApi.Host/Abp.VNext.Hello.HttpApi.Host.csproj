@@ -22,10 +22,10 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy" Version="4.2.2" />
-		<PackageReference Include="Volo.Abp.Autofac" Version="4.2.2" />
-		<PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="4.2.2" />
-		<PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="4.2.2" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy" Version="4.4.0" />
+		<PackageReference Include="Volo.Abp.Autofac" Version="4.4.0" />
+		<PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="4.4.0" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="4.4.0" />
 		<PackageReference Include="AutoMapper" Version="10.1.1" />
 	</ItemGroup>
 

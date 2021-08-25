@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="4.4.0" />
     <ProjectReference Include="..\Abp.VNext.Hello.Application.Contracts\Abp.VNext.Hello.Application.Contracts.csproj" />
     <ProjectReference Include="..\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations.csproj" />
   </ItemGroup>
