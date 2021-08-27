@@ -30,7 +30,7 @@ namespace Abp.VNext.Hello
         typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
-        typeof(SettingUiApplicationModule),
+        typeof(AbpSettingUiApplicationModule),
         typeof(AbpBackgroundJobsAbstractionsModule),
         typeof(HelloApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),

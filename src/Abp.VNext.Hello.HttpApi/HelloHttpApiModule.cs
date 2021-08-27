@@ -23,7 +23,7 @@ namespace Abp.VNext.Hello
         typeof(HelloApplicationContractsModule),
         typeof(HelloApplicationModule),
         typeof(BloggingHttpApiModule),
-        typeof(SettingUiHttpApiModule),
+        typeof(AbpSettingUiHttpApiModule),
         typeof(AbpAccountHttpApiModule),
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),
