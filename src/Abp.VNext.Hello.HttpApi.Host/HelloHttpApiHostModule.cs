@@ -30,6 +30,8 @@ using EasyAbp.Abp.WeChat.Pay;
 using EasyAbp.Abp.WeChat.Official;
 using System.Threading.Tasks;
 using Hello.Authentication.MiniProgram.WeChat;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
 namespace Abp.VNext.Hello
 {
@@ -79,6 +81,8 @@ namespace Abp.VNext.Hello
                 options.EncodingAesKey = "Hello ";
                 options.OAuthRedirectUrl = "Hello Kitty";
             });
+
+            context.Services.AddOcelot();
         }
 
         private void ConfigureCache(IConfiguration configuration)
@@ -215,7 +219,7 @@ namespace Abp.VNext.Hello
             }
 
             app.UseCorrelationId();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors(DefaultCorsPolicyName);
 
@@ -242,6 +246,7 @@ namespace Abp.VNext.Hello
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
+            app.UseOcelot().Wait();
         }
     }
 }

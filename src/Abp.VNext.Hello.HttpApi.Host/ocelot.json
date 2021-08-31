@@ -1,0 +1,22 @@
+﻿{
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration",
+    "ServiceDiscoveryProvider": { "Type": "Eureka" }
+  },
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Category",
+      "DownstreamScheme": "http",
+      "FileCacheOptions": { "TtlSeconds": 15 },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10000,
+        "TimeoutValue": 5000
+      },
+      "ServiceName": "ncore-rat",
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/Category"
+    }
+  ]
+}
