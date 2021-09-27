@@ -1,5 +1,4 @@
 ﻿using EasyAbp.Abp.SettingUi;
-using EasyAbp.Abp.WeChat.Official.HttpApi;
 using EasyAbp.Abp.WeChat.Pay.HttpApi;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,13 +22,11 @@ namespace Abp.VNext.Hello
         typeof(HelloApplicationContractsModule),
         typeof(HelloApplicationModule),
         typeof(BloggingHttpApiModule),
-        typeof(AbpSettingUiHttpApiModule),
         typeof(AbpAccountHttpApiModule),
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),
         typeof(AbpTenantManagementHttpApiModule),
         typeof(AbpWeChatPayHttpApiModule),
-        typeof(AbpWeChatOfficialHttpApiModule),
         typeof(AbpFeatureManagementHttpApiModule)
         )]
     public class HelloHttpApiModule : AbpModule
@@ -51,7 +48,10 @@ namespace Abp.VNext.Hello
             {
                 options.EnableEndpointRouting = false;
             });
-         
+           
+
+           
+
             //Configure<CookiePolicyOptions>(options =>
             //{
             //    options.MinimumSameSitePolicy = SameSiteMode.Unspecified;

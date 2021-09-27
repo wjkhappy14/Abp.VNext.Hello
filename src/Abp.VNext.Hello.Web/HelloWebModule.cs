@@ -82,6 +82,7 @@ namespace Abp.VNext.Hello.Web
             ConfigureNavigationServices(configuration);
             ConfigureMultiTenancy();
             ConfigureSwaggerServices(context.Services);
+           
         }
 
         private void ConfigureCache(IConfiguration configuration)
@@ -230,7 +231,7 @@ namespace Abp.VNext.Hello.Web
             app.UseAbpRequestLocalization();
 
             app.UseCorrelationId();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
 

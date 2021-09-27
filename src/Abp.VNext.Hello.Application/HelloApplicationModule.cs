@@ -37,7 +37,7 @@ namespace Abp.VNext.Hello
         typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpTenantManagementApplicationModule),
         typeof(AbpAspNetCoreSignalRModule),
-        typeof(AbpWeChatMiniProgramModule),
+       // typeof(AbpWeChatMiniProgramModule),
         typeof(AbpFeatureManagementApplicationModule)
         )]
     public class HelloApplicationModule : AbpModule
@@ -91,6 +91,7 @@ namespace Abp.VNext.Hello
                 capOptions.ProducerThreadCount = Environment.ProcessorCount;
                 capOptions.ConsumerThreadCount = Environment.ProcessorCount;
                 capOptions.DefaultGroupName = "Abp.VNext.Hello.Cap-Queue";
+                capOptions.TopicNamePrefix = "Abp.VNext.Hello";
                 capOptions.FailedThresholdCallback = (failed) =>
                 {
                     switch (failed.MessageType)
@@ -108,9 +109,9 @@ namespace Abp.VNext.Hello
                 capOptions.UseSqlServer(config["ConnectionStrings:Default"]);
                 capOptions.UseRabbitMQ(x =>
                 {
-                    x.HostName = "47.98.226.195";
-                    x.UserName = "admin";
-                    x.Password = "zxcvbnm";
+                    x.HostName = "117.50.40.186";
+                    x.UserName = "guest";
+                    x.Password = "guest";
                     x.VirtualHost = "/";
                 });// 服务器地址配置，支持配置IP地址和密码
                 capOptions.UseDashboard(dashboard => {
