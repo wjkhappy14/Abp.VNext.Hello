@@ -3,8 +3,9 @@
 	<Import Project="..\..\common.props" />
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<RootNamespace>Abp.VNext.Hello</RootNamespace>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,18 +14,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Volo.Abp.Account.HttpApi" Version="4.4.2" />
+		<PackageReference Include="Volo.Abp.Account.HttpApi" Version="5.0.0-rc.1" />
 		<PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
 		<PackageReference Include="EasyAbp.Abp.SettingUi.HttpApi" Version="1.1.11" />
-		<PackageReference Include="Volo.Blogging.HttpApi" Version="4.4.2" />
-		<PackageReference Include="Volo.Abp.Identity.HttpApi" Version="4.4.2" />
-		<PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="4.4.2" />
-		<PackageReference Include="Volo.Abp.PermissionManagement.HttpApi" Version="4.4.2" />
-		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="4.4.2" />
-		<PackageReference Include="Volo.Abp.FeatureManagement.HttpApi" Version="4.4.2" />
+		<PackageReference Include="Volo.Blogging.HttpApi" Version="5.0.0-rc.1" />
+		<PackageReference Include="Volo.Abp.Identity.HttpApi" Version="5.0.0-rc.1" />
+		<PackageReference Include="Volo.Abp.IdentityServer.Domain" Version="5.0.0-rc.1" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.HttpApi" Version="5.0.0-rc.1" />
+		<PackageReference Include="Volo.Abp.TenantManagement.HttpApi" Version="5.0.0-rc.1" />
+		<PackageReference Include="Volo.Abp.FeatureManagement.HttpApi" Version="5.0.0-rc.1" />
 		<PackageReference Include="EasyAbp.Abp.SettingUi.HttpApi" Version="1.5.0" />
-		<PackageReference Include="EasyAbp.Abp.WeChat.Official.HttpApi" Version="1.7.13" />
-		<PackageReference Include="EasyAbp.Abp.WeChat.Pay.HttpApi" Version="1.7.13" />
+		<PackageReference Include="EasyAbp.Abp.WeChat.Official.HttpApi" Version="1.7.14" />
+		<PackageReference Include="EasyAbp.Abp.WeChat.Pay.HttpApi" Version="1.7.14" />
 </ItemGroup>
 
 </Project>

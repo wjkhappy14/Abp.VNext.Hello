@@ -22,20 +22,20 @@ namespace Abp.VNext.Hello
 
         public ContainerBuilder GetContainer()
         {
-            ObjectAccessor<ContainerBuilder> item = ServiceProvider.GetRequiredService<ObjectAccessor<ContainerBuilder>>();
+            ObjectAccessor<ContainerBuilder> item = LazyServiceProvider.LazyGetRequiredService<ObjectAccessor<ContainerBuilder>>();
             return item.Value;
         }
 
         public IApplicationBuilder GetApplicationBuilder()
         {
   
-            IApplicationBuilder appBuilder = ServiceProvider.GetRequiredService<IApplicationBuilder>();
+            IApplicationBuilder appBuilder = LazyServiceProvider.LazyGetRequiredService<IApplicationBuilder>();
             return appBuilder;
         }
 
         public IEnumerable<object> GetServiceProvider()
         {
-            IServiceProvider provider = ServiceProvider.GetRequiredService<IServiceProvider>();
+            IServiceProvider provider = LazyServiceProvider.LazyGetRequiredService<IServiceProvider>();
             if (provider is AutofacServiceProvider)
             {
                 AutofacServiceProvider autofacServiceProvider = provider as AutofacServiceProvider;
