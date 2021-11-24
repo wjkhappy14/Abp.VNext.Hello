@@ -39,7 +39,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 namespace Abp.VNext.Hello.Web
 {
     [DependsOn(
-        typeof(HelloHttpApiModule),
+       // typeof(HelloHttpApiModule),
         typeof(HelloHttpApiClientModule),
         typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
         typeof(AbpAspNetCoreMvcClientModule),
