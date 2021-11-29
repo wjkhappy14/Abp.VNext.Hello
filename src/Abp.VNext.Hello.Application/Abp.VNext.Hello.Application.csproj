@@ -9,6 +9,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\dapr-sdk-1.4.0\Dapr.Actors\Dapr.Actors.csproj" />
+		<ProjectReference Include="..\..\dapr-sdk-1.4.0\Dapr.Client\Dapr.Client.csproj" />
 		<ProjectReference Include="..\Abp.VNext.Hello.Domain\Abp.VNext.Hello.Domain.csproj" />
 		<ProjectReference Include="..\Abp.VNext.Hello.Application.Contracts\Abp.VNext.Hello.Application.Contracts.csproj" />
 	</ItemGroup>

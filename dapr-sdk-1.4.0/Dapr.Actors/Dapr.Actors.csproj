@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+
+  <!-- Additional Nuget package properties. -->
+  <PropertyGroup>
+    <Description>This package contains the reference assemblies for developing Actor services using Dapr.</Description>
+    <PackageTags>$(PackageTags);Actors</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\properties\IsExternalInit.cs" Link="IsExternalInit.cs" />
+    <Compile Include="..\Shared\ArgumentVerifier.cs" />
+    <Compile Include="..\Shared\DaprDefaults.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dapr.Client\Dapr.Client.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
+  </ItemGroup>
+
+</Project>
