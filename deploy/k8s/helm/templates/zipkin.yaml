@@ -41,7 +41,7 @@ spec:
   ports:
     - port: 9411
       targetPort: 9411
-      nodePort: 33411
+      nodePort: 31411
       protocol: TCP
       name: zipkin
   selector:
