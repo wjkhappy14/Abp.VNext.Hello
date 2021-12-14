@@ -43,7 +43,7 @@ spec:
   ports:
     - port: 3379
       targetPort: 3379
-      nodePort: 3379
+      nodePort: 30379
       protocol: TCP
       name: harbor
   selector:
