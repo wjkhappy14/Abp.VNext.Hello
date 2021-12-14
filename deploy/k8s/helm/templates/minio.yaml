@@ -1,25 +1,25 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: redis
+  name: minio
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: redis
+    service: minio
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: redis
+      service: minio
   template:
     metadata:
       labels:
         app: abp-hello
-        service: redis
+        service: minio
     spec:
       containers:
-      - name: redis
-        image: redis:alpine
+      - name: minio
+        image: minio:alpine
         imagePullPolicy: IfNotPresent
         args:
           - "--requirepass e$h0p0nD@pr"
@@ -37,7 +37,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: redis
+    service: minio
 spec:
   type: NodePort
   ports:
@@ -45,6 +45,6 @@ spec:
       targetPort: 6379
       nodePort: 30379
       protocol: TCP
-      name: redis
+      name: minio
   selector:
-    service: redis
+    service: minio

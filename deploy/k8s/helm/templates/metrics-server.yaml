@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: redis
+  name: metrics
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
@@ -10,16 +10,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      service: redis
+      service: metrics
   template:
     metadata:
       labels:
         app: abp-hello
-        service: redis
+        service: metrics
     spec:
       containers:
-      - name: redis
-        image: redis:alpine
+      - name: metrics
+        image: metrics:alpine
         imagePullPolicy: IfNotPresent
         args:
           - "--requirepass e$h0p0nD@pr"
@@ -37,14 +37,14 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: redis
+    service: metrics
 spec:
   type: NodePort
   ports:
-    - port: 6379
-      targetPort: 6379
-      nodePort: 30379
+    - port: 33313
+      targetPort: 33313
+      nodePort: 33313
       protocol: TCP
-      name: redis
+      name: metrics
   selector:
-    service: redis
+    service: metrics

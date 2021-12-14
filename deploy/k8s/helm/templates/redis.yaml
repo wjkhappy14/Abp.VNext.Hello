@@ -43,7 +43,7 @@ spec:
   ports:
     - port: 6379
       targetPort: 6379
-      nodePort: 30379
+      nodePort: 31379
       protocol: TCP
       name: redis
   selector:

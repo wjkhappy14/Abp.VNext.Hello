@@ -46,7 +46,7 @@ spec:
   ports:
     - port: 1433
       targetPort: 1433
-      nodePort: 31433
+      nodePort: 32433
       protocol: TCP
       name: tds
   selector:

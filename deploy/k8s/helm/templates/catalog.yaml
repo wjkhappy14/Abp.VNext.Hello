@@ -77,7 +77,7 @@ spec:
       name: dapr-http
     - port: 50001
       targetPort: 50001
-      nodePort: 30041
+      nodePort: 31041
       protocol: TCP
       name: dapr-grpc
   selector:
