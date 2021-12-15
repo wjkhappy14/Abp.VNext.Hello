@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: redis
+    service: metrics
 spec:
   replicas: 1
   selector:
@@ -33,7 +33,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: redis
+  name: metrics
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
@@ -41,9 +41,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 33313
-      targetPort: 33313
-      nodePort: 33313
+    - port: 30313
+      targetPort: 30313
+      nodePort: 31313
       protocol: TCP
       name: metrics
   selector:
