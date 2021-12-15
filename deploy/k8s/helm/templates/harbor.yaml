@@ -25,7 +25,7 @@ spec:
           - "--requirepass e$h0p0nD@pr"
         ports:
           - name: http
-            containerPort: 6379
+            containerPort: 1319
             protocol: TCP
 
 ---
@@ -41,9 +41,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 3379
-      targetPort: 3379
-      nodePort: 30379
+    - port: 1319
+      targetPort: 1319
+      nodePort: 31319
       protocol: TCP
       name: harbor
   selector:
