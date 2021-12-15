@@ -5,14 +5,14 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: webshoppingagg
+    service: web-aggregate
 data:
   ASPNETCORE_ENVIRONMENT: Development
   BasketUrlHC: http://basket-api/hc
   CatalogUrlHC: http://catalog-api/hc
   IdentityUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30008
   IdentityUrlHC: http://identity-api/hc
-  PATH_BASE: /webshoppingagg
+  PATH_BASE: /web-aggregate
   PaymentUrlHC: http://payment-api/hc
   urls__basket: http://basket-api
   urls__catalog: http://catalog-api
@@ -23,30 +23,30 @@ data:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: webshoppingagg
+  name: web-aggregate
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: webshoppingagg
+    service: web-aggregate
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: webshoppingagg
+      service: web-aggregate
   template:
     metadata:
       labels:
         app: abp-hello
-        service: webshoppingagg
+        service: web-aggregate
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "webshoppingagg"
+        dapr.io/app-id: "web-aggregate"
         dapr.io/app-port: "80"
         dapr.io/config: "dapr-config"
     spec:
       containers:
-        - name: webshoppingagg
-          image: abp-hellodapr/webshoppingagg:latest
+        - name: web-aggregate
+          image: abp-hellodapr/web-aggregate:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -54,18 +54,18 @@ spec:
               protocol: TCP
           envFrom:
             - configMapRef:
-                name: webshoppingagg-cm
+                name: web-aggregate-cm
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: webshoppingagg
+  name: web-aggregate
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: webshoppingagg
+    service: web-aggregate
 spec:
   type: NodePort
   ports:
@@ -75,4 +75,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    service: webshoppingagg
+    service: web-aggregate

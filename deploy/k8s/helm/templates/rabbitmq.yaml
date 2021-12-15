@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: redis
+    service: rabbitmq
 spec:
   replicas: 1
   selector:

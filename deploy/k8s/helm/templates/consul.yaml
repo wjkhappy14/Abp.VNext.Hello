@@ -1,25 +1,25 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: redis
+  name: consul
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: redis
+    service: consul
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: redis
+      service: consul
   template:
     metadata:
       labels:
         app: abp-hello
-        service: redis
+        service: consul
     spec:
       containers:
-      - name: redis
-        image: redis:alpine
+      - name: consul
+        image: consul:alpine
         imagePullPolicy: IfNotPresent
         args:
           - "--requirepass e$h0p0nD@pr"
@@ -33,11 +33,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: redis
+  name: consul
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: redis
+    service: consul
 spec:
   type: NodePort
   ports:
@@ -45,6 +45,6 @@ spec:
       targetPort: 3379
       nodePort: 33379
       protocol: TCP
-      name: redis
+      name: consul
   selector:
-    service: redis
+    service: consul

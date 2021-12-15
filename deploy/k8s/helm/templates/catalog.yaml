@@ -10,7 +10,7 @@ data:
   ASPNETCORE_ENVIRONMENT: Development
   ASPNETCORE_URLS: http://0.0.0.0:80
   SeqServerUrl: http://seq
-  SqlConnectionString: Server=sqldata;Database=Microsoft.abp-helloOnDapr.Services.CatalogDb;User Id=sa;Password=Pass@word
+  SqlConnectionString: Server=sqldata;Database=Microsoft.abp-hello-OnDapr.Services.CatalogDb;User Id=sa;Password=Pass@word
 
 ---
 

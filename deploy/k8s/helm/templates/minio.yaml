@@ -33,7 +33,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: redis
+  name: minio
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
