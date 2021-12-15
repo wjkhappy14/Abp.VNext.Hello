@@ -41,9 +41,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 3379
-      targetPort: 3379
-      nodePort: 30379
+    - port: 3079
+      targetPort: 3079
+      nodePort: 30179
       protocol: TCP
       name: consul
   selector:
