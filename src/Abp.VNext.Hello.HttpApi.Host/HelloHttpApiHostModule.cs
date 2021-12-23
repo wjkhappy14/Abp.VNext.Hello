@@ -26,8 +26,6 @@ using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
-using EasyAbp.Abp.WeChat.Pay;
-using EasyAbp.Abp.WeChat.Official;
 using System.Threading.Tasks;
 using Hello.Authentication.MiniProgram.WeChat;
 using Ocelot.DependencyInjection;
@@ -66,22 +64,6 @@ namespace Abp.VNext.Hello
             {
                 options.KnownProxies.Add(IPAddress.Parse("172.16.0.4"));
             });
-            Configure<AbpWeChatPayOptions>(options =>
-            {
-                options.MchId = "Hello";
-                options.ApiKey = "Kitty";
-                options.NotifyUrl = "";
-                options.RefundNotifyUrl = "";
-            });
-            Configure<AbpWeChatOfficialOptions>(options =>
-            {
-                options.Token = "Hello ";
-                options.AppId = " Kitty";
-                options.AppSecret = " Kitty";
-                options.EncodingAesKey = "Hello ";
-                options.OAuthRedirectUrl = "Hello Kitty";
-            });
-
             context.Services.AddOcelot();
         }
 

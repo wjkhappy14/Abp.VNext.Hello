@@ -1,6 +1,4 @@
-﻿using EasyAbp.Abp.SettingUi;
-using EasyAbp.Abp.WeChat.Pay.HttpApi;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -26,7 +24,6 @@ namespace Abp.VNext.Hello
         typeof(AbpIdentityHttpApiModule),
         typeof(AbpPermissionManagementHttpApiModule),
         typeof(AbpTenantManagementHttpApiModule),
-        typeof(AbpWeChatPayHttpApiModule),
         typeof(AbpFeatureManagementHttpApiModule)
         )]
     public class HelloHttpApiModule : AbpModule

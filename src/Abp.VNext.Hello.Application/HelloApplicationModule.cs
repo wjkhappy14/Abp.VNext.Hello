@@ -1,8 +1,6 @@
 ﻿using Abp.VNext.Hello.XNetty.Server;
 using EasyAbp.Abp.EventBus.Cap;
 using EasyAbp.Abp.SettingUi;
-using EasyAbp.Abp.WeChat.MiniProgram;
-using EasyAbp.PrivateMessaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +25,6 @@ namespace Abp.VNext.Hello
     [DependsOn(
         typeof(DotNettyModule),
         typeof(HelloDomainModule),
-        typeof(PrivateMessagingApplicationModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpSettingUiApplicationModule),
@@ -37,7 +34,6 @@ namespace Abp.VNext.Hello
         typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpTenantManagementApplicationModule),
         typeof(AbpAspNetCoreSignalRModule),
-       // typeof(AbpWeChatMiniProgramModule),
         typeof(AbpFeatureManagementApplicationModule)
         )]
     public class HelloApplicationModule : AbpModule
