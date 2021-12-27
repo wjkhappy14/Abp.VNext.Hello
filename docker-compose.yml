@@ -6,8 +6,6 @@ services:
     image: rabbitmq:latest
     command:  -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=zxcvbnm
     restart: always
-    ports:
-     - 5672:5672
 
   redis:
     image: redis:latest
@@ -21,8 +19,6 @@ services:
   zipkin:
     image: openzipkin/zipkin-slim
 
-  dapr-placement:
-    image: "daprio/dapr:1.5.0"
 
   mysql-db:
     image: mysql
@@ -35,27 +31,60 @@ services:
 
   abp.vnext.hello.web:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.web:${TAG:-latest}
-    restart: always
-    ports:
-      - 10086:80
+    depends_on:
+        - abp.vnext.hello.identityserver
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.Web/Dockerfile
+     
+  abp.vnext.hello.web-dapr:
+    image: "daprio/daprd:1.5.0"
+    network_mode: "service:abp.vnext.hello.web"
+    depends_on:
+      - basket-api
 
   abp.vnext.hello.httpapi.host:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.httpapi.host:${TAG:-latest}
-    restart: always
-    ports:
-      - 10010:80
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.HttpApi.Host/Dockerfile
-
+  
+  abp.vnext.hello.httpapi.host-dapr:
+    image: "daprio/daprd:1.5.0"
+    network_mode: "service:abp.vnext.hello.httpapi.host"
+    depends_on:
+      - basket-api
+  
   abp.vnext.hello.identityserver:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.identityserver:${TAG:-latest}
-    restart: always
-    ports:
-      - 10000:80
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.IdentityServer/Dockerfile
+  
+  abp.vnext.hello.identityserver-dapr:
+    image: "daprio/daprd:1.5.0"
+    network_mode: "service:abp.vnext.hello.identityserver"
+
+  web-agg:
+    image: ${REGISTRY:-wjkhappy14}/web-agg:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/ApiGateways/Aggregators/Web.Shopping.HttpAggregator/Dockerfile
+    depends_on:
+      - basket-api
+      - catalog-api
+      - identity-api
+      - ordering-api
+      - mysql-db
+
+  web-agg-dapr:
+    image: "daprio/daprd:1.5.0"
+    network_mode: "service:web-agg"
+    depends_on:
+      - web-agg
+
+  webstatus:
+    image: xabarilcoding/healthchecksui:5.0.0
+ 
+  dapr-placement:
+    image: "daprio/dapr:1.5.0" 

@@ -84,6 +84,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		deploy\k8s\helm\templates\zipkin.yaml = deploy\k8s\helm\templates\zipkin.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{57C49A11-AF01-4626-BA74-6E427D5FE35E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{855EAC61-2ADB-494F-90C6-CE964ED8EB17}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\components\abp.vnext.hello-email.yaml = dapr\components\abp.vnext.hello-email.yaml
+		dapr\components\abp.vnext.hello-pubsub.yaml = dapr\components\abp.vnext.hello-pubsub.yaml
+		dapr\components\abp.vnext.hello-secretstore.json = dapr\components\abp.vnext.hello-secretstore.json
+		dapr\components\abp.vnext.hello-secretstore.yaml = dapr\components\abp.vnext.hello-secretstore.yaml
+		dapr\components\abp.vnext.hello-statestore.yaml = dapr\components\abp.vnext.hello-statestore.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{34382B03-70AC-465F-985D-B8308B1E00BE}"
+	ProjectSection(SolutionItems) = preProject
+		dapr\configuration\abp.vnext.hello-config.yaml = dapr\configuration\abp.vnext.hello-config.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -270,6 +286,8 @@ Global
 		{D1841C87-209D-4A5B-9136-C8D9672C8E6D} = {0CD8FB98-59C9-4B9A-9DF1-70BE18A8B2CA}
 		{CE589F65-67E2-4790-AFBA-1482A84346EA} = {D1841C87-209D-4A5B-9136-C8D9672C8E6D}
 		{7B7C62A5-0535-4CD4-B05A-86B7908488E8} = {CE589F65-67E2-4790-AFBA-1482A84346EA}
+		{855EAC61-2ADB-494F-90C6-CE964ED8EB17} = {57C49A11-AF01-4626-BA74-6E427D5FE35E}
+		{34382B03-70AC-465F-985D-B8308B1E00BE} = {57C49A11-AF01-4626-BA74-6E427D5FE35E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}
