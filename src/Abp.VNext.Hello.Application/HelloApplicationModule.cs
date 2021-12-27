@@ -1,6 +1,4 @@
 ﻿using Abp.VNext.Hello.XNetty.Server;
-using EasyAbp.Abp.EventBus.Cap;
-using EasyAbp.Abp.SettingUi;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +25,6 @@ namespace Abp.VNext.Hello
         typeof(HelloDomainModule),
         typeof(BloggingApplicationModule),
         typeof(AbpAccountApplicationModule),
-        typeof(AbpSettingUiApplicationModule),
         typeof(AbpBackgroundJobsAbstractionsModule),
         typeof(HelloApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),
@@ -82,39 +79,6 @@ namespace Abp.VNext.Hello
                 options.Kind = DateTimeKind.Local;
             });
 
-            context.AddCapEventBus(capOptions =>
-            {
-                capOptions.ProducerThreadCount = Environment.ProcessorCount;
-                capOptions.ConsumerThreadCount = Environment.ProcessorCount;
-                capOptions.DefaultGroupName = "Abp.VNext.Hello.Cap-Queue";
-                capOptions.TopicNamePrefix = "Abp.VNext.Hello";
-                capOptions.FailedThresholdCallback = (failed) =>
-                {
-                    switch (failed.MessageType)
-                    {
-                        case DotNetCore.CAP.Messages.MessageType.Publish:
-                            System.Diagnostics.Debug.WriteLine(failed.Message);
-                            break;
-                        case DotNetCore.CAP.Messages.MessageType.Subscribe:
-                            System.Diagnostics.Debug.WriteLine(failed.Message);
-                            break;
-                        default:
-                            break;
-                    }
-                };
-                capOptions.UseSqlServer(config["ConnectionStrings:Default"]);
-                capOptions.UseRabbitMQ(x =>
-                {
-                    x.HostName = "117.50.40.186";
-                    x.UserName = "guest";
-                    x.Password = "guest";
-                    x.VirtualHost = "/";
-                });// 服务器地址配置，支持配置IP地址和密码
-                capOptions.UseDashboard(dashboard => {
-                    //DotNetCore.CAP.Dashboard.LocalRequestsOnlyAuthorizationFilter
-                    dashboard.StatsPollingInterval = 600;
-                });
-            });
-        }
+            }
     }
 }

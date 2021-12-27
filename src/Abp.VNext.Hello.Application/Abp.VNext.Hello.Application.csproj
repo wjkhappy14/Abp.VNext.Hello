@@ -37,9 +37,6 @@
 		<PackageReference Include="DotNetty.Common" Version="0.7.0" />
 		<PackageReference Include="DotNetty.Handlers" Version="0.7.0" />
 		<PackageReference Include="DotNetty.Codecs" Version="0.7.0" />
-
-		<PackageReference Include="EasyAbp.Abp.SettingUi.Application" Version="1.5.0" />
-		<PackageReference Include="EasyAbp.Abp.EventBus.CAP" Version="4.4.0" />
 		
 		<PackageReference Include="DotNetCore.CAP" Version="5.2.0" />
 		<PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="5.2.0" />
