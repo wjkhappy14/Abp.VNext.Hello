@@ -3,7 +3,11 @@ version: '3.4'
 services:
 
   rabbitmq:
-    image: rabbitmq:3-management-latest
+    image: rabbitmq:latest
+    command:  -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=zxcvbnm
+    restart: always
+    ports:
+     - 5672:5672
 
   redis:
     image: redis:latest
@@ -31,18 +35,27 @@ services:
 
   abp.vnext.hello.web:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.web:${TAG:-latest}
+    restart: always
+    ports:
+      - 10086:80
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.Web/Dockerfile
 
   abp.vnext.hello.httpapi.host:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.httpapi.host:${TAG:-latest}
+    restart: always
+    ports:
+      - 10010:80
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.HttpApi.Host/Dockerfile
 
   abp.vnext.hello.identityserver:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.identityserver:${TAG:-latest}
+    restart: always
+    ports:
+      - 10000:80
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.IdentityServer/Dockerfile
