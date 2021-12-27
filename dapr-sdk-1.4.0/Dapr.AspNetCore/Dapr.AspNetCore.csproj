@@ -24,7 +24,7 @@
       The extra reference is harmless but is needed due to a bug in the 5.0 RC dotnet SDK.
       It can be removed when the issue is fixed (likely 5.0 GA).
     -->
-    <PackageReference Include="System.IO.Pipelines" Version="4.7.2" />
+    <PackageReference Include="System.IO.Pipelines" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
