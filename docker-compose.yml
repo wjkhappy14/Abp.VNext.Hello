@@ -41,7 +41,7 @@ services:
     image: "daprio/daprd:1.5.0"
     network_mode: "service:abp.vnext.hello.web"
     depends_on:
-      - basket-api
+      - abp.vnext.hello.web
 
   abp.vnext.hello.httpapi.host:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.httpapi.host:${TAG:-latest}
@@ -53,7 +53,7 @@ services:
     image: "daprio/daprd:1.5.0"
     network_mode: "service:abp.vnext.hello.httpapi.host"
     depends_on:
-      - basket-api
+      - abp.vnext.hello.httpapi.host
   
   abp.vnext.hello.identityserver:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.identityserver:${TAG:-latest}
@@ -69,12 +69,12 @@ services:
     image: ${REGISTRY:-wjkhappy14}/web-agg:${TAG:-latest}
     build:
       context: .
-      dockerfile: src/ApiGateways/Aggregators/Web.Shopping.HttpAggregator/Dockerfile
+      dockerfile: src/ApiGateways/Aggregators/Web.HttpAggregator/Dockerfile
     depends_on:
-      - basket-api
-      - catalog-api
-      - identity-api
-      - ordering-api
+      - abp.vnext.hello.identityserver
+      - abp.vnext.hello.httpapi.host
+      - abp.vnext.hello.web
+      - redis
       - mysql-db
 
   web-agg-dapr:

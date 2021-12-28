@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Abp.VNext.Hello.BuildingBlocks.EventBus</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\dapr-sdk-1.4.0\Dapr.Client\Dapr.Client.csproj" />
+  </ItemGroup>
+</Project>
