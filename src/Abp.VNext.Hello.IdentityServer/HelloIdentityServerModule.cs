@@ -28,7 +28,6 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using IdentityServer4.Configuration;
 using Microsoft.Extensions.Configuration;
-using IdentityServer4.Extensions;
 
 namespace Abp.VNext.Hello
 {

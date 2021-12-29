@@ -17,7 +17,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Web.HttpAggregator.Filters;
 
-namespace Web.HttpAggregator.Controllers.HttpAggregator
+namespace Web.HttpAggregator
 {
     public class Startup
     {
