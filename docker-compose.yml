@@ -31,11 +31,17 @@ services:
 
   abp.vnext.hello.web:
     image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.web:${TAG:-latest}
-    depends_on:
-        - abp.vnext.hello.identityserver
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.Web/Dockerfile
+    depends_on:
+      - abp.vnext.hello.identityserver
+      - abp.vnext.hello.httpapi.host
+      - rabbitmq
+      - redis
+      - mysql-db
+      - seq
+      - zikin
      
   abp.vnext.hello.web-dapr:
     image: "daprio/daprd:1.5.0"
@@ -48,7 +54,14 @@ services:
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.HttpApi.Host/Dockerfile
-  
+    depends_on:
+      - abp.vnext.hello.identityserver
+      - rabbitmq
+      - redis
+      - mysql-db
+      - seq
+      - zikin
+
   abp.vnext.hello.httpapi.host-dapr:
     image: "daprio/daprd:1.5.0"
     network_mode: "service:abp.vnext.hello.httpapi.host"
@@ -60,10 +73,18 @@ services:
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.IdentityServer/Dockerfile
-  
+    depends_on:
+      - rabbitmq
+      - redis
+      - mysql-db
+      - seq
+      - zikin
+
   abp.vnext.hello.identityserver-dapr:
     image: "daprio/daprd:1.5.0"
     network_mode: "service:abp.vnext.hello.identityserver"
+    depends_on:
+      - abp.vnext.hello.identityserver
 
   web-agg:
     image: ${REGISTRY:-wjkhappy14}/web-agg:${TAG:-latest}
