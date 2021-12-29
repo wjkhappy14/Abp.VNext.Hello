@@ -7,7 +7,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
     /// <summary>
     /// https://docs.microsoft.com/zh-cn/ef/core/dbcontext-configuration/#avoiding-dbcontext-threading-issues
     /// </summary>
-    [ConnectionStringName("Awesome")]
+    [ConnectionStringName("Default")]
     public class HelloDbContext : AbpDbContext<HelloDbContext>
     {
 

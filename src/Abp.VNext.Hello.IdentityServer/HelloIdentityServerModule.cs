@@ -166,13 +166,13 @@ namespace Abp.VNext.Hello
             {
                 app.UseErrorPage();
             }
-            app.Use(async (ctx, next) =>
-            {
-                ctx.SetIdentityServerOrigin(configuration["App:PublicOrigin"]);
-                await next();
-            });
+            //app.Use( (ctx, next) =>
+            //{
+            //   // ctx.SetIdentityServerOrigin(configuration["App:PublicOrigin"]);
+            //   // await next();
+            //});
             app.UseCorrelationId();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors(DefaultCorsPolicyName);
             app.UseAuthentication();

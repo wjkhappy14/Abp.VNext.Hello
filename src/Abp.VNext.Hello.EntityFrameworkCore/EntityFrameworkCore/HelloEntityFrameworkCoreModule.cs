@@ -57,7 +57,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlite<HelloDbContext>(x =>
+                options.UseSqlServer<HelloDbContext>(x =>
                 {
 
                 });
