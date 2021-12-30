@@ -23,9 +23,9 @@ namespace Abp.VNext.Hello
             _dapperRepository = new DapperRepository<HelloDbContext>(dbContextProvider);
         }
 
-        public IQueryable<StateProvince> FindByCountryIdAsync(int countryId)
+        public async Task<StateProvince> FindByCountryIdAsync(int countryId)
         {
-            return DbSet.Where(x => x.CountryId == countryId);
+            return await (await GetDbContextAsync()).Set<StateProvince>().FirstAsync(x => x.CountryId == countryId);
         }
 
         public Task<StateProvince> FindByNameAsync(string name)
