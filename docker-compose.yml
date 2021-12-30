@@ -19,7 +19,6 @@ services:
   zipkin:
     image: openzipkin/zipkin-slim
 
-
   mysql-db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
@@ -44,7 +43,7 @@ services:
       - zikin
      
   abp.vnext.hello.web-dapr:
-    image: "daprio/daprd:1.5.0"
+    image: "daprio/daprd:1.5.1"
     network_mode: "service:abp.vnext.hello.web"
     depends_on:
       - abp.vnext.hello.web
@@ -63,7 +62,7 @@ services:
       - zikin
 
   abp.vnext.hello.httpapi.host-dapr:
-    image: "daprio/daprd:1.5.0"
+    image: "daprio/daprd:1.5.1"
     network_mode: "service:abp.vnext.hello.httpapi.host"
     depends_on:
       - abp.vnext.hello.httpapi.host
@@ -81,7 +80,7 @@ services:
       - zikin
 
   abp.vnext.hello.identityserver-dapr:
-    image: "daprio/daprd:1.5.0"
+    image: "daprio/daprd:1.5.1"
     network_mode: "service:abp.vnext.hello.identityserver"
     depends_on:
       - abp.vnext.hello.identityserver
@@ -99,7 +98,7 @@ services:
       - mysql-db
 
   web-agg-dapr:
-    image: "daprio/daprd:1.5.0"
+    image: "daprio/daprd:1.5.1"
     network_mode: "service:web-agg"
     depends_on:
       - web-agg
@@ -108,4 +107,4 @@ services:
     image: xabarilcoding/healthchecksui:5.0.0
  
   dapr-placement:
-    image: "daprio/dapr:1.5.0" 
+    image: "daprio/dapr:1.5.1" 
