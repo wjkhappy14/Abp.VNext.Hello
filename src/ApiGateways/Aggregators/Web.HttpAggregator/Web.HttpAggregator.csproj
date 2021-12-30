@@ -10,8 +10,9 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..\..</DockerfileContext>
     <UserSecretsId>5f07867f-5948-4790-918c-93437ef154b7</UserSecretsId>
+	<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
-
+  
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Web.HttpAggregator' " />
 
   <ItemGroup>
