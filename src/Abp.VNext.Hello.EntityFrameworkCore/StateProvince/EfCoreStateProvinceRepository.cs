@@ -28,15 +28,16 @@ namespace Abp.VNext.Hello
             return await (await GetDbContextAsync()).Set<StateProvince>().FirstAsync(x => x.CountryId == countryId);
         }
 
-        public Task<StateProvince> FindByNameAsync(string name)
+        public async Task<StateProvince> FindByNameAsync(string name)
         {
-            return DbSet.FirstOrDefaultAsync(p => p.Name == name);
+            await W();
+            return await (await GetDbContextAsync()).Set<StateProvince>().FirstOrDefaultAsync(p => p.Name == name);
         }
 
 
-        private Dictionary<int, List<StateProvince>> W()
+        private async Task<Dictionary<int, List<StateProvince>>> W()
         {
-            return base.DbContext.StateProvinces
+            var items = (await GetDbSetAsync()).Where(x => x.Id > 0)
                  .GroupBy(c => c.CountryId)
                  .Where(x => x.Count() > 0)
               .Select(g => new
@@ -45,12 +46,13 @@ namespace Abp.VNext.Hello
                   Items = g.ToList()
               }).OrderByDescending(x => x.Items.Count)
                 .ToDictionary(g => g.CountryId, g => g.Items);
+            return items;
         }
-        private void GroupJoin()
+        private async void GroupJoin()
         {
             var groupJoin =
-                DbContext.StateProvinces.GroupJoin(
-                DbContext.Countries,
+                (await GetDbContextAsync()).Set<StateProvince>().GroupJoin(
+                (await GetDbContextAsync()).Set<Country>(),
                 stateProvince => stateProvince.CountryId,
                 country => country.Id,
                 (c, p) => new
@@ -62,9 +64,9 @@ namespace Abp.VNext.Hello
 
         }
 
-        void GroupBy(string provinceName)
+        async void GroupBy(string provinceName)
         {
-            var queryable = base.DbContext.StateProvinces
+            var queryable = (await GetDbSetAsync())
                 .Where(x => x.Name == provinceName)
                 .OrderByDescending(x => x.ChineseName)
                 .GroupBy(x => new { x.CountryId, x.Name })

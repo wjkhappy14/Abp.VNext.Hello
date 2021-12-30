@@ -16,19 +16,19 @@ namespace Abp.VNext.Hello
 
         }
 
-        public Task<City> FindByIdAsync(int cityId)
+        public async Task<City> FindByIdAsync(int cityId)
         {
-            return DbSet.FirstOrDefaultAsync(w => w.Id == cityId);
+            return await (await GetDbContextAsync()).Set<City>().FirstOrDefaultAsync(w => w.Id == cityId);
         }
 
-        public Task<City> FindByNameAsync(string name)
+        public async Task<City> FindByNameAsync(string name)
         {
-            return DbSet.FirstOrDefaultAsync(w => w.Name == name);
+            return await(await GetDbContextAsync()).Set<City>().FirstOrDefaultAsync(w => w.Name == name);
         }
 
-        public IQueryable<City> SearchAsync(string keywords)
+        public async Task<IQueryable<City>> SearchAsync(string keywords)
         {
-            return DbSet.Where(w => w.Name == keywords);
+            return  (await GetDbSetAsync()).Where(w => w.Name == keywords);
         }
     }
 }

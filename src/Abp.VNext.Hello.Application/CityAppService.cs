@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Caching;
@@ -50,8 +51,8 @@ namespace Abp.VNext.Hello
         [Authorize(HelloPermissions.City.Search)]
         public async Task<IList<CityDto>> Search(string keyword)
         {
-            List<City> items = await _cityRepository.SearchAsync(keyword).ToListAsync();
-            return ObjectMapper.Map<IList<City>, IList<CityDto>>(items);
+            IQueryable<City> items = await _cityRepository.SearchAsync(keyword);
+            return ObjectMapper.Map<IList<City>, IList<CityDto>>(items.ToList());
         }
 
         [Authorize(HelloPermissions.City.Update)]

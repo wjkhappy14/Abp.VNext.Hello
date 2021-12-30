@@ -16,18 +16,18 @@ namespace Abp.VNext.Hello
 
         }
 
-        public IQueryable<Country> Search(string keyword)
+        public async Task<IQueryable<Country>> Search(string keyword)
         {
-            return DbSet.Where(w => w.Name == keyword);
+            return (await GetDbSetAsync()).Where(w => w.Name == keyword);
         }
 
         public async Task<Country> GetByNameAsync(string name)
         {
-            return await DbSet.FirstOrDefaultAsync(p => p.Name == name);
+            return await (await GetDbSetAsync()).FirstOrDefaultAsync(p => p.Name == name);
         }
-        public Task<Country> GetCountryByIdAsync(int id)
+        public async Task<Country> GetCountryByIdAsync(int id)
         {
-            Task<Country> country = DbContext.Countries
+            var  country = await(await GetDbContextAsync()).Set<Country>()
                                .AsNoTracking()
                                .Include(item => item.StateProvinces)
                                .FirstOrDefaultAsync(p => p.Id == id);

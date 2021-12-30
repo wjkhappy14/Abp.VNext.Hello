@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities;
 
 namespace Abp.VNext.Hello
@@ -32,5 +34,10 @@ namespace Abp.VNext.Hello
         public long Population { get; set; }
 
         public virtual ICollection<StateProvince> StateProvinces { get; protected set; } = new HashSet<StateProvince>();
+
+        public static implicit operator Task<object>(Country v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

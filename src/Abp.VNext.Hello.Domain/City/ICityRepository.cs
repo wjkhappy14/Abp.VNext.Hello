@@ -10,6 +10,6 @@ namespace Abp.VNext.Hello
 
         Task<City> FindByNameAsync(string name);
 
-        IQueryable<City> SearchAsync(string keywords);
+        Task<IQueryable<City>> SearchAsync(string keywords);
     }
 }
