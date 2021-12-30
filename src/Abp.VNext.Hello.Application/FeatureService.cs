@@ -19,7 +19,7 @@ namespace Abp.VNext.Hello
 
         public IEnumerable<string> GetFeatures()
         {
-            var httpContext = ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+            var httpContext = LazyServiceProvider.LazyGetRequiredService<IHttpContextAccessor>();
             IFeatureCollection features = httpContext.HttpContext.Features;
             return features.Select(x => x.Key.FullName);
         }
@@ -27,7 +27,7 @@ namespace Abp.VNext.Hello
 
         public object GetFeature(string name)
         {
-            IHttpContextAccessor httpContext = ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+            IHttpContextAccessor httpContext = LazyServiceProvider.LazyGetRequiredService<IHttpContextAccessor>();
             IFeatureCollection features = httpContext.HttpContext.Features;//Get<IRoutingFeature>();
             KeyValuePair<Type, object> item = features.FirstOrDefault(x => x.Key.FullName == name);
             object feature = features[item.Key];
@@ -36,7 +36,7 @@ namespace Abp.VNext.Hello
 
         public IEnumerable<object> GetProperties()
         {
-            IHttpContextAccessor httpContext = ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+            IHttpContextAccessor httpContext = LazyServiceProvider.LazyGetRequiredService<IHttpContextAccessor>();
             IFeatureCollection features = httpContext.HttpContext.Features;
             Type t = features.GetType();
             PropertyInfo[] properties = t.GetProperties();
