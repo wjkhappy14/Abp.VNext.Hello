@@ -29,7 +29,7 @@ services:
       MYSQL_ROOT_PASSWORD: zxcvbnm
 
   abp.vnext.hello.web:
-    image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.web:${TAG:-latest}
+    image: ${DOCKER_REGISTRY-wjkhappy14}/abp.vnext.hello.web:${TAG:-latest}
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.Web/Dockerfile
@@ -49,7 +49,7 @@ services:
       - abp.vnext.hello.web
 
   abp.vnext.hello.httpapi.host:
-    image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.httpapi.host:${TAG:-latest}
+    image: ${DOCKER_REGISTRY-wjkhappy14}/abp.vnext.hello.httpapi.host:${TAG:-latest}
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.HttpApi.Host/Dockerfile
@@ -68,7 +68,7 @@ services:
       - abp.vnext.hello.httpapi.host
   
   abp.vnext.hello.identityserver:
-    image: ${DOCKER_REGISTRY-wjkhappy14}abp.vnext.hello.identityserver:${TAG:-latest}
+    image: ${DOCKER_REGISTRY-wjkhappy14}/abp.vnext.hello.identityserver:${TAG:-latest}
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.IdentityServer/Dockerfile
