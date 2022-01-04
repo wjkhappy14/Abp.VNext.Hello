@@ -42,7 +42,7 @@ spec:
     spec:
       containers:
         - name: api-six
-          image: abp-hello-dapr/api-six.api:latest
+          image: apache/apisix:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
