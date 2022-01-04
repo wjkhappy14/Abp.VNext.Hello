@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
         - name: grafana-api
-          image: abp-hellodapr/grafana.api:latest
+          image: wjkhappy14/grafana.api:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

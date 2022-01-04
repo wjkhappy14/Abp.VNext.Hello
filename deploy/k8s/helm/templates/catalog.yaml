@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: catalog-api
-          image: abp-hellodapr/catalog.api:latest
+          image: wjkhappy14/catalog.api:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80

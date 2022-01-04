@@ -35,13 +35,13 @@ spec:
         service: api-six
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "api-six-api"
+        dapr.io/app-id: "api-six"
         dapr.io/app-port: "80"
         dapr.io/config: "dapr-config"
         dapr.io/log-as-json: "true"
     spec:
       containers:
-        - name: api-six-api
+        - name: api-six
           image: abp-hello-dapr/api-six.api:latest
           imagePullPolicy: IfNotPresent
           ports:
@@ -57,7 +57,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-six-api
+  name: api-six
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello

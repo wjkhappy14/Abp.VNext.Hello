@@ -67,8 +67,8 @@ services:
     depends_on:
       - abp.vnext.hello.httpapi.host
   
-  abp.vnext.hello.identityserver:
-    image: ${DOCKER_REGISTRY-wjkhappy14}/abp.vnext.hello.identityserver:${TAG:-latest}
+  abp.vnext.hello.identityserver4:
+    image: ${DOCKER_REGISTRY-wjkhappy14}/abp.vnext.hello.identityserver4:${TAG:-latest}
     build:
       context: .
       dockerfile: src/Abp.VNext.Hello.IdentityServer/Dockerfile
@@ -81,9 +81,9 @@ services:
 
   abp.vnext.hello.identityserver-dapr:
     image: "daprio/daprd:1.5.1"
-    network_mode: "service:abp.vnext.hello.identityserver"
+    network_mode: "service:abp.vnext.hello.identityserver4"
     depends_on:
-      - abp.vnext.hello.identityserver
+      - abp.vnext.hello.identityserver4
 
   web-agg:
     image: ${REGISTRY:-wjkhappy14}/web-agg:${TAG:-latest}
@@ -91,7 +91,7 @@ services:
       context: .
       dockerfile: src/ApiGateways/Aggregators/Web.HttpAggregator/Dockerfile
     depends_on:
-      - abp.vnext.hello.identityserver
+      - abp.vnext.hello.identityserver4
       - abp.vnext.hello.httpapi.host
       - abp.vnext.hello.web
       - redis

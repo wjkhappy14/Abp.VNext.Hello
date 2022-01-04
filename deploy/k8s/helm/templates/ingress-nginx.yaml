@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
         - name: ingress-nginx-api
-          image: abp-hellodapr/ingress-nginx.api:latest
+          image: wjkhappy14/ingress-nginx.api:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
