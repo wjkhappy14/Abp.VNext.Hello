@@ -24,7 +24,7 @@
     <ProjectGuid>f54e7a3e-ecc8-44eb-a822-95277fa22ba7</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>abp.vnext.hello.web</DockerServiceName>
+    <DockerServiceName>abp.vnext.hello.httpapi.host</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include=".env" />

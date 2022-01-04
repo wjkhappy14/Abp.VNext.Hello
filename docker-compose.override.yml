@@ -103,12 +103,11 @@ services:
   web-agg:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - BasketUrlHC=http://basket-api/hc
+      - CatalogUrlHC=http://basket-api/hc
       - Abp.VNext.Hello.IdentityServerUrlHC=http://identity-api/hc
       - IdentityUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5105
     ports:
       - "5121:80"
-      - "50007:50001"
 
   web-agg-dapr:
     command: ["./daprd",

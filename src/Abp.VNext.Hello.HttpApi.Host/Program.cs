@@ -15,17 +15,11 @@ namespace Abp.VNext.Hello
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
             Log.Logger = new LoggerConfiguration()
-#if DEBUG
                 .MinimumLevel.Debug()
-#else
-                .MinimumLevel.Information()
-#endif
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.Async(c => c.File("Logs/Abp.VNext.Hello.HttpApi.Host.txt"))
-#if DEBUG
+                //.WriteTo.Async(c => c.File("Logs/Abp.VNext.Hello.HttpApi.Host.txt"))
                 .WriteTo.Async(c => c.Console())
-#endif
                 .CreateLogger();
 
             try
