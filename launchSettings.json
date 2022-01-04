@@ -8,7 +8,7 @@
       "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
       "serviceActions": {
         "abp.vnext.hello.httpapi.host": "StartWithoutDebugging",
-        "abp.vnext.hello.identityserver": "StartWithoutDebugging",
+        "abp.vnext.hello.ids4": "StartWithoutDebugging",
         "abp.vnext.hello.web": "StartDebugging",
         "dapr-placement": "StartWithoutDebugging",
         "mysql-db": "StartWithoutDebugging",

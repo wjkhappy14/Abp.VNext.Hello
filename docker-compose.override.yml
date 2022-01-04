@@ -30,11 +30,11 @@ services:
     ports:
       - "5411:9411"
 
-  abp.vnext.hello.identityserver:
+  abp.vnext.hello.ids4:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - IdentityUrl=http://abp.vnext.hello.identityserver
+      - IdentityUrl=http://abp.vnext.hello.identityserver4
       - IdentityUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5105
       - SeqServerUrl=http://seq
     ports:
@@ -43,7 +43,7 @@ services:
 
   abp.vnext.hello.identityserver-dapr:
     command: ["./daprd",
-      "-app-id", "abp.vnext.hello.identityserver",
+      "-app-id", "abp.vnext.hello.ids4",
       "-app-port", "80",
       "-components-path", "/components",
       "-config", "/configuration/abp.vnext.hello-config.yaml"
@@ -103,11 +103,8 @@ services:
   web-agg:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - urls__basket=http://basket-api
-      - urls__catalog=http://catalog-api
-      - urls__identity=http://identity-api
       - BasketUrlHC=http://basket-api/hc
-      - IdentityUrlHC=http://identity-api/hc
+      - Abp.VNext.Hello.IdentityServerUrlHC=http://identity-api/hc
       - IdentityUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5105
     ports:
       - "5121:80"

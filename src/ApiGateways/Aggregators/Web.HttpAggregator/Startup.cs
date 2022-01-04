@@ -31,10 +31,11 @@ namespace Web.HttpAggregator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var catalogUrl = new Uri(Configuration["CatalogUrlHC"]);
             var healthCheckBuilder = services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy())
                 .AddDapr()
-                .AddUrlGroup(new Uri(Configuration["CatalogUrlHC"]), name: "catalogapi-check", tags: new string[] { "catalogapi" })
+                .AddUrlGroup(catalogUrl, name: "catalogapi-check", tags: new string[] { "catalogapi" })
                 .AddUrlGroup(new Uri(Configuration["IdentityUrlHC"]), name: "identityapi-check", tags: new string[] { "identityapi" })
                 .AddUrlGroup(new Uri(Configuration["BasketUrlHC"]), name: "basketapi-check", tags: new string[] { "basketapi" });
 
