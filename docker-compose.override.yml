@@ -3,13 +3,16 @@ version: '3.4'
 services:
 
   rabbitmq:
+    command:  -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=zxcvbnm
+    restart: always
     ports:
-      - "5672:5672"
+      - "15672:5672"
 
   redis:
     image: redis:alpine
+    restart: always
     ports:
-      - "5379:6379"
+      - 16379:6379
 
   seq:
     environment:

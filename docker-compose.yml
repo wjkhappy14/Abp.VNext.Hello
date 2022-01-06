@@ -4,14 +4,9 @@ services:
 
   rabbitmq:
     image: rabbitmq:latest
-    command:  -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=zxcvbnm
-    restart: always
 
   redis:
     image: redis:latest
-    restart: always
-    ports:
-      - 6379:6379
 
   seq:
     image: datalust/seq:latest

@@ -55,7 +55,7 @@ namespace Abp.VNext.Hello
             ConfigureAuthentication(context, configuration);
             ConfigureLocalization();
             ConfigureCache(configuration);
-            ConfigureVirtualFileSystem(context);
+           //ConfigureVirtualFileSystem(context);
             ConfigureRedis(context, configuration, hostingEnvironment);
             ConfigureCors(context, configuration);
             ConfigureSwaggerServices(context);
