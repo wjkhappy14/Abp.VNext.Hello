@@ -1,0 +1,26 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "abp.vnext.hello.web",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "abp.vnext.hello.httpapi.host": "StartDebugging",
+        "abp.vnext.hello.httpapi.host-dapr": "StartWithoutDebugging",
+        "abp.vnext.hello.identityserver-dapr": "StartWithoutDebugging",
+        "abp.vnext.hello.ids4": "StartDebugging",
+        "abp.vnext.hello.web": "StartDebugging",
+        "abp.vnext.hello.web-dapr": "StartWithoutDebugging",
+        "dapr-placement": "StartWithoutDebugging",
+        "mysql-db": "StartWithoutDebugging",
+        "rabbitmq": "StartWithoutDebugging",
+        "redis": "StartWithoutDebugging",
+        "seq": "StartWithoutDebugging",
+        "webstatus": "StartWithoutDebugging",
+        "zipkin": "StartWithoutDebugging"
+      }
+    }
+  }
+}
