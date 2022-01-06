@@ -100,26 +100,6 @@ services:
       - "./dapr/components/:/components"
       - "./dapr/configuration/:/configuration"
 
-  web-agg:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - CatalogUrlHC=http://basket-api/hc
-      - Abp.VNext.Hello.IdentityServerUrlHC=http://identity-api/hc
-      - IdentityUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5105
-    ports:
-      - "5121:80"
-
-  web-agg-dapr:
-    command: ["./daprd",
-      "-app-id", "webshoppingagg",
-      "-app-port", "80",
-      "-components-path", "/components",
-      "-config", "/configuration/abp.vnext.hello-config.yaml"
-      ]
-    volumes:
-      - "./dapr/components/:/components"
-      - "./dapr/configuration/:/configuration"
-
   webstatus:
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80

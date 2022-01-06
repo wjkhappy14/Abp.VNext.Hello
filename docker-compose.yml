@@ -85,24 +85,6 @@ services:
     depends_on:
       - abp.vnext.hello.ids4
 
-  web-agg:
-    image: ${REGISTRY:-wjkhappy14}/web-agg:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: src/ApiGateways/Aggregators/Web.HttpAggregator/Dockerfile
-    depends_on:
-      - abp.vnext.hello.ids4
-      - abp.vnext.hello.httpapi.host
-      - abp.vnext.hello.web
-      - redis
-      - mysql-db
-
-  web-agg-dapr:
-    image: "daprio/daprd:1.5.1"
-    network_mode: "service:web-agg"
-    depends_on:
-      - web-agg
-
   webstatus:
     image: xabarilcoding/healthchecksui:5.0.0
  

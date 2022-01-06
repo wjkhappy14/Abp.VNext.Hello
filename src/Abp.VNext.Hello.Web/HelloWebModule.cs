@@ -78,7 +78,7 @@ namespace Abp.VNext.Hello.Web
             ConfigureUrls(configuration);
             ConfigureAuthentication(context, configuration);
             ConfigureAutoMapper();
-            ConfigureVirtualFileSystem(hostingEnvironment);
+           //ConfigureVirtualFileSystem(hostingEnvironment);
             ConfigureNavigationServices(configuration);
             ConfigureMultiTenancy();
             ConfigureSwaggerServices(context.Services);
