@@ -17,13 +17,17 @@ COPY ["src/Abp.VNext.Hello.EntityFrameworkCore.DbMigrations/Abp.VNext.Hello.Enti
 COPY ["src/Abp.VNext.Hello.EntityFrameworkCore/Abp.VNext.Hello.EntityFrameworkCore.csproj", "src/Abp.VNext.Hello.EntityFrameworkCore/"]
 COPY ["src/Abp.VNext.Hello.Domain/Abp.VNext.Hello.Domain.csproj", "src/Abp.VNext.Hello.Domain/"]
 COPY ["src/Abp.VNext.Hello.Domain.Shared/Abp.VNext.Hello.Domain.Shared.csproj", "src/Abp.VNext.Hello.Domain.Shared/"]
+COPY ["docker-compose.dcproj", "./"]
+COPY ["NuGet.config", "./"]
+COPY ["Abp.VNext.Hello.sln", "./"]
 RUN dotnet restore "src/Abp.VNext.Hello.IdentityServer/Abp.VNext.Hello.IdentityServer.csproj"
+
 COPY . .
 WORKDIR "/src/src/Abp.VNext.Hello.IdentityServer"
-RUN dotnet build "Abp.VNext.Hello.IdentityServer.csproj" -c Release -o /app/build
+# RUN dotnet build "Abp.VNext.Hello.IdentityServer.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Abp.VNext.Hello.IdentityServer.csproj" -c Release -o /app/publish
+RUN dotnet publish --no-restore "Abp.VNext.Hello.IdentityServer.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

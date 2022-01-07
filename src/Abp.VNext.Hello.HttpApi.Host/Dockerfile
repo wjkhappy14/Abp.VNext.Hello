@@ -20,13 +20,17 @@ COPY ["src/Abp.VNext.Hello.Application/Abp.VNext.Hello.Application.csproj", "src
 COPY ["src/Abp.VNext.Hello.Application.Contracts/Abp.VNext.Hello.Application.Contracts.csproj", "src/Abp.VNext.Hello.Application.Contracts/"]
 COPY ["dapr-sdk-1.4.0/Dapr.AspNetCore/Dapr.AspNetCore.csproj", "dapr-sdk-1.4.0/Dapr.AspNetCore/"]
 COPY ["src/Hello.Authentication.MiniProgram.WeChat/Hello.Authentication.MiniProgram.WeChat.csproj", "src/Hello.Authentication.MiniProgram.WeChat/"]
+COPY ["docker-compose.dcproj", "./"]
+COPY ["NuGet.config", "./"]
+COPY ["Abp.VNext.Hello.sln", "./"]
 RUN dotnet restore "src/Abp.VNext.Hello.HttpApi.Host/Abp.VNext.Hello.HttpApi.Host.csproj"
+
 COPY . .
 WORKDIR "/src/src/Abp.VNext.Hello.HttpApi.Host"
-RUN dotnet build "Abp.VNext.Hello.HttpApi.Host.csproj" -c Release -o /app/build
+# RUN dotnet build "Abp.VNext.Hello.HttpApi.Host.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Abp.VNext.Hello.HttpApi.Host.csproj" -c Release -o /app/publish
+RUN dotnet publish --no-restore "Abp.VNext.Hello.HttpApi.Host.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
