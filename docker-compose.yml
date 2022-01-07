@@ -16,12 +16,7 @@ services:
 
   mysql-db:
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: zxcvbnm
+
 
   abp.vnext.hello.web:
     image: ${DOCKER_REGISTRY-wjkhappy14}/abp.vnext.hello.web:${TAG:-latest}
