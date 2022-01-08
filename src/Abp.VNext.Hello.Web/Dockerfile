@@ -19,7 +19,6 @@ COPY ["src/Abp.VNext.Hello.Application.Contracts/Abp.VNext.Hello.Application.Con
 COPY ["dapr-sdk-1.4.0/Dapr.AspNetCore/Dapr.AspNetCore.csproj", "dapr-sdk-1.4.0/Dapr.AspNetCore/"]
 COPY ["src/Abp.VNext.Hello.HttpApi.Client/Abp.VNext.Hello.HttpApi.Client.csproj", "src/Abp.VNext.Hello.HttpApi.Client/"]
 COPY ["src/Hello.Authentication.MiniProgram.WeChat/Hello.Authentication.MiniProgram.WeChat.csproj", "src/Hello.Authentication.MiniProgram.WeChat/"]
-COPY ["docker-compose.dcproj", "./"]
 COPY ["NuGet.config", "./"]
 COPY ["Abp.VNext.Hello.sln", "./"]
 RUN dotnet restore "src/Abp.VNext.Hello.Web/Abp.VNext.Hello.Web.csproj"
