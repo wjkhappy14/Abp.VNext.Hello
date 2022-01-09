@@ -15,7 +15,7 @@ namespace Abp.VNext.Hello.Web
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
-               // .WriteTo.Async(c => c.File("Logs/logs.txt"))
+                // .WriteTo.Async(c => c.File("Logs/logs.txt"))
                 .WriteTo.Async(c => c.Console())
                 .CreateLogger();
 

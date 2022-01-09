@@ -258,3 +258,6 @@ src/Abp.VNext.Hello.IdentityServer/Logs/*
 src/Abp.VNext.Hello.HttpApi.Host/Logs/*
 src/Abp.VNext.Hello.HttpApi.HostWithIds/Logs/*
 src/Abp.VNext.Hello.DbMigrator/Logs/*
+src/.DS_Store
+src/Abp.VNext.Hello.Web/.DS_Store
+.DS_Store

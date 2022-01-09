@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace Abp.VNext.Hello.Web.Pages
 {
-    public class IndexModel : HelloPageModel
+    public class IndexModel : DemoPageModel
     {
         public void OnGet()
         {

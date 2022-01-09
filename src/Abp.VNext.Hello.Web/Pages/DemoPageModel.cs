@@ -3,9 +3,9 @@ using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 
 namespace Abp.VNext.Hello.Web.Pages
 {
-    public abstract class HelloPageModel : AbpPageModel
+    public abstract class DemoPageModel : AbpPageModel
     {
-        protected HelloPageModel()
+        protected DemoPageModel()
         {
             LocalizationResourceType = typeof(HelloResource);
         }
