@@ -63,6 +63,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - RetryMigrations=true
       - SeqServerUrl=http://seq
+      - AuthServer__Authority=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
       - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
     ports:
       - "5101:80"
@@ -87,8 +88,7 @@ services:
       - SqlConnectionString__HelloDB=Server=mysql-db;database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
       - RetryMigrations=true
       - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
-      - OrderingApiUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5102
-      - ShoppingAggregatorApiUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5121
+      - OrderingApiUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
     ports:
       - "5105:80"
 
@@ -108,20 +108,12 @@ services:
   webstatus:
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - HealthChecksUI__HealthChecks__0__Name=Basket API
-      - HealthChecksUI__HealthChecks__0__Uri=http://basket-api/hc
-      - HealthChecksUI__HealthChecks__1__Name=Catalog API
-      - HealthChecksUI__HealthChecks__1__Uri=http://catalog-api/hc
-      - HealthChecksUI__HealthChecks__2__Name=Identity API
-      - HealthChecksUI__HealthChecks__2__Uri=http://identity-api/hc
-      - HealthChecksUI__HealthChecks__3__Name=Ordering API
-      - HealthChecksUI__HealthChecks__3__Uri=http://ordering-api/hc
-      - HealthChecksUI__HealthChecks__4__Name=Payment API
-      - HealthChecksUI__HealthChecks__4__Uri=http://payment-api/hc
-      - HealthChecksUI__HealthChecks__5__Name=Web Shopping Aggregator
-      - HealthChecksUI__HealthChecks__5__Uri=http://webshoppingagg/hc
-      - HealthChecksUI__HealthChecks__6__Name=Blazor Client
-      - HealthChecksUI__HealthChecks__6__Uri=http://blazor-client/hc
+      - HealthChecksUI__HealthChecks__0__Name=abp.vnext.hello.httpapi.host
+      - HealthChecksUI__HealthChecks__0__Uri=http://abp.vnext.hello.httpapi.host/hc
+      - HealthChecksUI__HealthChecks__1__Name=abp.vnext.hello.ids4
+      - HealthChecksUI__HealthChecks__1__Uri=http://abp.vnext.hello.ids4/hc
+      - HealthChecksUI__HealthChecks__2__Name=abp.vnext.hello.web
+      - HealthChecksUI__HealthChecks__2__Uri=http://abp.vnext.hello.web/hc
     ports:
       - "5107:80"
 
