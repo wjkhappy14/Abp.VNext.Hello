@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using Hello.Authentication.MiniProgram.WeChat;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Volo.Abp.Swashbuckle;
 
 namespace Abp.VNext.Hello
 {
@@ -38,7 +39,8 @@ namespace Abp.VNext.Hello
         typeof(AbpCachingStackExchangeRedisModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
         typeof(HelloApplicationModule),
-        typeof(AbpAspNetCoreSerilogModule)
+        typeof(AbpAspNetCoreSerilogModule),
+        typeof(AbpSwashbuckleModule)
         )]
     public class HelloHttpApiHostModule : AbpModule
     {

@@ -14,6 +14,7 @@ using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.TenantManagement;
+using Volo.Abp.SettingManagement;
 using Volo.Abp.Timing;
 using Volo.Abp.Uow;
 using Volo.Blogging;
@@ -31,6 +32,7 @@ namespace Abp.VNext.Hello
         typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpTenantManagementApplicationModule),
         typeof(AbpAspNetCoreSignalRModule),
+        typeof(AbpSettingManagementApplicationModule),
         typeof(AbpFeatureManagementApplicationModule)
         )]
     public class HelloApplicationModule : AbpModule
