@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Linq;
 using Localization.Resources.AbpUi;
 using Microsoft.AspNetCore.Builder;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Abp.VNext.Hello.EntityFrameworkCore;
 using Abp.VNext.Hello.Localization;
 using Abp.VNext.Hello.MultiTenancy;
 using StackExchange.Redis;
@@ -37,7 +35,6 @@ namespace Abp.VNext.Hello
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
-        typeof(HelloEntityFrameworkCoreDbMigrationsModule),
         typeof(AbpAspNetCoreSerilogModule)
         )]
     public class HelloIdentityServerModule : AbpModule
@@ -100,7 +97,7 @@ namespace Abp.VNext.Hello
 
             if (!hostingEnvironment.IsDevelopment())
             {
-                var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
+                var redis = ConnectionMultiplexer.Connect(configuration["Redis:Config"]);
                 context.Services
                     .AddDataProtection()
                     .PersistKeysToStackExchangeRedis(redis, "Hello-Protection-Keys");

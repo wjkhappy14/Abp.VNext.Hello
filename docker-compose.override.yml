@@ -39,7 +39,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - IdentityUrl=http://abp.vnext.hello.identityserver4
-      - IdentityUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5105
+      - ConnectionStrings__AbpIdentityServer=Server=mysql-db;database=Abp.VNext.Hello;UID=root;password=zxcvbnm; SSLMode=none"
+      - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
       - SeqServerUrl=http://seq
     ports:
       - "5103:80"
@@ -62,7 +63,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - RetryMigrations=true
       - SeqServerUrl=http://seq
-      - SqlConnectionString=${ESHOPONDAPR_CATALOG_DB:-Server=mysql-db;database=catalog; UID=root; password=zxcvbnm; SSLMode=none}
+      - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
     ports:
       - "5101:80"
       - "50002:50001"
@@ -83,9 +84,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - SeqServerUrl=http://seq
-      - SqlConnectionString=${ESHOP_AZURE_IDENTITY_DB:-Server=mysql-db;database=eShop.Identity; UID=root; password=zxcvbnm; SSLMode=none}
+      - SqlConnectionString__HelloDB=Server=mysql-db;database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
       - RetryMigrations=true
-      - BasketApiUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
+      - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
       - OrderingApiUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5102
       - ShoppingAggregatorApiUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5121
     ports:

@@ -7,7 +7,7 @@ namespace Abp.VNext.Hello.DbMigrator
 {
     [DependsOn(
         typeof(AbpAutofacModule),
-        typeof(HelloEntityFrameworkCoreDbMigrationsModule),
+        typeof(HelloEntityFrameworkCoreModule),
         typeof(HelloApplicationContractsModule)
         )]
     public class HelloDbMigratorModule : AbpModule

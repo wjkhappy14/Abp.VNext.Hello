@@ -20,14 +20,14 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
         public async Task MigrateAsync()
         {
-            /* We intentionally resolving the HelloMigrationsDbContext
+            /* We intentionally resolving the HelloDbContext
              * from IServiceProvider (instead of directly injecting it)
              * to properly get the connection string of the current tenant in the
              * current scope.
              */
 
             await _serviceProvider
-                .GetRequiredService<HelloMigrationsDbContext>()
+                .GetRequiredService<HelloDbContext>()
                 .Database
                 .MigrateAsync();
         }

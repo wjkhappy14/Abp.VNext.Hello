@@ -7,18 +7,18 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 {
     /* This class is needed for EF Core console commands
      * (like Add-Migration and Update-Database commands) */
-    public class HelloMigrationsDbContextFactory : IDesignTimeDbContextFactory<HelloMigrationsDbContext>
+    public class HelloDbContextFactory : IDesignTimeDbContextFactory<HelloDbContext>
     {
-        public HelloMigrationsDbContext CreateDbContext(string[] args)
+        public HelloDbContext CreateDbContext(string[] args)
         {
             HelloEfCoreEntityExtensionMappings.Configure();
 
             var configuration = BuildConfiguration();
 
-            var builder = new DbContextOptionsBuilder<HelloMigrationsDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+            var builder = new DbContextOptionsBuilder<HelloDbContext>()
+                .UseMySql(configuration.GetConnectionString("Default"), MySqlServerVersion.LatestSupportedServerVersion);
 
-            return new HelloMigrationsDbContext(builder.Options);
+            return new HelloDbContext(builder.Options);
         }
 
         private static IConfigurationRoot BuildConfiguration()

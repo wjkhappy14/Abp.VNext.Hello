@@ -4,7 +4,7 @@ using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Dapper;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.SqlServer;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
@@ -24,7 +24,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
-        typeof(AbpEntityFrameworkCoreSqlServerModule),
+        typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpTenantManagementEntityFrameworkCoreModule),
@@ -32,6 +32,11 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
         )]
     public class HelloEntityFrameworkCoreModule : AbpModule
     {
+
+        public override void PreConfigureServices(ServiceConfigurationContext context)
+        {
+            HelloEfCoreEntityExtensionMappings.Configure();
+        }
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.AddAbpDbContext<HelloDbContext>(options =>
@@ -57,22 +62,14 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer<HelloDbContext>(x =>
+                options.UseMySQL<HelloDbContext>(x =>
                 {
-
+                    
                 });
             });
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer<BackgroundJobsDbContext>(x =>
-                {
-
-                });
-            });
-
-            Configure<AbpDbContextOptions>(options =>
-            {
-                options.UseSqlServer<FeatureManagementDbContext>(x =>
+                options.UseMySQL<BackgroundJobsDbContext>(x =>
                 {
 
                 });
@@ -80,14 +77,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer<AbpAuditLoggingDbContext>(x =>
-                {
-                });
-            });
-
-            Configure<AbpDbContextOptions>(options =>
-            {
-                options.UseSqlServer<TenantManagementDbContext>(x =>
+                options.UseMySQL<FeatureManagementDbContext>(x =>
                 {
 
                 });
@@ -95,7 +85,22 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer<SettingManagementDbContext>(x =>
+                options.UseMySQL<AbpAuditLoggingDbContext>(x =>
+                {
+                });
+            });
+
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseMySQL<TenantManagementDbContext>(x =>
+                {
+
+                });
+            });
+
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseMySQL<SettingManagementDbContext>(x =>
                 {
 
                 });
@@ -103,7 +108,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>((options) =>
             {
-                options.UseSqlServer<IdentityDbContext>(x =>
+                options.UseMySQL<IdentityDbContext>(x =>
                 {
                     // x.CommandTimeout(6_000);
                 });
@@ -111,7 +116,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>((options) =>
             {
-                options.UseSqlServer<PermissionManagementDbContext>(x =>
+                options.UseMySQL<PermissionManagementDbContext>(x =>
                 {
                     //x.CommandTimeout(6_000);
                 });
@@ -119,7 +124,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>((options) =>
             {
-                options.UseSqlServer<IdentityServerDbContext>(x =>
+                options.UseMySQL<IdentityServerDbContext>(x =>
                 {
                     // x.MaxBatchSize(4096);
                     // x.CommandTimeout(6_000);
@@ -128,7 +133,7 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer<BloggingDbContext>();
+                options.UseMySQL<BloggingDbContext>();
             });
         }
     }

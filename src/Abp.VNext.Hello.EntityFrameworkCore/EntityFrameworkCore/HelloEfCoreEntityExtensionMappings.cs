@@ -10,6 +10,9 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
         public static void Configure()
         {
+            HelloGlobalFeatureConfigurator.Configure();
+            HelloModuleExtensionConfigurator.Configure();
+
             OneTimeRunner.Run(() =>
             {
                 /* You can configure entity extension properties for the

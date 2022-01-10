@@ -55,7 +55,10 @@
     <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="5.0.1" />
     <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="5.0.1" />
     <PackageReference Include="Volo.Abp.Account.Application" Version="5.0.1" />
-    <ProjectReference Include="..\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations\Abp.VNext.Hello.EntityFrameworkCore.DbMigrations.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Abp.VNext.Hello.EntityFrameworkCore\Abp.VNext.Hello.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

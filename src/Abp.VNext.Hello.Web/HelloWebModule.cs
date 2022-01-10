@@ -209,7 +209,7 @@ namespace Abp.VNext.Hello.Web
         {
             if (!hostingEnvironment.IsDevelopment())
             {
-                var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
+                var redis = ConnectionMultiplexer.Connect(configuration["Redis:Config"]);
                 context.Services
                     .AddDataProtection()
                     .PersistKeysToStackExchangeRedis(redis, "Hello-Protection-Keys");
