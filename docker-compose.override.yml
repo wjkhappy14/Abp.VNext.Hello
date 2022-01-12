@@ -71,7 +71,7 @@ services:
 
   abp.vnext.hello.web-dapr:
     command: ["./daprd",
-      "-app-id", "abp.vnext.hello.web",
+      "-app-id", "abp.vnext.hello.web-dapr",
       "-app-port", "80",
       "-components-path", "/components",
       "-config", "/configuration/abp.vnext.hello-config.yaml"

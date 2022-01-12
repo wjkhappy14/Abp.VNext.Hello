@@ -20,6 +20,7 @@ using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
+using Abp.VNext.Hello.EntityFrameworkCore;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
@@ -35,6 +36,7 @@ namespace Abp.VNext.Hello
 {
     [DependsOn(
         typeof(HelloHttpApiModule),
+        typeof(HelloEntityFrameworkCoreModule),
         typeof(AbpAutofacModule),
         typeof(AbpCachingStackExchangeRedisModule),
         typeof(AbpAspNetCoreMvcUiMultiTenancyModule),

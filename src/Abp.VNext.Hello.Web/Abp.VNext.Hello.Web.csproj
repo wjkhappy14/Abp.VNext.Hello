@@ -33,6 +33,7 @@
     <PackageReference Include="Volo.Abp.Identity.Web" Version="5.0.1" />
     <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="5.0.1" />
     <PackageReference Include="Volo.Abp.SettingManagement.Web" Version="5.0.1" />
+    <ProjectReference Include="..\Abp.VNext.Hello.EntityFrameworkCore\Abp.VNext.Hello.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Abp.VNext.Hello.HttpApi.Client\Abp.VNext.Hello.HttpApi.Client.csproj" />
   </ItemGroup>
 

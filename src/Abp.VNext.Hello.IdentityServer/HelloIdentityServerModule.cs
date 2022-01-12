@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Abp.VNext.Hello.EntityFrameworkCore;
 using Abp.VNext.Hello.Localization;
 using Abp.VNext.Hello.MultiTenancy;
 using StackExchange.Redis;
@@ -24,8 +25,8 @@ using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
-using IdentityServer4.Configuration;
 using Microsoft.Extensions.Configuration;
+using IdentityServer4.Configuration;
 
 namespace Abp.VNext.Hello
 {
@@ -34,7 +35,9 @@ namespace Abp.VNext.Hello
         typeof(AbpCachingStackExchangeRedisModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAccountApplicationModule),
+        typeof(AbpAccountHttpApiModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
+        typeof(HelloEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule)
         )]
     public class HelloIdentityServerModule : AbpModule
@@ -67,7 +70,7 @@ namespace Abp.VNext.Hello
 
             Configure<AbpAuditingOptions>(options =>
             {
-                //options.IsEnabledForGetRequests = true;
+                options.IsEnabledForGetRequests = true;
                 options.ApplicationName = "AuthServer";
             });
 
