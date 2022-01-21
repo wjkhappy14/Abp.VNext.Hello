@@ -70,7 +70,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		deploy\k8s\helm\templates\secrets.yaml = deploy\k8s\helm\templates\secrets.yaml
 		deploy\k8s\helm\templates\sendmail.yaml = deploy\k8s\helm\templates\sendmail.yaml
 		deploy\k8s\helm\templates\seq.yaml = deploy\k8s\helm\templates\seq.yaml
-		deploy\k8s\helm\templates\web-aggregate.yaml = deploy\k8s\helm\templates\web-aggregate.yaml
 		deploy\k8s\helm\templates\webstatus.yaml = deploy\k8s\helm\templates\webstatus.yaml
 		deploy\k8s\helm\templates\zipkin.yaml = deploy\k8s\helm\templates\zipkin.yaml
 	EndProjectSection

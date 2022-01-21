@@ -21,8 +21,6 @@ spec:
       - name: minio
         image: minio:alpine
         imagePullPolicy: IfNotPresent
-        args:
-          - "--requirepass e$h0p0nD@pr"
         ports:
           - name: http
             containerPort: 9000

@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: wjkhappy14/blazor.client:latest
+          image: bitnami/prometheus:latest:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
