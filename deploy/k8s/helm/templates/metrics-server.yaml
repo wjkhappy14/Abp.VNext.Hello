@@ -19,13 +19,11 @@ spec:
     spec:
       containers:
       - name: metrics
-        image: metrics:alpine
+        image: bitnami/metrics-server:latest
         imagePullPolicy: IfNotPresent
-        args:
-          - "--requirepass e$h0p0nD@pr"
         ports:
           - name: http
-            containerPort: 6379
+            containerPort: 6079
             protocol: TCP
 
 ---
@@ -41,8 +39,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 30313
-      targetPort: 30313
+    - port: 6079
+      targetPort: 6079
       nodePort: 31313
       protocol: TCP
       name: metrics
