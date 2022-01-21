@@ -54,7 +54,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: abp.vnext.hello.ids4-api
+  name: abp.vnext.hello.ids4
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
