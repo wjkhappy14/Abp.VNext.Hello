@@ -1,16 +1,16 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: abp.vnext.hello.ids4-cm
+  name: abp-vnext-hello-ids4-cm
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.ids4
+    service: abp-vnext-hello-ids4
 data:
   ASPNETCORE_ENVIRONMENT: Development
   ASPNETCORE_URLS: http://0.0.0.0:80
   SeqServerUrl: http://seq
-  SqlConnectionString: Server=sqldata;Database=Microsoft.abp-helloOnDapr.Service.abp.vnext.hello.ids4Db;User Id=sa;Password=Pass@word
+  SqlConnectionString: Server=sqldata;Database=Microsoft.abp-helloOnDapr.Service.abp-vnext-hello-ids4Db;User Id=sa;Password=Pass@word
   BlazorClientUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30000
   BasketApiUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30005
   OrderingApiUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30002
@@ -21,25 +21,25 @@ data:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: abp.vnext.hello.ids4
+  name: abp-vnext-hello-ids4
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.ids4
+    service: abp-vnext-hello-ids4
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: abp.vnext.hello.ids4
+      service: abp-vnext-hello-ids4
   template:
     metadata:
       labels:
         app: abp-hello
-        service: abp.vnext.hello.ids4
+        service: abp-vnext-hello-ids4
     spec:
       containers:
-        - name: abp.vnext.hello.ids4-api
-          image: wjkhappy14/abp.vnext.hello.identityserver:latest
+        - name: abp-vnext-hello-ids4-api
+          image: wjkhappy14/abp.vnext.hello.ids4:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -47,18 +47,18 @@ spec:
               protocol: TCP
           envFrom:
             - configMapRef:
-                name: abp.vnext.hello.ids4-cm
+                name: abp-vnext-hello-ids4-cm
 
 ---
 
 kind: Service
 apiVersion: v1
 metadata:
-  name: abp.vnext.hello.ids4
+  name: abp-vnext-hello-ids4
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.ids4
+    service: abp-vnext-hello-ids4
 spec:
   type: NodePort
   ports:
@@ -68,4 +68,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    service: abp.vnext.hello.ids4
+    service: abp-vnext-hello-ids4

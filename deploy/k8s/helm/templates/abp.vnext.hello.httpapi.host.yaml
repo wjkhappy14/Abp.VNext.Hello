@@ -1,46 +1,46 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: abp.vnext.hello.httpapi.host-cm
+  name: abp-vnext-hello-httpapi-host-cm
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.httpapi.host
+    service: abp-vnext-hello-httpapi-host
 data:
   ASPNETCORE_ENVIRONMENT: Development
   ASPNETCORE_URLS: http://0.0.0.0:80
   SeqServerUrl: http://seq
-  SqlConnectionString: Server=sqldata;Database=Microsoft.abp-hello-OnDapr.Services.abp.vnext.hello.httpapi.hostDb;User Id=sa;Password=Pass@word
+  SqlConnectionString: Server=sqldata;Database=Microsoft.abp-hello-OnDapr.Services.abp-vnext-hello-httpapi-hostDb;User Id=sa;Password=Pass@word
 
 ---
 
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: abp.vnext.hello.httpapi.host
+  name: abp-vnext-hello-httpapi-host
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.httpapi.host
+    service: abp-vnext-hello-httpapi-host
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: abp.vnext.hello.httpapi.host
+      service: abp-vnext-hello-httpapi-host
   template:
     metadata:
       labels:
         app: abp-hello
-        service: abp.vnext.hello.httpapi.host
+        service: abp-vnext-hello-httpapi-host
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "abp.vnext.hello.httpapi.host-api"
+        dapr.io/app-id: "abp-vnext-hello-httpapi-host-api"
         dapr.io/app-port: "80"
         dapr.io/config: "dapr-config"
         dapr.io/log-as-json: "true"
     spec:
       containers:
-        - name: abp.vnext.hello.httpapi.host
+        - name: abp-vnext-hello-httpapi-host
           image: wjkhappy14/abp.vnext.hello.httpapi.host:latest
           imagePullPolicy: IfNotPresent
           ports:
@@ -50,18 +50,18 @@ spec:
               protocol: TCP
           envFrom:
             - configMapRef:
-                name: abp.vnext.hello.httpapi.host-cm
+                name: abp-vnext-hello-httpapi-host-cm
 
 ---
 
 kind: Service
 apiVersion: v1
 metadata:
-  name: abp.vnext.hello.httpapi.host
+  name: abp-vnext-hello-httpapi-host
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.httpapi.host
+    service: abp-vnext-hello-httpapi-host
 spec:
   type: NodePort
   ports:
@@ -81,4 +81,4 @@ spec:
       protocol: TCP
       name: dapr-grpc
   selector:
-    service: abp.vnext.hello.httpapi.host
+    service: abp-vnext-hello-httpapi-host

@@ -1,11 +1,11 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: abp.vnext.hello.web-cm
+  name: abp-vnext-hello-web-cm
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.web
+    service: abp-vnext-hello-web
 data:
   ASPNETCORE_ENVIRONMENT: Development
   ASPNETCORE_URLS: http://0.0.0.0:80
@@ -17,24 +17,24 @@ data:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: abp.vnext.hello.web
+  name: abp-vnext-hello-web
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.web
+    service: abp-vnext-hello-web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: abp.vnext.hello.web
+      service: abp-vnext-hello-web
   template:
     metadata:
       labels:
         app: abp-hello
-        service: abp.vnext.hello.web
+        service: abp-vnext-hello-web
     spec:
       containers:
-        - name: abp.vnext.hello.web
+        - name: abp-vnext-hello-web
           image: wjkhappy14/abp.vnext.hello.web:latest
           imagePullPolicy: Always
           ports:
@@ -43,7 +43,7 @@ spec:
               protocol: TCP
           envFrom:
             - configMapRef:
-                name: abp.vnext.hello.web-cm
+                name: abp-vnext-hello-web-cm
 
 ---
 
@@ -54,7 +54,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
-    service: abp.vnext.hello.web
+    service: abp-vnext-hello-web
 spec:
   type: NodePort
   ports:
@@ -64,4 +64,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    service: abp.vnext.hello.web
+    service: abp-vnext-hello-web
