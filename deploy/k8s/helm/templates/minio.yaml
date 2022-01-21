@@ -39,9 +39,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 6379
-      targetPort: 6379
-      nodePort: 30379
+    - port: 9000
+      targetPort: 9000
+      nodePort: 30900
       protocol: TCP
       name: minio
   selector:
