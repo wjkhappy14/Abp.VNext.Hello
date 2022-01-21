@@ -50,7 +50,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: blazor-client
+  name: abp-vnext-hello-web
   namespace: {{ .Values.namespace }}
   labels:
     app: abp-hello
