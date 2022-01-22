@@ -10,7 +10,7 @@ data:
   ASPNETCORE_ENVIRONMENT: Development
   ASPNETCORE_URLS: http://0.0.0.0:80
   SeqServerUrl: http://seq
-  SqlConnectionString: Server=sqldata;Database=Microsoft.abp-hello-OnDapr.Services.abp-vnext-hello-httpapi-hostDb;User Id=sa;Password=Pass@word
+  ConnectionStrings__Default: Server=mysql; database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
 
 ---
 
