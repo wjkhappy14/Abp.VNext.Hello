@@ -85,7 +85,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - SeqServerUrl=http://seq
-      - SqlConnectionString__Default=Server=mysql-db;database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
+      - ConnectionStrings__Default=Server=mysql-db;database=Abp.VNext.Hello;UID=root;password=zxcvbnm; SSLMode=none
       - RetryMigrations=true
       - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
       - OrderingApiUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
