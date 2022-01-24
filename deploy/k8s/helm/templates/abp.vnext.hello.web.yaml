@@ -11,7 +11,7 @@ data:
   ASPNETCORE_URLS: http://0.0.0.0:80
   ApiGatewayUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30050
   IdentityUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30008
-
+  Redis__Config: redis,password=e$h0p0nD@pr,abortConnect=false
 ---
 
 kind: Deployment

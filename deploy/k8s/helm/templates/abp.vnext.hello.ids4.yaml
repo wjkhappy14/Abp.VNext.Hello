@@ -10,12 +10,12 @@ data:
   ASPNETCORE_ENVIRONMENT: Development
   ASPNETCORE_URLS: http://0.0.0.0:80
   SeqServerUrl: http://seq
-  ConnectionStrings__Default: Server=mysql; database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
+  ConnectionStrings__Default=Server: mysql-db;database=Abp.VNext.Hello;UID=root;password=zxcvbnm; SSLMode=none
   BlazorClientUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30000
   BasketApiUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30005
   OrderingApiUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30002
   ShoppingAggregatorApiUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30006
-
+  Redis__Config: redis,password=e$h0p0nD@pr,abortConnect=false
 ---
 
 kind: Deployment
