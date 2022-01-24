@@ -15,7 +15,7 @@ services:
     image: openzipkin/zipkin-slim
 
   mysql-db:
-    image: mysql
+    image: mysql:5.7
 
 
   abp.vnext.hello.web:

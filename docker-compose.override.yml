@@ -21,14 +21,14 @@ services:
       - "5340:80"
 
   mysql-db:
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: zxcvbnm
-    volumes:
-      - abp.vnext.hello-mysql-db:/var/opt/mysql
+     environment:
+       - MYSQL_ROOT_PASSWORD=zxcvbnm
+     command: --default-authentication-plugin=mysql_native_password
+     restart: always
+     ports:
+       - 3306:3306
+     volumes:
+       - abp.vnext.hello-mysql-db:/var/opt/mysql
 
   zipkin:
     ports:
@@ -39,7 +39,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - IdentityUrl=http://abp.vnext.hello.identityserver4
-      - ConnectionStrings__Default=Server=mysql-db;database=Abp.VNext.Hello;UID=root;password=zxcvbnm; SSLMode=none"
+      - ConnectionStrings__Default=Server=mysql-db;database=Abp.VNext.Hello;UID=root;password=zxcvbnm; SSLMode=none
       - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
       - SeqServerUrl=http://seq
     ports:
