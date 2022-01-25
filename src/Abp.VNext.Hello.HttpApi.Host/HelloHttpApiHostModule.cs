@@ -106,7 +106,7 @@ namespace Abp.VNext.Hello
             context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = configuration["AuthServer:Authority"];
+                    options.Authority = configuration["Authority"];
                     options.RequireHttpsMetadata = false;
                     // options.IncludeErrorDetails = false;
                     // options.Audience = configuration["AuthServer:Authority"]; //"Awesome_Web";
@@ -171,7 +171,7 @@ namespace Abp.VNext.Hello
                 {
                     builder
                         .WithOrigins(
-                            configuration["App:CorsOrigins"]
+                            configuration["CorsOrigins"]
                                 .Split(",", StringSplitOptions.RemoveEmptyEntries)
                                 .Select(o => o.RemovePostFix("/"))
                                 .ToArray()

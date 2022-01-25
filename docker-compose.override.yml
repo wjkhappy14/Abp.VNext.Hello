@@ -39,9 +39,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - IdentityUrl=http://abp.vnext.hello.identityserver4
-      - ConnectionStrings__Default=Server=mysql-db;database=Abp.VNext.Hello;UID=root;password=zxcvbnm; SSLMode=none
-      - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
+      - PublicOrigin=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
+      - IssuerUri=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
+      - SelfUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
       - SeqServerUrl=http://seq
+      - CorsOrigins=http://*.Hello.com,http://106.13.130.51:80,http://http://106.13.130.51:70,http://192.168.3.128:9527
     ports:
       - "5103:80"
       - "50001:50001"
@@ -61,10 +63,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
+      - RemoteServices=http://${EXTERNAL_DNS_NAME_OR_IP}:5104
+      - SelfUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5101
       - RetryMigrations=true
       - SeqServerUrl=http://seq
-      - AuthServer__Authority=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
-      - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
+      - Authority=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
     ports:
       - "5101:80"
       - "50002:50001"
@@ -85,9 +88,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - SeqServerUrl=http://seq
-      - ConnectionStrings__Default=Server=mysql-db;database=Abp.VNext.Hello;UID=root;password=zxcvbnm; SSLMode=none
+      - SelfUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5101
+      - Authority=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
       - RetryMigrations=true
-      - Redis__Config=redis,password=e$h0p0nD@pr,abortConnect=false
+      - CorsOrigins=http://*.Hello.com,http://106.13.130.51:80,http://http://106.13.130.51:70,http://192.168.3.128:9527
       - OrderingApiUrlExternal=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
     ports:
       - "5105:80"

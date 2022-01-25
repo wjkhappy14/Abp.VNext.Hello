@@ -100,7 +100,7 @@ namespace Abp.VNext.Hello.Web
         {
             Configure<AppUrlOptions>(options =>
             {
-                options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
+                options.Applications["MVC"].RootUrl = configuration["SelfUrl"];
             });
         }
 
@@ -125,7 +125,7 @@ namespace Abp.VNext.Hello.Web
                 })
                 .AddAbpOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = configuration["AuthServer:Authority"];
+                    options.Authority = configuration["Authority"];
                     options.RequireHttpsMetadata = false;
                     options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
                     //options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;

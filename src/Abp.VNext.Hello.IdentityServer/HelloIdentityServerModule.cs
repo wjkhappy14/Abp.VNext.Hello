@@ -85,7 +85,7 @@ namespace Abp.VNext.Hello
 
             Configure<AppUrlOptions>(options =>
             {
-                options.Applications["MVC"].RootUrl = configuration["App:SelfUrl"];
+                options.Applications["MVC"].RootUrl = configuration["SelfUrl"];
             });
 
             Configure<AbpBackgroundJobOptions>(options =>
@@ -112,7 +112,7 @@ namespace Abp.VNext.Hello
                 {
                     builder
                         .WithOrigins(
-                            configuration["App:CorsOrigins"]
+                            configuration["CorsOrigins"]
                                 .Split(",", StringSplitOptions.RemoveEmptyEntries)
                                 .Select(o => o.RemovePostFix("/"))
                                 .ToArray()
@@ -137,7 +137,7 @@ namespace Abp.VNext.Hello
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
-                options.IssuerUri = configuration["App:IssuerUri"];
+                options.IssuerUri = configuration["IssuerUri"];
                 // options.PublicOrigin = configuration["App:PublicOrigin"];
                 options.LowerCaseIssuerUri = true;
                 options.MutualTls.Enabled = true;
