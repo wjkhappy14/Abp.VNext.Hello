@@ -37,7 +37,7 @@ spec:
       containers:
         - name: abp-vnext-hello-ids4-api
           image: wjkhappy14/abp.vnext.hello.ids4:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80
