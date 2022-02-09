@@ -22,7 +22,7 @@
     <Description>This package contains the reference assemblies for developing services using Dapr.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.19.3" />
+    <PackageReference Include="Google.Protobuf" Version="3.19.4" />
     <PackageReference Include="Grpc.Net.Client" Version="2.42.0" />
     <PackageReference Include="Grpc.Tools" Version="2.43.0" PrivateAssets="All" />
     <PackageReference Include="Google.Api.CommonProtos" Version="2.5.0" />
