@@ -11,7 +11,10 @@ data:
   ASPNETCORE_URLS: http://0.0.0.0:80
   SeqServerUrl: http://seq
   ConnectionStrings__Default: Server=mysql; database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
-  AggregatorApiUrlExternal: http://{{ .Values.externalDnsNameOrIP}}:30006
+  IssuerUri: http://{{ .Values.externalDnsNameOrIP}}:30006
+  SelfUrl: http://{{ .Values.externalDnsNameOrIP}}:30008
+  PublicOrigin: http://{{ .Values.externalDnsNameOrIP}}:30006
+  CorsOrigins: http://*.hello.com,http://106.13.130.51:80,http://http://106.13.130.51:70
   Redis__Config: redis,password=e$h0p0nD@pr,abortConnect=false
 ---
 
@@ -61,7 +64,7 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 31008
+      nodePort: 30008
       protocol: TCP
       name: http
   selector:
