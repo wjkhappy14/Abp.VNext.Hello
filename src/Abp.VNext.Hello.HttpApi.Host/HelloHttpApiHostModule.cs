@@ -98,8 +98,8 @@ public class HelloHttpApiHostModule : AbpModule
         context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = configuration["AuthServer:Authority"];
-                options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
+                options.Authority = configuration["Authority"];
+                options.RequireHttpsMetadata = false;
                 options.Audience = "Hello";
             });
     }
@@ -107,7 +107,7 @@ public class HelloHttpApiHostModule : AbpModule
     private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)
     {
         context.Services.AddAbpSwaggerGenWithOAuth(
-            configuration["AuthServer:Authority"],
+            configuration["Authority"],
             new Dictionary<string, string>
             {
                     {"Hello", "Hello API"}
@@ -154,7 +154,7 @@ public class HelloHttpApiHostModule : AbpModule
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Hello");
         if (!hostingEnvironment.IsDevelopment())
         {
-            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
+            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Config"]);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Hello-Protection-Keys");
         }
     }
@@ -167,7 +167,7 @@ public class HelloHttpApiHostModule : AbpModule
             {
                 builder
                     .WithOrigins(
-                        configuration["App:CorsOrigins"]
+                        configuration["CorsOrigins"]
                             .Split(",", StringSplitOptions.RemoveEmptyEntries)
                             .Select(o => o.RemovePostFix("/"))
                             .ToArray()

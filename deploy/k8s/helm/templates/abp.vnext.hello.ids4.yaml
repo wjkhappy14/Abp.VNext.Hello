@@ -16,6 +16,8 @@ data:
   PublicOrigin: http://{{ .Values.externalDnsNameOrIP}}:30006
   CorsOrigins: http://*.hello.com,http://106.13.130.51:80,http://http://106.13.130.51:70
   Redis__Config: redis,password=e$h0p0nD@pr,abortConnect=false
+  ClientUrl: "http://localhost:4200"
+  RedirectAllowedUrls: "http://{{ .Values.externalDnsNameOrIP}}:4200,https://{{ .Values.externalDnsNameOrIP}}:44307"
 ---
 
 kind: Deployment
