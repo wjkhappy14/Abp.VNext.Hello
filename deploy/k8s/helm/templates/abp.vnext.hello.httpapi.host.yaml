@@ -42,7 +42,7 @@ spec:
       containers:
         - name: abp-vnext-hello-httpapi-host
           image: wjkhappy14/abp.vnext.hello.httpapi.host:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
               protocol: TCP
