@@ -1,10 +1,10 @@
 {
   "iisSettings": {
-    "windowsAuthentication": false,
+    "windowsAuthentication": false, 
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:60",
-      "sslPort": 44338
+      "applicationUrl": "https://localhost:44365",
+      "sslPort": 44365
     }
   },
   "profiles": {
@@ -18,17 +18,10 @@
     "Abp.VNext.Hello.IdentityServer": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "https://localhost:44365",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:60"
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "publishAllPorts": true,
-      "useSSL": true
+      }
     }
   }
 }

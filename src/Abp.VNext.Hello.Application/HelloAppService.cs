@@ -4,15 +4,14 @@ using System.Text;
 using Abp.VNext.Hello.Localization;
 using Volo.Abp.Application.Services;
 
-namespace Abp.VNext.Hello
+namespace Abp.VNext.Hello;
+
+/* Inherit your application services from this class.
+ */
+public abstract class HelloAppService : ApplicationService
 {
-    /* Inherit your application services from this class.
-     */
-    public abstract class HelloAppService : ApplicationService
+    protected HelloAppService()
     {
-        protected HelloAppService()
-        {
-            LocalizationResource = typeof(HelloResource);
-        }
+        LocalizationResource = typeof(HelloResource);
     }
 }

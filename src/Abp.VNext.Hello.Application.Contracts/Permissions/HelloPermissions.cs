@@ -1,40 +1,9 @@
-﻿namespace Abp.VNext.Hello
+﻿namespace Abp.VNext.Hello.Permissions;
+
+public static class HelloPermissions
 {
-    public static class HelloPermissions
-    {
-        public const string GroupName = "Hello";
+    public const string GroupName = "Hello";
 
-
-        public static class StateProvince
-        {
-            public const string Default = GroupName + ".StateProvince";
-
-            public const string Create = Default + ".Create";
-            public const string Update = Default + ".Update";
-            public const string Delete = Default + ".Delete";
-            public const string Search = Default + ".Search";
-            public const string View = Default + ".View";
-        }
-        public static class Country
-        {
-            public const string Default = GroupName + ".Country";
-            public const string Create = Default + ".Create";
-            public const string Update = Default + ".Update";
-            public const string Delete = Default + ".Delete";
-            public const string Search = Default + ".Search";
-            public const string View = Default + ".View";
-        }
-
-        public static class City
-        {
-            public const string Default = GroupName + ".City";
-            public const string Create = Default + ".Create";
-            public const string Update = Default + ".Update";
-            public const string Delete = Default + ".Delete";
-            public const string Search = Default + ".Search";
-            public const string View = Default + ".View";
-        }
-    }
-
-
+    //Add your own permission names. Example:
+    //public const string MyPermission1 = GroupName + ".MyPermission1";
 }

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 
-namespace Abp.VNext.Hello.Web
+namespace Abp.VNext.Hello.Web;
+
+public class HelloWebAutoMapperProfile : Profile
 {
-    public class HelloWebAutoMapperProfile : Profile
+    public HelloWebAutoMapperProfile()
     {
-        public HelloWebAutoMapperProfile()
-        {
-            //Define your AutoMapper configuration here for the Web project.
-        }
+        //Define your AutoMapper configuration here for the Web project.
     }
 }

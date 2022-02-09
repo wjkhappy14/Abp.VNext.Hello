@@ -1,85 +1,41 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.ObjectPool;
-using System.Text;
+﻿using Localization.Resources.AbpUi;
+using Abp.VNext.Hello.Localization;
 using Volo.Abp.Account;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
-using Volo.Abp.IdentityServer;
+using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.HttpApi;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
-using Volo.Blogging;
 
-namespace Abp.VNext.Hello
+namespace Abp.VNext.Hello;
+
+[DependsOn(
+    typeof(HelloApplicationContractsModule),
+    typeof(AbpAccountHttpApiModule),
+    typeof(AbpIdentityHttpApiModule),
+    typeof(AbpPermissionManagementHttpApiModule),
+    typeof(AbpTenantManagementHttpApiModule),
+    typeof(AbpFeatureManagementHttpApiModule),
+    typeof(AbpSettingManagementHttpApiModule)
+    )]
+public class HelloHttpApiModule : AbpModule
 {
-    [DependsOn(
-        typeof(AbpIdentityServerDomainModule),
-        typeof(HelloApplicationContractsModule),
-        typeof(HelloApplicationModule),
-        typeof(BloggingHttpApiModule),
-        typeof(AbpAccountHttpApiModule),
-        typeof(AbpIdentityHttpApiModule),
-        typeof(AbpPermissionManagementHttpApiModule),
-        typeof(AbpSettingManagementHttpApiModule),
-        typeof(AbpTenantManagementHttpApiModule),
-        typeof(AbpFeatureManagementHttpApiModule)
-        )]
-    public class HelloHttpApiModule : AbpModule
+    public override void ConfigureServices(ServiceConfigurationContext context)
     {
+        ConfigureLocalization();
+    }
 
-        public override void PreConfigureServices(ServiceConfigurationContext context)
+    private void ConfigureLocalization()
+    {
+        Configure<AbpLocalizationOptions>(options =>
         {
-            PreConfigure<IMvcBuilder>(mvcBuilder =>
-            {
-                mvcBuilder.AddApplicationPartIfNotExists(typeof(HelloHttpApiModule).Assembly);
-            });
-        }
-
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            base.ConfigureServices(context);
-
-            Configure<MvcOptions>(options =>
-            {
-                options.EnableEndpointRouting = false;
-            });
-           
-
-           
-
-            //Configure<CookiePolicyOptions>(options =>
-            //{
-            //    options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
-            //    options.OnAppendCookie = cookieContext =>
-            //        CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
-            //    options.OnDeleteCookie = cookieContext =>
-            //        CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
-            //});
-
-
-            context.Services.TryAddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
-
-            context.Services.TryAddSingleton<ObjectPool<StringBuilder>>(serviceProvider =>
-            {
-                var provider = serviceProvider.GetRequiredService<ObjectPoolProvider>();
-                var policy = new StringBuilderPooledObjectPolicy();
-                return provider.Create(policy);
-            });
-
-            context.Services.AddWebEncoders();
-        }
-
-        private void CheckSameSite(HttpContext httpContext, CookieOptions options)
-        {
-            if (options.SameSite == SameSiteMode.None)
-            {
-                var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
-                options.SameSite = SameSiteMode.Unspecified;
-            }
-        }
+            options.Resources
+                .Get<HelloResource>()
+                .AddBaseTypes(
+                    typeof(AbpUiResource)
+                );
+        });
     }
 }

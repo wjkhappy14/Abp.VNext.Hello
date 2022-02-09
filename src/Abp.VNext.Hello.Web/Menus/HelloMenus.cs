@@ -1,11 +1,10 @@
-﻿namespace Abp.VNext.Hello.Web.Menus
+﻿namespace Abp.VNext.Hello.Web.Menus;
+
+public class HelloMenus
 {
-    public class HelloMenus
-    {
-        private const string Prefix = "Hello";
-        public const string Home = Prefix + ".Home";
+    private const string Prefix = "Hello";
+    public const string Home = Prefix + ".Home";
 
-        //Add your menu items here...
+    //Add your menu items here...
 
-    }
 }

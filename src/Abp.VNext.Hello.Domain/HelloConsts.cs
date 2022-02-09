@@ -1,9 +1,8 @@
-﻿namespace Abp.VNext.Hello
-{
-    public static class HelloConsts
-    {
-        public const string DbTablePrefix = "App";
+﻿namespace Abp.VNext.Hello;
 
-        public const string DbSchema = null;
-    }
+public static class HelloConsts
+{
+    public const string DbTablePrefix = "App";
+
+    public const string DbSchema = null;
 }
