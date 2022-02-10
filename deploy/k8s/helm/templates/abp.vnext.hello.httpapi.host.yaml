@@ -10,6 +10,7 @@ data:
   ASPNETCORE_ENVIRONMENT: Development
   ASPNETCORE_URLS: http://0.0.0.0:80
   SeqServerUrl: http://seq
+  Authority: http://{{ .Values.externalDnsNameOrIP}}:30008
   Redis__Config: redis,defaultDatabase=11,password=e$h0p0nD@pr,ssl=False,abortConnect=false
   ConnectionStrings__Default: Server=mysql; database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
 ---
