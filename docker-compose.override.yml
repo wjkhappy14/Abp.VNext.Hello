@@ -44,6 +44,7 @@ services:
       - SelfUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
       - SeqServerUrl=http://seq
       - CorsOrigins=http://*.Hello.com,http://106.13.130.51:80,http://http://106.13.130.51:70,http://192.168.3.128:9527
+      - RedirectAllowedUrls=http://*.Hello.com,http://106.13.130.51:80,http://http://106.13.130.51:70
     ports:
       - "5103:80"
       - "50001:50001"

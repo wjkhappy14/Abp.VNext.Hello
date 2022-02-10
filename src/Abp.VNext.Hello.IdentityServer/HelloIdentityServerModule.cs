@@ -97,7 +97,7 @@ public class HelloIdentityServerModule : AbpModule
                 options.ApplicationName = "AuthServer";
         });
 
-        if (hostingEnvironment.IsDevelopment())
+        if (!hostingEnvironment.IsDevelopment())
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
