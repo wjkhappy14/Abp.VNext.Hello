@@ -1,2 +1,2 @@
 namespace: abp-hello-on-dapr-in-k8s
-externalDnsNameOrIP: 192.168.1.5
+externalDnsNameOrIP: 159.75.111.137
