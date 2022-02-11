@@ -14,7 +14,7 @@ data:
   AuthServer__Authority: http://{{ .Values.externalDnsNameOrIP}}:30008
   Redis__Config: redis,password=e$h0p0nD@pr,abortConnect=false
   RemoteServices__Default__BaseUrl: http://{{ .Values.externalDnsNameOrIP}}:30003
-  AbpMvcClient: http://{{ .Values.externalDnsNameOrIP}}:30003
+  RemoteServices__AbpMvcClient__BaseUrl: http://{{ .Values.externalDnsNameOrIP}}:30003
 ---
 
 kind: Deployment
