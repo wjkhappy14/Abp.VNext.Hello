@@ -40,7 +40,7 @@ spec:
           claimName: mysql-pv-claim
 ---
 kind: Service
-apiVersion: v1
+apiVersion: apps/v1
 metadata:
   name: mysql
   namespace: {{ .Values.namespace }}
@@ -57,7 +57,7 @@ spec:
   selector:
     service: mysql
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim

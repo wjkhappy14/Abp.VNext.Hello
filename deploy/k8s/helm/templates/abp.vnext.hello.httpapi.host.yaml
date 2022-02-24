@@ -1,5 +1,5 @@
 kind: ConfigMap
-apiVersion: v1
+apiVersion: apps/v1
 metadata:
   name: abp-vnext-hello-httpapi-host-cm
   namespace: {{ .Values.namespace }}
@@ -56,7 +56,7 @@ spec:
 ---
 
 kind: Service
-apiVersion: v1
+apiVersion: apps/v1
 metadata:
   name: abp-vnext-hello-httpapi-host
   namespace: {{ .Values.namespace }}

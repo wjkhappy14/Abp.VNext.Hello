@@ -51,7 +51,7 @@ spec:
 ---
 
 kind: Service
-apiVersion: v1
+apiVersion: apps/v1
 metadata:
   name: abp-vnext-hello-web
   namespace: {{ .Values.namespace }}
