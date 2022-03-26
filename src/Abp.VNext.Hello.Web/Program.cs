@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -10,21 +12,27 @@ namespace Abp.VNext.Hello.Web;
 
 public class Program
 {
+    private static IConfiguration GetConfiguration()
+    {
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables();
+
+        return builder.Build();
+    }
+
     public async static Task<int> Main(string[] args)
     {
+        var configuration = GetConfiguration();
+        var seqServerUrl = configuration["Seq:Url"];
         Log.Logger = new LoggerConfiguration()
-#if DEBUG
             .MinimumLevel.Debug()
-#else
-            .MinimumLevel.Information()
-#endif
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
             .Enrich.FromLogContext()
-            .WriteTo.Async(c => c.File("Logs/logs.txt"))
-#if DEBUG
+            .WriteTo.Seq(seqServerUrl)
             .WriteTo.Async(c => c.Console())
-#endif
             .CreateLogger();
 
         try

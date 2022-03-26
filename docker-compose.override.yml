@@ -42,7 +42,8 @@ services:
       - PublicOrigin=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
       - IssuerUri=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
       - SelfUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
-      - SeqServerUrl=http://seq
+      - Seq__Url=http://seq
+      - ConnectionStrings__Default=Server=mysql-db; database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
       - CorsOrigins=http://*.Hello.com,http://106.13.130.51:80,http://http://106.13.130.51:70,http://192.168.3.128:9527
       - RedirectAllowedUrls=http://*.Hello.com,http://106.13.130.51:80,http://http://106.13.130.51:70
     ports:
@@ -67,7 +68,7 @@ services:
       - RemoteServices=http://${EXTERNAL_DNS_NAME_OR_IP}:5104
       - SelfUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5101
       - RetryMigrations=true
-      - SeqServerUrl=http://seq
+      - Seq__Url=http://seq
       - Authority=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
       - AbpMvcClient=http://{{EXTERNAL_DNS_NAME_OR_IP}}:5101
     ports:
@@ -89,7 +90,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - SeqServerUrl=http://seq
+      - Seq__Url=http://seq
+      - ConnectionStrings__Default=Server=mysql-db; database=Abp.VNext.Hello; UID=root; password=zxcvbnm; SSLMode=none
       - SelfUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5101
       - Authority=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
       - RetryMigrations=true

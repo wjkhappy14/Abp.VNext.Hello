@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Autofac" Version="5.1.4" />
+	<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
     <PackageReference Include="Volo.Abp.Caching.StackExchangeRedis" Version="5.1.4" />
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc.Client" Version="5.1.4" />
     <PackageReference Include="Volo.Abp.AspNetCore.Authentication.OpenIdConnect" Version="5.1.4" />

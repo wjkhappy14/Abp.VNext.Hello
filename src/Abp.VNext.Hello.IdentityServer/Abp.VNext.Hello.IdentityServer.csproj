@@ -35,6 +35,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+	<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="6.0.3" />
   </ItemGroup>
