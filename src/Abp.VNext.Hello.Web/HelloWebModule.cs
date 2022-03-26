@@ -41,6 +41,9 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 namespace Abp.VNext.Hello.Web;
 
@@ -90,6 +93,7 @@ public class HelloWebModule : AbpModule
         ConfigureNavigationServices(configuration);
         ConfigureMultiTenancy();
         ConfigureSwaggerServices(context.Services);
+        context.Services.AddHealthChecks().AddCheck("abp.vnext.hello.web", () => HealthCheckResult.Healthy());
     }
 
     private void ConfigureBundles()
@@ -254,5 +258,20 @@ public class HelloWebModule : AbpModule
         });
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapDefaultControllerRoute();
+            endpoints.MapControllers();
+            IEndpointConventionBuilder endpointConventionBuilder = endpoints.MapHealthChecks($"/hc", options: new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            endpoints.MapHealthChecks($"/liveness", new HealthCheckOptions
+            {
+                Predicate = r => r.Name.Contains("abp.vnext.hello.web")
+            });
+        });
     }
 }

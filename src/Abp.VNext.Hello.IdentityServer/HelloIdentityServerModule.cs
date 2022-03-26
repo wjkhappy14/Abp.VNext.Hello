@@ -31,6 +31,9 @@ using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace Abp.VNext.Hello;
 
@@ -50,7 +53,7 @@ public class HelloIdentityServerModule : AbpModule
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
-
+        context.Services.AddHealthChecks().AddCheck("abp.vnext.hello.ids4", () => HealthCheckResult.Healthy());
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
@@ -186,5 +189,20 @@ public class HelloIdentityServerModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapDefaultControllerRoute();
+            endpoints.MapControllers();
+            IEndpointConventionBuilder endpointConventionBuilder = endpoints.MapHealthChecks($"/hc", options: new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            endpoints.MapHealthChecks($"/liveness", new HealthCheckOptions
+            {
+                Predicate = r => r.Name.Contains("abp.vnext.hello.ids4")
+            });
+        });
     }
 }
