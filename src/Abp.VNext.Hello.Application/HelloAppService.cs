@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Abp.VNext.Hello.Localization;
+﻿using Abp.VNext.Hello.Localization;
 using Volo.Abp.Application.Services;
 
 namespace Abp.VNext.Hello;
