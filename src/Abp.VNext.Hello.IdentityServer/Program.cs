@@ -14,20 +14,20 @@ public class Program
 {
     private static IConfiguration GetConfiguration()
     {
-        var builder = new ConfigurationBuilder()
+       
+        IConfigurationBuilder builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.Development.json", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables();
 
         return builder.Build();
     }
     public async static Task<int> Main(string[] args)
     {
-        var configuration = GetConfiguration();
-        var seqServerUrl = configuration["Seq:Url"];
+        IConfiguration configuration = GetConfiguration();
+        string seqServerUrl = configuration["Seq:Url"];
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
-            .MinimumLevel.Information()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
             .Enrich.FromLogContext()
@@ -38,12 +38,12 @@ public class Program
         try
         {
             Log.Information("Starting Abp.VNext.Hello.IdentityServer.");
-            var builder = WebApplication.CreateBuilder(args);
-            builder.Host.AddAppSettingsSecretsJson()
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            builder.Host.AddAppSettingsSecretsJson(true)
                 .UseAutofac()
                 .UseSerilog();
             await builder.AddApplicationAsync<HelloIdentityServerModule>();
-            var app = builder.Build();
+            WebApplication app = builder.Build();
             await app.InitializeApplicationAsync();
             await app.RunAsync();
             return 0;

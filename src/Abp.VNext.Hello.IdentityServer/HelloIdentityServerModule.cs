@@ -14,8 +14,6 @@ using StackExchange.Redis;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
-using Volo.Abp.AspNetCore.Mvc.UI;
-using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
@@ -29,11 +27,12 @@ using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.UI;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Abp.VNext.Hello;
 
@@ -51,8 +50,8 @@ public class HelloIdentityServerModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        var hostingEnvironment = context.Services.GetHostingEnvironment();
-        var configuration = context.Services.GetConfiguration();
+        IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
+        IConfiguration configuration = context.Services.GetConfiguration();
         context.Services.AddHealthChecks().AddCheck("abp.vnext.hello.ids4", () => HealthCheckResult.Healthy());
         Configure<AbpLocalizationOptions>(options =>
         {
@@ -104,7 +103,7 @@ public class HelloIdentityServerModule : AbpModule
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                    options.FileSets.ReplaceEmbeddedByPhysical<HelloDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VNext.Hello.Domain.Shared"));
+                options.FileSets.ReplaceEmbeddedByPhysical<HelloDomainSharedModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VNext.Hello.Domain.Shared"));
                 options.FileSets.ReplaceEmbeddedByPhysical<HelloDomainModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}Abp.VNext.Hello.Domain"));
             });
         }
@@ -128,10 +127,10 @@ public class HelloIdentityServerModule : AbpModule
             options.KeyPrefix = "Hello:";
         });
 
-        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Hello");
+        IDataProtectionBuilder dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Hello");
         if (!hostingEnvironment.IsDevelopment())
         {
-            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Config"]);
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration["Redis:Config"]);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Hello-Protection-Keys");
         }
 
@@ -157,8 +156,8 @@ public class HelloIdentityServerModule : AbpModule
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
-        var app = context.GetApplicationBuilder();
-        var env = context.GetEnvironment();
+        IApplicationBuilder app = context.GetApplicationBuilder();
+        IWebHostEnvironment env = context.GetEnvironment();
 
         if (env.IsDevelopment())
         {

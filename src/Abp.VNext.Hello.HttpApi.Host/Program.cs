@@ -14,17 +14,17 @@ public class Program
 {
     private static IConfiguration GetConfiguration()
     {
-        var builder = new ConfigurationBuilder()
+        IConfigurationBuilder builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
             .AddEnvironmentVariables();
 
         return builder.Build();
     }
     public async static Task<int> Main(string[] args)
     {
-        var configuration = GetConfiguration();
-        var seqServerUrl = configuration["Seq:Url"];
+        IConfiguration configuration = GetConfiguration();
+        string seqServerUrl = configuration["Seq:Url"];
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -37,12 +37,12 @@ public class Program
         try
         {
             Log.Information("Starting Abp.VNext.Hello.HttpApi.Host.");
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog();
             await builder.AddApplicationAsync<HelloHttpApiHostModule>();
-            var app = builder.Build();
+            WebApplication app = builder.Build();
             await app.InitializeApplicationAsync();
             await app.RunAsync();
             return 0;

@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.dev.json" />
+    <None Remove="appsettings.Development.json" />
     <None Remove="appsettings.json" />
-    <Content Include="appsettings.dev.json">
+    <Content Include="appsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
