@@ -1,4 +1,5 @@
 ﻿using Volo.Abp.Account;
+using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
@@ -7,25 +8,27 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 
-namespace Abp.VNext.Hello;
-
-[DependsOn(
-    typeof(HelloDomainModule),
-    typeof(AbpAccountApplicationModule),
-    typeof(HelloApplicationContractsModule),
-    typeof(AbpIdentityApplicationModule),
-    typeof(AbpPermissionManagementApplicationModule),
-    typeof(AbpTenantManagementApplicationModule),
-    typeof(AbpFeatureManagementApplicationModule),
-    typeof(AbpSettingManagementApplicationModule)
-    )]
-public class HelloApplicationModule : AbpModule
+namespace Abp.VNext.Hello
 {
-    public override void ConfigureServices(ServiceConfigurationContext context)
+    [DependsOn(
+        typeof(HelloDomainModule),
+        typeof(AbpAccountApplicationModule),
+        typeof(HelloApplicationContractsModule),
+        typeof(AbpIdentityApplicationModule),
+        typeof(AbpAspNetCoreSignalRModule),
+        typeof(AbpPermissionManagementApplicationModule),
+        typeof(AbpTenantManagementApplicationModule),
+        typeof(AbpFeatureManagementApplicationModule),
+        typeof(AbpSettingManagementApplicationModule)
+        )]
+    public class HelloApplicationModule : AbpModule
     {
-        Configure<AbpAutoMapperOptions>(options =>
+        public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            options.AddMaps<HelloApplicationModule>();
-        });
+            Configure<AbpAutoMapperOptions>(options =>
+            {
+                options.AddMaps<HelloApplicationModule>();
+            });
+        }
     }
 }

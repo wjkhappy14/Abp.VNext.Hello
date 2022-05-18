@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Account.Application" Version="5.2.1" />
+	<PackageReference Include="StackExchange.Redis" Version="2.2.4" />
+	<PackageReference Include="Volo.Abp.AspNetCore.SignalR" Version="5.2.1" />
 	<PackageReference Include="Minio" Version="4.0.2" />
     <PackageReference Include="Volo.Abp.Identity.Application" Version="5.2.1" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="5.2.1" />
@@ -21,5 +23,4 @@
     <PackageReference Include="Volo.Abp.FeatureManagement.Application" Version="5.2.1" />
     <PackageReference Include="Volo.Abp.SettingManagement.Application" Version="5.2.1" />
   </ItemGroup>
-
 </Project>
