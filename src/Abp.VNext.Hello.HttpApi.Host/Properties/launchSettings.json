@@ -9,7 +9,7 @@
   },
   "profiles": {
     "Abp.VNext.Hello.HttpApi.Host": {
-      "applicationUrl": "https://0.0.0.0:8050",
+      "applicationUrl": "http://0.0.0.0:8050",
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

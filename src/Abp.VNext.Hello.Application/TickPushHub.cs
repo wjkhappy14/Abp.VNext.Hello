@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using AutoMapper.Configuration;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using System;
 using System.Net;
@@ -7,10 +9,16 @@ using Volo.Abp.AspNetCore.SignalR;
 
 namespace Abp.VNext.Hello
 {
+    [HubRoute("/signalr-hubs/tick-push")]
     public class TickPushHub : AbpHub
     {
-        public TickPushHub()
+        ILogger<TickPushHub> _logger;
+        IConfiguration config;
+        public TickPushHub(ILogger<TickPushHub> logger, IConfiguration configuration)
         {
+            _logger = logger;
+            config = configuration;
+            _logger.Log(LogLevel.Information, "Tick Push Hub");
             Start();
         }
 
@@ -28,13 +36,12 @@ namespace Abp.VNext.Hello
             Password = "03hx5DDDivYmbkTgDlFz",
             EndPoints = {
                 new IPEndPoint(IPAddress.Parse("117.50.40.186"), 6379)
-            },
-            ChannelPrefix = "X"
+            }
         });
         private void Start()
         {
-            Subscribe("HKEX:MHI:1904");
-            Subscribe("SGX:CN:1904");
+            Subscribe("CME:EC:2206");
+            Subscribe("HKEX:HSI:2205");
         }
         private void Subscribe(string channelName)
         {
@@ -47,7 +54,11 @@ namespace Abp.VNext.Hello
                 string timestamp = values[0];
                 string qlastprice = values[1];
                 string qlastqty = values[2];
-                await Clients.All.SendAsync("responseHandler", message);
+                _logger.Log(LogLevel.Information, message);
+                if (Clients != null)
+                {
+                    await Clients.All.SendAsync("responseHandler", message);
+                }
             });
         }
     }
