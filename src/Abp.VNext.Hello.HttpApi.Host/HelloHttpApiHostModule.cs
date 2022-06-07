@@ -237,6 +237,7 @@ public class HelloHttpApiHostModule : AbpModule
             {
                 Predicate = r => r.Name.Contains("abp.vnext.hello.httpapi.host")
             });
+            endpoints.MapConnectionHandler<TickPushConnectionHandler>("/tick-push");
         });
     }
 }
