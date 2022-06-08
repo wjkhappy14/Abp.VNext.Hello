@@ -36,6 +36,9 @@ namespace Abp.VNext.Hello
         private void Start()
         {
             Subscriber.Subscribe("CME:EC:2206", async (channel, message) => await Publish(message));
+            Subscriber.Subscribe("CME:EC:2303", async (channel, message) => await Publish(message));
+            Subscriber.Subscribe("CME:JY:2209", async (channel, message) => await Publish(message));
+            Subscriber.Subscribe("CBO:TC:2212", async (channel, message) => await Publish(message));
             Subscriber.Subscribe("HKEX:HSI:2205", async (channel, message) => await Publish(message));
         }
         public override async Task OnConnectedAsync(ConnectionContext connection)

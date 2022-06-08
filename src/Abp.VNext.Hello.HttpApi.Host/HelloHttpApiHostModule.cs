@@ -157,7 +157,7 @@ public class HelloHttpApiHostModule : AbpModule
         IDataProtectionBuilder dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("Hello");
         if (!hostingEnvironment.IsDevelopment())
         {
-            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration["Redis:Config"]);
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "Hello-Protection-Keys");
         }
     }
