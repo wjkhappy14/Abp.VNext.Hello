@@ -13,7 +13,6 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
 
         public DbSet<City> Cities { get; set; }
 
-        public DbSet<EztvItem> Eztvs { get; set; }
 
         public DbSet<Country> Countries { get; set; }
 
