@@ -12,40 +12,8 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
         {
             Check.NotNull(builder, nameof(builder));
 
-            AbpModelBuilderConfigurationOptions options = new AbpModelBuilderConfigurationOptions(
-             DbProperties.DbTablePrefix,
-             DbProperties.DbSchema
-         );
-
-
-            builder.Entity<City>(b =>
-            {
-                b.ToTable(options.TablePrefix + "Cities");
-                b.HasOne<StateProvince>().WithMany().HasForeignKey(ur => ur.StateProvinceId);
-                b.HasIndex(q => q.Id);
-            });
-
-            builder.Entity<StateProvince>(b =>
-            {
-                b.ToTable(options.TablePrefix + "StateProvinces");
-                b.HasOne<Country>().WithMany().HasForeignKey(ur => ur.CountryId);
-                b.HasMany(u => u.Cities).WithOne().HasForeignKey(uc => uc.StateProvinceId);
-                b.HasIndex(q => q.Id);
-            });
-
-            builder.Entity<Country>(b =>
-            {
-                b.ToTable(options.TablePrefix + "Countries");
-                b.HasMany(u => u.StateProvinces).WithOne().HasForeignKey(uc => uc.CountryId);
-                b.HasIndex(q => q.Id);
-            });
-
-            builder.Entity<Contact>(b =>
-            {
-                b.ToTable(options.TablePrefix + "Contacts");
-                b.HasMany(u => u.Address).WithOne().HasForeignKey(uc => uc.ContactId);
-                b.HasIndex(q => q.Id);
-            });
+            AbpModelBuilderConfigurationOptions options = new AbpModelBuilderConfigurationOptions(DbProperties.DbTablePrefix,DbProperties.DbSchema);
+         
         }
 
         public static void ConfigureCustomUserProperties<TUser>(this EntityTypeBuilder<TUser> b)

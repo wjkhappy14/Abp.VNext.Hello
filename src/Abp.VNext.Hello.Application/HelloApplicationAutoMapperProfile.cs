@@ -21,13 +21,7 @@ namespace Abp.VNext.Hello
     {
         public HelloApplicationAutoMapperProfile()
         {
-            CreateMap<Country, CountryDto>().ForMember(dest => dest.NationalFlagUrl, opt => opt.MapFrom(src => src.NationalFlag));
-            CreateMap<CountryDto, Country>().ForMember(dest => dest.NationalFlag, opt => opt.MapFrom(src => src.NationalFlagUrl));
-            CreateMap<StateProvince, StateProvinceDto>();
-            CreateMap<StateProvinceDto, StateProvince>();
-            CreateMap<City, CityDto>();//.Ignore(x=>x.);
-            CreateMap<CityDto, City>();
-
+          
             CreateMap<Client, ClientDto>();
             CreateMap<ClientClaim, ClientClaimDto>();
             CreateMap<ClientCorsOrigin, ClientCorsOriginDto>();
@@ -52,18 +46,7 @@ namespace Abp.VNext.Hello
             CreateMap<IdentityClaim, IdentityClaimDto>();
             CreateMap<IdentityResource, IdentityResourceDto>();
 
-            CreateMap<ContactDto, Contact>();
-            CreateMap<Contact, ContactDto>();
-
-            CreateMap<EztvItemDto, EztvItem>();
-            CreateMap<EztvItem, EztvItemDto>()
-                .ForMember(dest => dest.title, opt => opt.MapFrom(src => FromBase64String(src.title)))
-                .ForMember(dest => dest.size_kb, opt => opt.MapFrom(src => (src.size_bytes / 1024)))
-                .ForMember(dest => dest.size_mb, opt => opt.MapFrom(src => (src.size_bytes / 1024 / 1024)))
-                .ForMember(dest => dest.size_gb, opt => opt.MapFrom(src => (src.size_bytes / 1024 / 1024 / 1024)))
-                .ForMember(dest => dest.torrent_url, opt => opt.MapFrom(src => FromBase64String(src.torrent_url)))
-                .ForMember(dest => dest.filename, opt => opt.MapFrom(src => FromBase64String(src.filename)));
-        }
+       }
 
         private string FromBase64String(string keyWord)
         {
