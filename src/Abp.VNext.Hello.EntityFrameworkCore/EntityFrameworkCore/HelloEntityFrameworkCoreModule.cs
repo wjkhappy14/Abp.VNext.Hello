@@ -37,22 +37,6 @@ namespace Abp.VNext.Hello.EntityFrameworkCore
             context.Services.AddAbpDbContext<HelloDbContext>(options =>
             {
                 options.AddDefaultRepositories(includeAllEntities: true);
-
-                options.Entity<Country>(opt =>
-                {
-                    opt.DefaultWithDetailsFunc = q => q.Include(p => p.StateProvinces);
-                });
-
-                options.Entity<StateProvince>(opt =>
-                {
-                    opt.DefaultWithDetailsFunc = q => q.Include(p => p.Cities);
-                });
-
-                options.Entity<Contact>(opt =>
-                {
-                    opt.DefaultWithDetailsFunc = q => q.Include(p => p.Address);
-                });
-
             });
 
             Configure<AbpDbContextOptions>(options =>
