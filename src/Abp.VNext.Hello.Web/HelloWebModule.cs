@@ -39,7 +39,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 namespace Abp.VNext.Hello.Web
 {
     [DependsOn(
-       // typeof(HelloHttpApiModule),
+        // typeof(HelloHttpApiModule),
         typeof(HelloHttpApiClientModule),
         typeof(AbpAspNetCoreAuthenticationOpenIdConnectModule),
         typeof(AbpAspNetCoreMvcClientModule),
@@ -82,7 +82,13 @@ namespace Abp.VNext.Hello.Web
             ConfigureNavigationServices(configuration);
             ConfigureMultiTenancy();
             ConfigureSwaggerServices(context.Services);
-           
+
+            context.Services.BuildServiceProvider(new ServiceProviderOptions()
+            {
+                ValidateOnBuild = true,
+                ValidateScopes = true//验证作用域
+            }
+            );
         }
 
         private void ConfigureCache(IConfiguration configuration)
