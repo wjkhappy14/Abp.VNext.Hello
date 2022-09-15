@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.SignalR;
 
 namespace Abp.VNext.Hello
 {
+
+    [Authorize]
     public class HelloHub : AbpHub
     {
         public HelloHub()
@@ -18,6 +21,15 @@ namespace Abp.VNext.Hello
         public override Task OnDisconnectedAsync(Exception exception)
         {
             return base.OnDisconnectedAsync(exception);
+        }
+
+        [Authorize("Administrators")]
+        public void BanUser(string userName)
+        {
+        }
+        [Authorize("DomainRestricted")]
+        public void ViewUserHistory(string username)
+        {
         }
     }
 }
